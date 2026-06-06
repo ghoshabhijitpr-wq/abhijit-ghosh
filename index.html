@@ -1,0 +1,1140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Abhijit Ghosh — Portfolio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
+</head>
+<body>
+
+  <!-- Aurora -->
+  <div id="aurora" aria-hidden="true">
+    <div class="aurora-blob a1"></div>
+    <div class="aurora-blob a2"></div>
+    <div class="aurora-blob a3"></div>
+    <div class="aurora-blob a4"></div>
+  </div>
+
+  <!-- Particle canvas -->
+  <canvas id="particle-canvas" aria-hidden="true"></canvas>
+
+  <!-- NAV -->
+  <nav id="navbar">
+    <div class="nav-inner">
+      <div class="nav-logo-wrap">
+        <span class="nav-logo-icon"><img src="photo_passport.jpg" alt="Abhijit Ghosh" /></span>
+        <span class="nav-logo-text">Abhijit Ghosh</span>
+      </div>
+      <ul>
+        <li><a href="#about">About</a></li>
+        <li><a href="#skills">Skills</a></li>
+        <li><a href="#experience">Experience</a></li>
+        <li><a href="#gallery">Gallery</a></li>
+        <li><a href="#projects">Projects</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+      <div class="nav-progress" id="navProgress"></div>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section id="hero">
+    <div class="hero-bg-img" aria-hidden="true"></div>
+    <div class="hero-floats" aria-hidden="true">
+      <span class="float-icon" data-depth="0.30" style="--ix:12%;--iy:22%">📦</span>
+      <span class="float-icon" data-depth="0.50" style="--ix:83%;--iy:26%">🚚</span>
+      <span class="float-icon" data-depth="0.20" style="--ix:74%;--iy:66%">⚙️</span>
+      <span class="float-icon" data-depth="0.40" style="--ix:16%;--iy:70%">📊</span>
+      <span class="float-icon" data-depth="0.60" style="--ix:88%;--iy:50%">🏭</span>
+      <span class="float-icon" data-depth="0.35" style="--ix:48%;--iy:14%">🔗</span>
+      <span class="float-icon" data-depth="0.25" style="--ix:62%;--iy:80%">📋</span>
+      <span class="float-icon" data-depth="0.45" style="--ix:30%;--iy:45%">🎓</span>
+    </div>
+
+    <div class="hero-profile-img">
+      <img src="photo_passport.jpg" alt="Abhijit Ghosh" />
+      <div class="hero-profile-ring"></div>
+    </div>
+
+    <div class="hero-content">
+      <div class="hero-badge">
+        <span class="badge-dot"></span>
+        Management Trainee SCM · Neo Metaliks &nbsp;·&nbsp; CSCMP Certified 🏅
+      </div>
+      <h1 id="hero-headline">
+        <span id="typed-name"></span><span class="cursor-blink">|</span>
+      </h1>
+      <p class="hero-tagline">
+        From <span class="gold">Burdwan</span> to boardrooms — turning ground-level supply chain chaos
+        into <span class="gold">operational clarity</span> with data, grit, and purpose.
+      </p>
+      <div class="hero-chips">
+        <span>📦 Supply Chain</span>
+        <span>🚛 Logistics</span>
+        <span>🏭 Neo Metaliks</span>
+        <span>🤖 AI Tools</span>
+        <span>🎓 IISWBM</span>
+      </div>
+      <div class="hero-cta">
+        <a href="#projects" class="btn-gold">View My Work</a>
+        <a href="#contact" class="btn-outline">Get in Touch</a>
+      </div>
+    </div>
+    <div class="hero-scroll-hint">
+      <span>Scroll</span>
+      <div class="scroll-line"></div>
+    </div>
+  </section>
+
+  <!-- MARQUEE -->
+  <div class="marquee-bar">
+    <div class="marquee-track">
+      <span>📦 Supply Chain Management</span>
+      <span>⭐ COPQ Reduction</span>
+      <span>🏭 Neo Metaliks · Management Trainee</span>
+      <span>📊 Data Analytics</span>
+      <span>🚚 Transportation &amp; Logistics</span>
+      <span>🎓 IISWBM Kolkata · 2024–2026</span>
+      <span>🌿 Emami Agrotech</span>
+      <span>🔍 Root Cause Analysis</span>
+      <span>🎒 BBA Marketing · Burdwan University</span>
+      <span>🤖 AI-Assisted Research</span>
+      <span>📦 Supply Chain Management</span>
+      <span>⭐ COPQ Reduction</span>
+      <span>🏭 Neo Metaliks · Management Trainee</span>
+      <span>📊 Data Analytics</span>
+      <span>🚚 Transportation &amp; Logistics</span>
+      <span>🎓 IISWBM Kolkata · 2024–2026</span>
+      <span>🌿 Emami Agrotech</span>
+      <span>🔍 Root Cause Analysis</span>
+      <span>🎒 BBA Marketing · Burdwan University</span>
+      <span>🤖 AI-Assisted Research</span>
+    </div>
+  </div>
+
+  <!-- ABOUT -->
+  <section id="about">
+    <div class="container">
+      <div class="section-label">Who I Am</div>
+      <h2 class="section-title">About Me</h2>
+      <div class="about-grid">
+        <div class="about-text">
+          <p>I'm <span class="gold">Abhijit Ghosh</span>, a Supply Chain professional from West Bengal currently working as a <span class="gold">Management Trainee — SCM at Neo Metaliks Limited</span>. I started my academic journey with a <span class="gold">BBA in Marketing</span> from the University of Burdwan, which gave me a strong foundation in business and consumer dynamics.</p>
+          <p>I then levelled up with an <span class="gold">MBA in Transportation &amp; Logistics from IISWBM, Kolkata</span> (2024–2026) — diving deep into supply chain strategy, operations research, procurement, and logistics optimisation. During my MBA, I completed my internship at <span class="gold">Emami Agrotech Limited</span> (March–May 2026) — conducting India's first COPQ study for an edible oil distribution network, quantifying ₹10.03 crores in annual quality failures across their Haldia plant and pan-India CFA network.</p>
+          <p>I also co-founded <span class="gold">Janani Ghee</span> (2021–23) — a homemade ghee brand where I ran end-to-end logistics, procurement, and distribution across 10+ retail outlets and 200+ customers, cutting delivery lead times by 25%. I love combining ground-level operations thinking with <span class="gold">AI tools</span> to make supply chains leaner, faster, and smarter.</p>
+        </div>
+        <div class="about-stats">
+          <div class="stat-card glass-card clickable" data-modal="mba" title="Click to see what I studied">
+            <span class="stat-icon">🎓</span>
+            <span class="stat-num">MBA</span>
+            <span class="stat-label">IISWBM, Kolkata</span>
+            <span class="stat-hint">Click to explore →</span>
+          </div>
+          <div class="stat-card glass-card clickable" data-modal="bba" title="Click to see BBA details">
+            <span class="stat-icon">🏛️</span>
+            <span class="stat-num">BBA</span>
+            <span class="stat-label">Univ. of Burdwan</span>
+            <span class="stat-hint">Click to explore →</span>
+          </div>
+          <div class="stat-card glass-card">
+            <span class="stat-icon">🏭</span>
+            <span class="stat-num" data-count="1">1+</span>
+            <span class="stat-label">Years at Neo Metaliks</span>
+          </div>
+          <div class="stat-card glass-card">
+            <span class="stat-icon">🔍</span>
+            <span class="stat-num">Ops</span>
+            <span class="stat-label">Ground Research</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SKILLS -->
+  <section id="skills">
+    <div class="container">
+      <div class="section-label">What I Know</div>
+      <h2 class="section-title">Skills</h2>
+      <div class="skills-grid skills-grid-4">
+        <div class="skill-group glass-card tilt-card">
+          <div class="skill-group-icon">⛓️</div>
+          <h3>Supply Chain &amp; Operations</h3>
+          <div class="skill-bar-list">
+            <div class="skill-bar-item">
+              <div class="skill-label-row"><span>COPQ Analysis &amp; Reduction</span><span class="skill-pct">90%</span></div>
+              <div class="bar"><div class="bar-fill" data-w="90"></div></div>
+            </div>
+            <div class="skill-bar-item">
+              <div class="skill-label-row"><span>Inventory &amp; Warehouse Mgmt</span><span class="skill-pct">85%</span></div>
+              <div class="bar"><div class="bar-fill" data-w="85"></div></div>
+            </div>
+            <div class="skill-bar-item">
+              <div class="skill-label-row"><span>Logistics &amp; Transportation</span><span class="skill-pct">88%</span></div>
+              <div class="bar"><div class="bar-fill" data-w="88"></div></div>
+            </div>
+            <div class="skill-bar-item">
+              <div class="skill-label-row"><span>SOP Design &amp; Compliance</span><span class="skill-pct">85%</span></div>
+              <div class="bar"><div class="bar-fill" data-w="85"></div></div>
+            </div>
+            <div class="skill-bar-item">
+              <div class="skill-label-row"><span>Procurement &amp; Sourcing</span><span class="skill-pct">80%</span></div>
+              <div class="bar"><div class="bar-fill" data-w="80"></div></div>
+            </div>
+          </div>
+        </div>
+        <div class="skill-group glass-card tilt-card">
+          <div class="skill-group-icon">📊</div>
+          <h3>Data &amp; Analytics</h3>
+          <div class="skill-bar-list">
+            <div class="skill-bar-item">
+              <div class="skill-label-row"><span>Microsoft Excel (Advanced)</span><span class="skill-pct">92%</span></div>
+              <div class="bar"><div class="bar-fill" data-w="92"></div></div>
+            </div>
+            <div class="skill-bar-item">
+              <div class="skill-label-row"><span>Power BI / Visualisation</span><span class="skill-pct">78%</span></div>
+              <div class="bar"><div class="bar-fill" data-w="78"></div></div>
+            </div>
+            <div class="skill-bar-item">
+              <div class="skill-label-row"><span>SAP (Functional Exposure)</span><span class="skill-pct">72%</span></div>
+              <div class="bar"><div class="bar-fill" data-w="72"></div></div>
+            </div>
+            <div class="skill-bar-item">
+              <div class="skill-label-row"><span>Python (Data Analysis)</span><span class="skill-pct">65%</span></div>
+              <div class="bar"><div class="bar-fill" data-w="65"></div></div>
+            </div>
+            <div class="skill-bar-item">
+              <div class="skill-label-row"><span>SQL (Querying &amp; Reporting)</span><span class="skill-pct">68%</span></div>
+              <div class="bar"><div class="bar-fill" data-w="68"></div></div>
+            </div>
+          </div>
+        </div>
+        <div class="skill-group glass-card tilt-card">
+          <div class="skill-group-icon">🤝</div>
+          <h3>Soft Skills</h3>
+          <div class="skill-bar-list">
+            <div class="skill-bar-item">
+              <div class="skill-label-row"><span>Stakeholder Communication</span><span class="skill-pct">90%</span></div>
+              <div class="bar"><div class="bar-fill" data-w="90"></div></div>
+            </div>
+            <div class="skill-bar-item">
+              <div class="skill-label-row"><span>Root Cause Analysis</span><span class="skill-pct">88%</span></div>
+              <div class="bar"><div class="bar-fill" data-w="88"></div></div>
+            </div>
+            <div class="skill-bar-item">
+              <div class="skill-label-row"><span>Collaborative Problem Solving</span><span class="skill-pct">88%</span></div>
+              <div class="bar"><div class="bar-fill" data-w="88"></div></div>
+            </div>
+            <div class="skill-bar-item">
+              <div class="skill-label-row"><span>Negotiation &amp; Team Handling</span><span class="skill-pct">84%</span></div>
+              <div class="bar"><div class="bar-fill" data-w="84"></div></div>
+            </div>
+            <div class="skill-bar-item">
+              <div class="skill-label-row"><span>Report Writing &amp; Decks</span><span class="skill-pct">87%</span></div>
+              <div class="bar"><div class="bar-fill" data-w="87"></div></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="skill-group glass-card tilt-card ai-skill-card">
+          <div class="skill-group-icon">🤖</div>
+          <h3>AI Integration &amp; Productivity</h3>
+          <div class="skill-bar-list">
+            <div class="skill-bar-item">
+              <div class="skill-label-row"><span>Claude AI (Workflow Automation)</span><span class="skill-pct">92%</span></div>
+              <div class="bar"><div class="bar-fill" data-w="92"></div></div>
+            </div>
+            <div class="skill-bar-item">
+              <div class="skill-label-row"><span>AI-Assisted Research &amp; Analysis</span><span class="skill-pct">90%</span></div>
+              <div class="bar"><div class="bar-fill" data-w="90"></div></div>
+            </div>
+            <div class="skill-bar-item">
+              <div class="skill-label-row"><span>Prompt Engineering (SCM context)</span><span class="skill-pct">88%</span></div>
+              <div class="bar"><div class="bar-fill" data-w="88"></div></div>
+            </div>
+            <div class="skill-bar-item">
+              <div class="skill-label-row"><span>AI Tool Building (HTML/JS)</span><span class="skill-pct">80%</span></div>
+              <div class="bar"><div class="bar-fill" data-w="80"></div></div>
+            </div>
+            <div class="skill-bar-item">
+              <div class="skill-label-row"><span>Google Analytics</span><span class="skill-pct">72%</span></div>
+              <div class="bar"><div class="bar-fill" data-w="72"></div></div>
+            </div>
+          </div>
+          <div class="ai-badge-row">
+            <span class="ai-badge">🏅 CSCMP SCPro™ Certified</span>
+            <span class="ai-badge">📜 Nestlé SCM Certified</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- EXPERIENCE -->
+  <section id="experience">
+    <div class="container">
+      <div class="section-label">Where I've Been</div>
+      <h2 class="section-title">Experience</h2>
+      <div class="timeline">
+        <div class="timeline-fill" aria-hidden="true"></div>
+
+        <div class="timeline-item">
+          <div class="timeline-dot"><span>01</span></div>
+          <div class="timeline-content glass-card">
+            <span class="timeline-date">2025 — Present</span>
+            <h3>Management Trainee — Supply Chain Management</h3>
+            <p class="timeline-company">Neo Metaliks Limited · West Bengal</p>
+            <p>Working as a Management Trainee in the Supply Chain division of Neo Metaliks — a steel manufacturing company producing TMT bars and wire rods. Involved in inbound raw material procurement (sponge iron, scrap, ferro-alloys), vendor coordination, logistics tracking, and building supply chain reporting frameworks to drive cost efficiency.</p>
+            <div class="tags"><span>Steel SCM</span><span>Procurement</span><span>Vendor Mgmt</span><span>Logistics</span><span>Reporting</span></div>
+          </div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="timeline-dot"><span>02</span></div>
+          <div class="timeline-content glass-card">
+            <span class="timeline-date">March – May 2026</span>
+            <h3>MBA Intern — Customer Service &amp; Logistics</h3>
+            <p class="timeline-company">Emami Agrotech Limited · Haldia Plant (M251) &amp; Dhulagarh CFA, Kolkata (D257)</p>
+            <p>Dissertation internship under Mr. Debanjan Chakravarti (Manager – CS&amp;L). Conducted India's first COPQ study for an edible oil distribution network — analysed 5,167 SRN lines worth ₹773.38 lakhs, quantified ₹10.03 crores annual COPQ, and delivered 14 interventions with ₹4.5–6 crore first-year saving potential. Also designed the <strong>SAMA SRN portal</strong> to digitise the sales return and credit note approval workflow.</p>
+            <div class="tags"><span>COPQ</span><span>SAP Analysis</span><span>SRN / Credit Notes</span><span>FMCG Logistics</span><span>Dissertation</span></div>
+          </div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="timeline-dot"><span>03</span></div>
+          <div class="timeline-content glass-card">
+            <span class="timeline-date">2024 — 2026</span>
+            <h3>MBA — Transportation &amp; Logistics</h3>
+            <p class="timeline-company">IISWBM (Institute of Management Studies) · Kolkata</p>
+            <p>Pursuing MBA with specialisation in Transportation &amp; Logistics at one of India's oldest management institutes. Coursework spans operations research, logistics strategy, procurement, quality management, and business analytics. Active in case competitions and industry interaction programmes.</p>
+            <div class="tags"><span>Operations Research</span><span>Logistics Strategy</span><span>Procurement</span><span>Quality Mgmt</span></div>
+          </div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="timeline-dot"><span>04</span></div>
+          <div class="timeline-content glass-card">
+            <span class="timeline-date">2024</span>
+            <h3>Assistant Stock Manager</h3>
+            <p class="timeline-company">Dr Soma Singha · Homeopathic Clinic</p>
+            <p>Managed inventory of 200+ homeopathic products — ensuring accurate stock tracking, timely replenishment, and zero stockout incidents. This was my first hands-on experience with real inventory management outside the classroom.</p>
+            <div class="tags"><span>Inventory Mgmt</span><span>Stock Tracking</span><span>Replenishment</span></div>
+          </div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="timeline-dot"><span>05</span></div>
+          <div class="timeline-content glass-card">
+            <span class="timeline-date">2021 — 2023</span>
+            <h3>Co-Founder — Janani Ghee 🧈</h3>
+            <p class="timeline-company">Janani Ghee · Entrepreneurial Venture · West Bengal</p>
+            <p>Co-founded and ran a homemade ghee brand from scratch. Managed end-to-end supply chain — sourcing raw materials, coordinating production with 12 housewives, and building a distribution network across 10+ retail outlets and 200+ direct customers. Reduced delivery lead times by 25% through demand forecasting and route optimisation.</p>
+            <div class="tags"><span>Entrepreneurship</span><span>Logistics</span><span>Procurement</span><span>Demand Forecasting</span><span>Distribution</span></div>
+          </div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="timeline-dot"><span>06</span></div>
+          <div class="timeline-content glass-card">
+            <span class="timeline-date">2021 — 2024</span>
+            <h3>BBA — Marketing Management</h3>
+            <p class="timeline-company">Cyber Research &amp; Training Institute, Burdwan · Burdwan University · 75%</p>
+            <p>Bachelor of Business Administration with a focus on Marketing Management. Built foundational knowledge in business strategy, consumer behaviour, market research, brand management, and sales operations — skills that now help me communicate supply chain value clearly to business stakeholders.</p>
+            <div class="tags"><span>Marketing</span><span>Business Strategy</span><span>Consumer Behaviour</span></div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- GALLERY -->
+  <section id="gallery">
+    <div class="container">
+      <div class="section-label">In the Field</div>
+      <h2 class="section-title">Moments</h2>
+      <div class="gallery-grid">
+
+        <div class="gallery-item g-reveal" data-caption="Standing in front of the 8 Pillars of TPM at the Emami Agrotech plant — internship field visit 🏭">
+          <img src="photo2.jpg" alt="Emami Agrotech TPM visit" loading="lazy" />
+          <div class="gallery-overlay">
+            <span>Emami Agrotech — 8 Pillars of TPM</span>
+          </div>
+        </div>
+
+        <div class="gallery-item g-reveal" data-caption="CII LOGISEAST 2025 — Transforming Logistics in Eastern India 🚀 IISWBM batch represents!">
+          <img src="photo_logiseast.jpg" alt="CII LOGISEAST 2025" loading="lazy" />
+          <div class="gallery-overlay">
+            <span>CII LOGISEAST 2025 — Eastern India Logistics Summit</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- CERTIFICATIONS STRIP -->
+  <div class="cert-strip">
+    <div class="cert-strip-inner">
+      <div class="cert-card glass-card clickable" data-modal="cscmp">
+        <div class="cert-icon">🏅</div>
+        <div class="cert-info">
+          <div class="cert-name">CSCMP Global Learning Challenge</div>
+          <div class="cert-sub">Bronze Level · SCPro™ Foundations · Oct 2025</div>
+        </div>
+        <div class="cert-org">CSCMP</div>
+      </div>
+      <div class="cert-card glass-card">
+        <div class="cert-icon">📜</div>
+        <div class="cert-info">
+          <div class="cert-name">Running an Efficient Supply Chain</div>
+          <div class="cert-sub">Supply chain optimisation &amp; sustainability · 2025</div>
+        </div>
+        <div class="cert-org">Nestlé</div>
+      </div>
+      <div class="cert-card glass-card">
+        <div class="cert-icon">🤖</div>
+        <div class="cert-info">
+          <div class="cert-name">AI-Integrated Portfolio Design</div>
+          <div class="cert-sub">Built this portfolio using Claude AI · 2026</div>
+        </div>
+        <div class="cert-org">Claude</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PROJECTS -->
+  <section id="projects">
+    <div class="container">
+      <div class="section-label">What I've Built</div>
+      <h2 class="section-title">Projects</h2>
+      <div class="projects-grid">
+
+        <div class="project-card glass-card clickable" data-modal="copq">
+          <div class="card-shine" aria-hidden="true"></div>
+          <div class="project-number">01</div>
+          <div class="project-header">
+            <span class="project-icon">📦</span>
+            <h3>Emami COPQ Reduction Study</h3>
+          </div>
+          <p>India's first COPQ map for an edible oil network — ₹10.03 cr annual waste quantified across 15 depots. 5,167 SRN lines, SAP data analysis, 14 interventions with ₹4.5–6 cr saving potential.</p>
+          <div class="tags"><span>FMCG</span><span>COPQ</span><span>SAP</span><span>₹10 Cr Impact</span><span>Dissertation</span></div>
+          <div class="card-cta">View Case Study →</div>
+        </div>
+
+        <div class="project-card glass-card clickable" data-modal="expiry">
+          <div class="card-shine" aria-hidden="true"></div>
+          <div class="project-number">02</div>
+          <div class="project-header">
+            <span class="project-icon">📊</span>
+            <h3>Expiry Tracker — Emami Depot</h3>
+          </div>
+          <p>Interactive browser-based expiry tracking tool for depot inventory management with real-time freshness visibility and FEFO alert system.</p>
+          <div class="tags"><span>HTML/JS</span><span>Inventory</span><span>FEFO</span><span>Depot Ops</span></div>
+          <div class="card-cta">Launch Tool →</div>
+        </div>
+
+        <div class="project-card glass-card clickable" data-modal="neometaliks">
+          <div class="card-shine" aria-hidden="true"></div>
+          <div class="project-number">03</div>
+          <div class="project-header">
+            <span class="project-icon">🏭</span>
+            <h3>Neo Metaliks — SCM Role</h3>
+          </div>
+          <p>Management Trainee in SCM at Neo Metaliks — steel manufacturing. Inbound procurement, vendor coordination, logistics tracking, and cost-reduction frameworks.</p>
+          <div class="tags"><span>Steel</span><span>Procurement</span><span>Vendor Mgmt</span><span>Live Role</span></div>
+          <div class="card-cta">View Details →</div>
+        </div>
+
+        <div class="project-card glass-card clickable" data-modal="sama">
+          <div class="card-shine" aria-hidden="true"></div>
+          <div class="project-number">04</div>
+          <div class="project-header">
+            <span class="project-icon">📦</span>
+            <h3>SAMA — SRN Portal</h3>
+          </div>
+          <p>Built a Sales Return & Approval (SRN) portal at Emami Agrotech — digitising the credit note issuance process, cutting approval cycle time and eliminating manual paperwork.</p>
+          <div class="tags"><span>Process Design</span><span>Credit Notes</span><span>Emami</span><span>Digitisation</span></div>
+          <div class="card-cta">View Project →</div>
+        </div>
+
+        <div class="project-card glass-card clickable" data-modal="scmknowledge">
+          <div class="card-shine" aria-hidden="true"></div>
+          <div class="project-number">05</div>
+          <div class="project-header">
+            <span class="project-icon">📋</span>
+            <h3>SCM Knowledge Base</h3>
+          </div>
+          <p>Structured, AI-assisted knowledge base for IISWBM Transportation &amp; Logistics examinations across 8 subjects — shared with batchmates.</p>
+          <div class="tags"><span>Knowledge Mgmt</span><span>SCM Theory</span><span>AI Tools</span></div>
+          <div class="card-cta">View Details →</div>
+        </div>
+
+        <div class="project-card glass-card clickable" data-modal="jananighee">
+          <div class="card-shine" aria-hidden="true"></div>
+          <div class="project-number">06</div>
+          <div class="project-header">
+            <span class="project-icon">🧈</span>
+            <h3>Janani Ghee — Co-Founder</h3>
+          </div>
+          <p>Co-founded a homemade ghee brand — ran procurement, production coordination with 12 housewives, logistics &amp; distribution to 200+ customers.</p>
+          <div class="tags"><span>Entrepreneurship</span><span>SCM</span><span>Distribution</span><span>2021–23</span></div>
+          <div class="card-cta">View Story →</div>
+        </div>
+
+        <div class="project-card glass-card clickable" data-modal="aiportfolio">
+          <div class="card-shine" aria-hidden="true"></div>
+          <div class="project-number">07</div>
+          <div class="project-header">
+            <span class="project-icon">🤖</span>
+            <h3>AI-Integrated Portfolio</h3>
+          </div>
+          <p>Designed and built this entire portfolio using Claude AI — from layout design to custom chatbot, animations, and productivity tools.</p>
+          <div class="tags"><span>Claude AI</span><span>HTML/CSS/JS</span><span>AI Design</span><span>Automation</span></div>
+          <div class="card-cta">View Details →</div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <div class="container">
+      <div class="section-label">Say Hello</div>
+      <h2 class="section-title">Get in Touch</h2>
+      <p class="contact-sub">Open to conversations about supply chain, logistics, and operations roles.</p>
+      <div class="contact-grid">
+        <a href="mailto:ghoshabhijitpr@gmail.com" class="contact-card glass-card">
+          <span class="contact-icon-wrap">✉️</span>
+          <div><span class="contact-label">Email</span><span class="contact-value">ghoshabhijitpr@gmail.com</span></div>
+        </a>
+        <a href="tel:+917864084892" class="contact-card glass-card">
+          <span class="contact-icon-wrap">📱</span>
+          <div><span class="contact-label">Phone</span><span class="contact-value">+91 78640 84892</span></div>
+        </a>
+        <a href="https://www.linkedin.com/in/ghoshabhijitpr/" class="contact-card glass-card" target="_blank" rel="noopener">
+          <span class="contact-icon-wrap">💼</span>
+          <div><span class="contact-label">LinkedIn</span><span class="contact-value">ghoshabhijitpr</span></div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <canvas id="footer-stars" aria-hidden="true"></canvas>
+    <div class="footer-inner">
+      <div class="footer-logo"><img src="photo_passport.jpg" alt="Abhijit Ghosh" /></div>
+      <p class="footer-statement">"Building Leaner, Smarter &amp; Greener Supply Chains."</p>
+      <p>© 2026 Abhijit Ghosh · Management Trainee SCM · Neo Metaliks</p>
+      <p class="footer-sub">BBA Marketing · MBA Transportation &amp; Logistics · IISWBM</p>
+    </div>
+  </footer>
+
+  <!-- ═══════════════ MODALS ═══════════════ -->
+
+  <!-- MBA Modal -->
+  <div class="modal-overlay" id="modal-mba" role="dialog" aria-modal="true" aria-label="MBA Curriculum">
+    <div class="modal-box">
+      <button class="modal-close" aria-label="Close">✕</button>
+      <div class="modal-header">
+        <span class="modal-icon">🎓</span>
+        <div>
+          <h2>MBA — Transportation &amp; Logistics</h2>
+          <p class="modal-sub">IISWBM (Institute of Management Studies) · Kolkata · 2024–2026</p>
+        </div>
+      </div>
+      <div class="modal-body">
+        <div class="sem-grid">
+          <div class="sem-block">
+            <div class="sem-label">Semester I — Foundation</div>
+            <ul>
+              <li>Principles of Management</li>
+              <li>Managerial Economics</li>
+              <li>Quantitative Methods for Management</li>
+              <li>Financial Accounting &amp; Analysis</li>
+              <li>Organisational Behaviour</li>
+              <li>Business Communication</li>
+            </ul>
+          </div>
+          <div class="sem-block">
+            <div class="sem-label">Semester II — Core</div>
+            <ul>
+              <li>Operations Management</li>
+              <li>Supply Chain Management</li>
+              <li>Marketing Management</li>
+              <li>Human Resource Management</li>
+              <li>Management Information Systems</li>
+              <li>Business Statistics &amp; Analytics</li>
+            </ul>
+          </div>
+          <div class="sem-block">
+            <div class="sem-label">Semester III — T&amp;L Specialisation</div>
+            <ul>
+              <li>Logistics &amp; Distribution Management</li>
+              <li>Transportation Management Systems</li>
+              <li>Warehouse &amp; Inventory Management</li>
+              <li>Procurement &amp; Materials Management</li>
+              <li>Quality Management (TQM / Six Sigma)</li>
+              <li>Research Methodology</li>
+            </ul>
+          </div>
+          <div class="sem-block">
+            <div class="sem-label">Semester IV — Advanced</div>
+            <ul>
+              <li>Strategic Supply Chain Management</li>
+              <li>International Logistics &amp; Trade</li>
+              <li>Operations Research &amp; Modelling</li>
+              <li>Multimodal Transport &amp; Port Ops</li>
+              <li>Dissertation / Summer Project</li>
+              <li>Industry Interaction Programme</li>
+            </ul>
+          </div>
+        </div>
+        <div class="modal-note">
+          <span class="gold">Specialisation:</span> Transportation &amp; Logistics &nbsp;·&nbsp;
+          <span class="gold">Institution:</span> IISWBM, Kolkata (Est. 1953) &nbsp;·&nbsp;
+          <span class="gold">Duration:</span> 2024–2026 &nbsp;·&nbsp;
+          <span class="gold">Affiliation:</span> University of Calcutta
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- BBA Modal -->
+  <div class="modal-overlay" id="modal-bba" role="dialog" aria-modal="true" aria-label="BBA Details">
+    <div class="modal-box">
+      <button class="modal-close" aria-label="Close">✕</button>
+      <div class="modal-header">
+        <span class="modal-icon">🏛️</span>
+        <div>
+          <h2>BBA — Marketing</h2>
+          <p class="modal-sub">Cyber Research &amp; Training Institute, Burdwan · Burdwan University · 75% · 2021–2024</p>
+        </div>
+      </div>
+      <div class="modal-body">
+        <div class="detail-section">
+          <h4>📚 Programme Overview</h4>
+          <p>Bachelor of Business Administration with a specialisation in Marketing from the University of Burdwan — one of the oldest universities in West Bengal. The programme built a strong foundation in business fundamentals, consumer psychology, and market strategy.</p>
+        </div>
+        <div class="detail-section">
+          <h4>🎯 Key Subjects</h4>
+          <div class="sem-grid">
+            <div class="sem-block">
+              <div class="sem-label">Core Business</div>
+              <ul>
+                <li>Business Management</li>
+                <li>Principles of Marketing</li>
+                <li>Financial Management</li>
+                <li>Human Resource Management</li>
+                <li>Business Economics</li>
+              </ul>
+            </div>
+            <div class="sem-block">
+              <div class="sem-label">Marketing Electives</div>
+              <ul>
+                <li>Consumer Behaviour</li>
+                <li>Brand Management</li>
+                <li>Market Research Methods</li>
+                <li>Sales &amp; Distribution Management</li>
+                <li>Retail &amp; Supply Chain Basics</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="detail-section">
+          <h4>💡 How It Shapes My Work</h4>
+          <p>My marketing background gives me a rare edge in supply chain — I understand the customer pull side of demand signals, can translate operational metrics into business language, and communicate supply chain value clearly to non-technical stakeholders.</p>
+        </div>
+        <div class="modal-tags">
+          <span>Marketing</span><span>Business Strategy</span><span>Consumer Behaviour</span><span>Burdwan University</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- COPQ Modal -->
+  <div class="modal-overlay" id="modal-copq" role="dialog" aria-modal="true">
+    <div class="modal-box">
+      <button class="modal-close" aria-label="Close">✕</button>
+      <div class="modal-header">
+        <span class="modal-icon">📊</span>
+        <div>
+          <h2>COPQ Reduction — Emami Agrotech</h2>
+          <p class="modal-sub">MBA Dissertation · Haldia Plant (M251) &amp; Dhulagarh CFA (D257) · March–May 2026</p>
+        </div>
+      </div>
+      <div class="modal-body">
+        <div class="detail-section">
+          <h4>📌 Full Title</h4>
+          <p><em>Cost of Poor Quality (COPQ) Reduction in Logistics Operations: A Pan-India Study of Wastages Across the Distribution Network of Emami Agrotech Limited — FY 2025–26</em></p>
+          <p style="margin-top:.5rem">Guide: <strong>Mr. Debanjan Chakravarti</strong>, Manager – CS&amp;L, Emami Agrotech Ltd. | Exam Roll No. 240018</p>
+        </div>
+        <div class="detail-section">
+          <h4>🎯 Problem</h4>
+          <p>On a peak dispatch day at Haldia, 150 trucks arrive — but the ASRS loads only 90. The remaining 60 wait 6–7 hours. That is a daily detention exposure of <strong>₹60,000</strong> sitting on no P&amp;L line. Across the network, 5,167 SRN credit memo lines worth <strong>₹773.38 lakhs</strong> were processed in FY26 — yet no consolidated COPQ framework existed to link root causes to rupee impact.</p>
+        </div>
+        <div class="detail-section">
+          <h4>🔬 Methodology</h4>
+          <ul>
+            <li>6 weeks of direct field observation at Haldia Plant (M251) and Dhulagarh CFA, Kolkata (D257)</li>
+            <li>SAP analysis: 5,167 SRN lines × ₹773.38 lakhs across 15 depots; 9 months of expiry &amp; near-expiry stock data = ₹130.27 lakhs (Aug 2025 – Apr 2026)</li>
+            <li>COPQ framework: Feigenbaum / Juran 4-quadrant model — Prevention, Appraisal, Internal Failure, External Failure costs applied to FMCG logistics for the first time</li>
+            <li>Truck TAT mapping, detention liability modelling, MRP mismatch exposure analysis at ASRS feed station</li>
+          </ul>
+        </div>
+        <div class="detail-section">
+          <h4>📊 Key Findings (Quantified)</h4>
+          <ul>
+            <li><strong>Total quantified COPQ: ₹10.03 crores/year</strong> across the network</li>
+            <li><strong>SRN (Stock Return Notes): ₹773.38 lakhs</strong> — e-commerce channel drives 89.2% (₹690.13 lakhs) due to quick-commerce 180-day shelf-life rule enforcement</li>
+            <li><strong>Kolkata depot (D257): ₹417.87 lakhs</strong> — 54% of all-India SRN; depot SRN rate 1.60% vs best-practice target &lt;0.5%</li>
+            <li><strong>Freshness / expiry losses: ₹168.27 lakhs/year</strong> (full-year estimate)</li>
+            <li><strong>Truck detention liability: ₹1.87 crores/year</strong> — dormant contractual clause; will activate at next transporter renegotiation</li>
+            <li><strong>MRP mismatch at Haldia ASRS: ₹3.12 crores/year</strong> exposure across 3 plants</li>
+            <li>December 2025 SRN spike: ₹120.85 lakhs — 2.6× non-festive monthly average</li>
+          </ul>
+        </div>
+        <div class="detail-section">
+          <h4>✅ Recommendations (14 Interventions)</h4>
+          <ul>
+            <li>9 of 14 interventions carry <strong>zero implementation cost</strong></li>
+            <li>Move labour station down FFS conveyor (8 ft → 20–25 ft) — allows seal to harden before handling; cost ₹0</li>
+            <li>FEFO mandatory enforcement + batch shelf-life check before every dispatch — targets ₹168L expiry loss</li>
+            <li>Smart sensor installation for depot lighting &amp; AC — ₹4.20 lakhs/year electricity saving</li>
+            <li>BOPT (Battery-Operated Pallet Truck) upgrade — 3-year ROI model built; ₹74.97L/year labour saving potential</li>
+            <li>Anti-bird net + tarpaulin covers at depot — eliminates pigeon damage and rain infiltration</li>
+            <li>Pre-dispatch MRP verification checklist to eliminate ₹3.12 crore ASRS mismatch exposure</li>
+          </ul>
+          <p style="margin-top:.75rem"><strong>First-year saving potential: ₹4.5–6.0 crores</strong></p>
+        </div>
+        <div class="detail-section">
+          <h4>🏆 Significance</h4>
+          <p>This study builds the <strong>first formally documented COPQ map for an Indian edible oil distribution network</strong> — a replicable framework for the CS&amp;L function to track and reduce wastage systematically in FY27. Pan-India net sales base: ₹2,266.68 crores (FY26); Haldia billings: ₹797.74 crores.</p>
+        </div>
+        <div class="modal-tags">
+          <span>COPQ</span><span>SAP Data Analysis</span><span>FMCG Logistics</span><span>SRN</span><span>Detention Analysis</span><span>Edible Oil</span><span>Haldia Plant</span><span>MBA Dissertation</span><span>FY 2025-26</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Expiry Tracker Modal -->
+  <div class="modal-overlay" id="modal-expiry" role="dialog" aria-modal="true">
+    <div class="modal-box">
+      <button class="modal-close" aria-label="Close">✕</button>
+      <div class="modal-header">
+        <span class="modal-icon">📊</span>
+        <div>
+          <h2>Expiry Tracker — Emami Depot</h2>
+          <p class="modal-sub">Interactive Inventory Freshness Tool · HTML/JS · 2025</p>
+        </div>
+      </div>
+      <div class="modal-body">
+        <div class="detail-section">
+          <h4>🎯 Problem It Solves</h4>
+          <p>Depot managers had no real-time visibility of stock nearing expiry. Products were either written off at the last minute or dispatched to distributors with dangerously low shelf life — causing complaints, returns, and losses.</p>
+        </div>
+        <div class="detail-section">
+          <h4>⚙️ What It Does</h4>
+          <ul>
+            <li>Tracks batch-wise stock with manufacturing date, expiry date, and quantity</li>
+            <li>Auto-calculates remaining shelf life and colour-codes by risk (🔴 Critical / 🟡 Warning / 🟢 Fresh)</li>
+            <li>Highlights FEFO violations — when newer stock is being picked before older batches</li>
+            <li>Generates exportable alerts for depot managers</li>
+            <li>Zero dependency — runs fully in browser, no server needed</li>
+          </ul>
+        </div>
+        <div class="detail-section">
+          <h4>🛠 Built With</h4>
+          <div class="modal-tags" style="margin-top:.5rem">
+            <span>HTML5</span><span>CSS3</span><span>Vanilla JS</span><span>Local Storage</span>
+          </div>
+        </div>
+        <div class="modal-launch">
+          <a href="expiry_tracker.html" target="_blank" class="btn-gold" style="display:inline-flex;align-items:center;gap:.5rem">
+            🚀 Launch Expiry Tracker
+          </a>
+          <p class="launch-note">Opens the live tool in a new tab</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Neo Metaliks Modal -->
+  <div class="modal-overlay" id="modal-neometaliks" role="dialog" aria-modal="true">
+    <div class="modal-box">
+      <button class="modal-close" aria-label="Close">✕</button>
+      <div class="modal-header">
+        <span class="modal-icon">🏭</span>
+        <div>
+          <h2>Neo Metaliks — Management Trainee SCM</h2>
+          <p class="modal-sub">Neo Metaliks Limited · Siltara, Raipur · 2025–Present</p>
+        </div>
+      </div>
+      <div class="modal-body">
+        <div class="detail-section">
+          <h4>🏢 About Neo Metaliks Limited</h4>
+          <p>Neo Metaliks Limited is a growing integrated steel manufacturer headquartered in Raipur, Chhattisgarh, with operations focused on producing <strong>TMT (Thermo Mechanically Treated) bars</strong> and <strong>wire rods</strong> — key inputs to India's construction and infrastructure sectors. The company operates an induction furnace-based steel melt shop and rolling mill, processing primary raw materials including sponge iron (DRI), mild steel scrap, and ferro-alloys. Neo Metaliks serves a regional customer base spanning builders, real estate developers, and infrastructure contractors, with distribution across central and eastern India.</p>
+          <p style="margin-top:.75rem">As part of India's fragmented secondary steel sector, Neo Metaliks competes on cost-efficiency, product quality (IS 1786 Fe-500D grade TMT), and service reliability — all areas where SCM plays a critical role.</p>
+        </div>
+        <div class="detail-section">
+          <h4>⚙️ Operations &amp; Supply Chain Context</h4>
+          <ul>
+            <li><strong>Raw materials:</strong> Sponge iron (DRI) from regional producers, MS scrap from local aggregators, ferro-alloys (ferro-manganese, silico-manganese) for grade control</li>
+            <li><strong>Production:</strong> Induction furnace → continuous casting (billets) → rolling mill (TMT bars &amp; wire rods)</li>
+            <li><strong>Logistics:</strong> Road-dominant inbound and outbound; coordination with fleet operators, weighbridges, and state-permit systems</li>
+            <li><strong>Inventory pressure:</strong> Just-in-time raw material availability is critical — sponge iron and scrap prices are volatile, requiring active procurement scheduling</li>
+          </ul>
+        </div>
+        <div class="detail-section">
+          <h4>🔧 My Role &amp; Responsibilities</h4>
+          <ul>
+            <li>Manage inbound raw material procurement scheduling — sponge iron, MS scrap, ferro-alloys</li>
+            <li>Track vendor lead times, delivery performance, and payment terms across the supplier base</li>
+            <li>Monitor inbound freight routes and flag cost-reduction opportunities in transportation</li>
+            <li>Build weekly SCM performance dashboards for management review — inventory turns, vendor fill rates, freight cost per tonne</li>
+            <li>Support vendor benchmarking exercises and supplier performance evaluation (SPI)</li>
+            <li>Coordinate with production planning to align raw material availability with rolling schedules</li>
+            <li>Apply MBA learnings in Transportation &amp; Logistics directly in live operations</li>
+          </ul>
+        </div>
+        <div class="detail-section">
+          <h4>📌 Key Contributions</h4>
+          <ul>
+            <li>Initiated a Supplier Performance Index (SPI) framework to bring structured evaluation into vendor management</li>
+            <li>Identified vendor consolidation opportunities to reduce procurement fragmentation and administrative overhead</li>
+            <li>Flagged freight savings opportunities through lane-wise cost analysis and alternative route benchmarking</li>
+            <li>Introduced AI-assisted reporting tools (Excel + Claude) to speed up weekly MIS report generation</li>
+          </ul>
+        </div>
+        <div class="modal-tags">
+          <span>Steel Manufacturing</span><span>TMT Bars</span><span>Inbound Procurement</span><span>Vendor Management</span><span>Logistics</span><span>DRI / Scrap</span><span>Management Trainee</span><span>Live Role</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SAMA SRN Portal Modal -->
+  <div class="modal-overlay" id="modal-sama" role="dialog" aria-modal="true">
+    <div class="modal-box">
+      <button class="modal-close" aria-label="Close">✕</button>
+      <div class="modal-header">
+        <span class="modal-icon">📦</span>
+        <div>
+          <h2>SAMA — Sales Return &amp; Approval Portal</h2>
+          <p class="modal-sub">Emami Agrotech Limited · MBA Internship Project · March–May 2026</p>
+        </div>
+      </div>
+      <div style="padding:0 2rem 1.25rem;border-bottom:1px solid rgba(245,182,66,.12);">
+        <a href="sama.html" target="_blank" class="btn-gold" style="display:inline-flex;align-items:center;gap:.6rem;text-decoration:none;padding:.7rem 1.6rem;border-radius:8px;font-weight:700;font-size:.95rem;">
+          🚀 Launch SAMA Portal
+        </a>
+      </div>
+      <div class="modal-body">
+        <div class="detail-section">
+          <h4>🧩 Problem Statement</h4>
+          <p>During the COPQ internship, SAP data revealed that <strong>5,167 Stock Return Notes (SRNs)</strong> worth <strong>₹773.38 lakhs</strong> were processed across Emami Agrotech's 15 depots in FY 2025–26 — with the Kolkata depot alone contributing ₹417.87 lakhs (54% of all-India SRN). The root cause was not just product quality — it was the absence of a structured, traceable return and credit note approval system. Returns were being initiated and approved through informal channels (WhatsApp, phone calls), credit notes were issued inconsistently, and there was no audit trail linking the return reason to the credit amount.</p>
+        </div>
+        <div class="detail-section">
+          <h4>💡 Solution — SAMA Portal</h4>
+          <p><strong>SAMA</strong> (Sales Approval &amp; Management Application) is a structured SRN portal designed to digitise the end-to-end sales return and credit note issuance workflow. The portal maps the approval hierarchy, enforces stage-gate controls, and generates credit notes automatically upon approval.</p>
+          <ul>
+            <li>Sales representative submits SRN request with product details, return quantity, reason code, and distributor info</li>
+            <li>System routes the request to the Area Sales Manager → Regional Manager → Accounts team in sequence</li>
+            <li>Each approver gets a digital notification; rejections require documented reasons</li>
+            <li>Upon full approval, a credit note is auto-generated with reference number, amount, and GST details</li>
+            <li>Dashboard view for management: pending SRNs, approval TAT, rejection reasons, and credit note ledger</li>
+          </ul>
+        </div>
+        <div class="detail-section">
+          <h4>📊 Impact &amp; Outcomes</h4>
+          <ul>
+            <li>Reduced SRN approval cycle time significantly by eliminating physical routing</li>
+            <li>Eliminated credit note disputes — every CN tied to a documented, approved SRN</li>
+            <li>Created an audit trail for all returns — traceable by product, region, sales rep, and reason code</li>
+            <li>Improved distributor trust and satisfaction by providing real-time status visibility on return requests</li>
+          </ul>
+        </div>
+        <div class="detail-section">
+          <h4>🛠️ My Role</h4>
+          <p>Designed the process flow, mapped the approval hierarchy, defined data fields for each stage, and built the portal using AI-assisted design tools. Presented the solution to the supply chain and sales operations team at Emami Agrotech during the internship.</p>
+          <div style="margin-top:1.25rem">
+            <a href="sama.html" target="_blank" class="btn-gold" style="display:inline-flex;align-items:center;gap:.5rem;text-decoration:none;padding:.65rem 1.4rem;border-radius:8px;font-weight:600;font-size:.9rem">
+              🚀 Launch SAMA Portal
+            </a>
+          </div>
+        </div>
+        <div class="modal-tags">
+          <span>Process Design</span><span>Sales Returns</span><span>Credit Notes</span><span>Digitisation</span><span>Emami Agrotech</span><span>Approval Workflow</span><span>SRN Portal</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SCM Knowledge Base Modal -->
+  <div class="modal-overlay" id="modal-scmknowledge" role="dialog" aria-modal="true">
+    <div class="modal-box">
+      <button class="modal-close" aria-label="Close">✕</button>
+      <div class="modal-header">
+        <span class="modal-icon">📋</span>
+        <div>
+          <h2>SCM Knowledge Base</h2>
+          <p class="modal-sub">AI-Assisted Academic Resource · IISWBM T&amp;L Programme</p>
+        </div>
+      </div>
+      <div class="modal-body">
+        <div class="detail-section">
+          <h4>📚 What It Covers</h4>
+          <div class="sem-grid">
+            <div class="sem-block">
+              <div class="sem-label">Quantitative Subjects</div>
+              <ul>
+                <li>Operations Research (LP, Transportation, Assignment)</li>
+                <li>Demand Forecasting Models</li>
+                <li>Inventory Optimisation (EOQ, Safety Stock)</li>
+                <li>Network Design Problems</li>
+              </ul>
+            </div>
+            <div class="sem-block">
+              <div class="sem-label">Strategic Subjects</div>
+              <ul>
+                <li>SCM Strategy &amp; Competitive Advantage</li>
+                <li>Procurement &amp; Sourcing Strategy</li>
+                <li>Global Logistics &amp; Trade</li>
+                <li>Quality Management (TQM, Six Sigma)</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="detail-section">
+          <h4>🤖 AI-Assisted Approach</h4>
+          <p>Used Claude AI to synthesise lecture notes, reference books, and past papers into a structured, searchable knowledge base. Each topic includes: concept summary → formula sheet → case framework → practice questions.</p>
+        </div>
+        <div class="modal-tags">
+          <span>Operations Research</span><span>SCM Theory</span><span>AI Tools</span><span>Academic</span><span>Claude AI</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CSCMP Modal -->
+  <div class="modal-overlay" id="modal-cscmp" role="dialog" aria-modal="true">
+    <div class="modal-box">
+      <button class="modal-close" aria-label="Close">✕</button>
+      <div class="modal-header">
+        <span class="modal-icon">🏅</span>
+        <div>
+          <h2>CSCMP Global Learning Challenge — Bronze</h2>
+          <p class="modal-sub">Council of Supply Chain Management Professionals · October 18, 2025</p>
+        </div>
+      </div>
+      <div class="modal-body">
+        <div class="detail-section">
+          <h4>🏆 Achievement</h4>
+          <p>Abhijit was awarded the <span class="gold">Bronze Level Certificate of Achievement</span> in the 2025 CSCMP Global Learning Challenge — in recognition of outstanding commitment to professional development and global supply chain excellence.</p>
+        </div>
+        <div class="detail-section">
+          <h4>📋 How It Was Earned</h4>
+          <p>The Bronze Level requirements were satisfied through completion of prescribed courses and assessments for the <span class="gold">CSCMP SCPro™ Foundations Professional Certificate</span> on LinkedIn Learning — covering supply chain fundamentals, logistics management, and operational strategy.</p>
+        </div>
+        <div class="detail-section">
+          <h4>🌐 About CSCMP</h4>
+          <p>The Council of Supply Chain Management Professionals (CSCMP) is the world's leading professional association dedicated to the supply chain management profession, with members across 62 countries. The SCPro™ certification is a globally recognised credential in supply chain excellence.</p>
+        </div>
+        <div class="modal-note">
+          <span class="gold">Signed by:</span> Mark Baxa, President &amp; CEO, CSCMP &nbsp;·&nbsp;
+          <span class="gold">Date:</span> October 18, 2025 &nbsp;·&nbsp;
+          <span class="gold">Level:</span> Bronze — SCPro™ Foundations
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Janani Ghee Modal -->
+  <div class="modal-overlay" id="modal-jananighee" role="dialog" aria-modal="true">
+    <div class="modal-box">
+      <button class="modal-close" aria-label="Close">✕</button>
+      <div class="modal-header">
+        <span class="modal-icon">🧈</span>
+        <div>
+          <h2>Janani Ghee — Co-Founder</h2>
+          <p class="modal-sub">Entrepreneurial Venture · West Bengal · 2021–2023</p>
+        </div>
+      </div>
+      <div class="modal-body">
+        <div class="detail-section">
+          <h4>💡 The Idea</h4>
+          <p>Co-founded Janani Ghee — a homemade ghee brand built around quality, trust, and community. The brand was rooted in the idea of empowering local housewives while delivering pure, authentic ghee directly to customers and retail outlets.</p>
+        </div>
+        <div class="detail-section">
+          <h4>⚙️ What I Ran</h4>
+          <ul>
+            <li>Coordinated production with <span class="gold">12 housewives</span> — quality checks, batch scheduling, and output consistency</li>
+            <li>Managed <span class="gold">end-to-end procurement</span> of raw materials (milk, equipment, packaging)</li>
+            <li>Built a distribution network across <span class="gold">10+ retail outlets</span> in West Bengal</li>
+            <li>Grew to <span class="gold">200+ direct customers</span> through word-of-mouth and local marketing</li>
+            <li>Implemented demand forecasting and route planning — reduced delivery lead times by <span class="gold">25%</span></li>
+            <li>Handled inventory management, cost control, and pricing strategy</li>
+          </ul>
+        </div>
+        <div class="detail-section">
+          <h4>📌 Key Learnings</h4>
+          <p>Janani Ghee was my real-world supply chain MBA — before the actual MBA. It taught me that supply chain isn't just theory: it's about people, trust, and execution on the ground. Every concept I study now, I've seen play out in that small operation.</p>
+        </div>
+        <div class="modal-tags">
+          <span>Entrepreneurship</span><span>Procurement</span><span>Distribution</span><span>Demand Forecasting</span><span>Inventory Mgmt</span><span>Cost Control</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- AI Portfolio Modal -->
+  <div class="modal-overlay" id="modal-aiportfolio" role="dialog" aria-modal="true">
+    <div class="modal-box">
+      <button class="modal-close" aria-label="Close">✕</button>
+      <div class="modal-header">
+        <span class="modal-icon">🤖</span>
+        <div>
+          <h2>AI-Integrated Portfolio</h2>
+          <p class="modal-sub">Built with Claude AI · HTML/CSS/JS · 2026</p>
+        </div>
+      </div>
+      <div class="modal-body">
+        <div class="detail-section">
+          <h4>💡 What This Is</h4>
+          <p>This entire portfolio website was designed and built by Abhijit using <span class="gold">Claude AI</span> as a creative and technical collaborator — from the initial layout concept through to animations, the chatbot, and the expiry tracker tool. Zero prior web dev experience required.</p>
+        </div>
+        <div class="detail-section">
+          <h4>🛠 What Was AI-Generated</h4>
+          <ul>
+            <li>Full layout architecture and visual design (dark navy + gold theme)</li>
+            <li>GSAP + Lenis animation system — scroll reveals, parallax, 3D tilt</li>
+            <li>Particle network canvas with mouse attraction</li>
+            <li>This chatbot — knowledge base, UI, and conversation logic</li>
+            <li>Expiry Tracker inventory tool for Emami depot ops</li>
+            <li>Modal system for all project and education cards</li>
+          </ul>
+        </div>
+        <div class="detail-section">
+          <h4>🧠 What This Demonstrates</h4>
+          <p>Abhijit's ability to <span class="gold">integrate AI into real workflows</span> — not just use AI as a search engine, but as a genuine productivity multiplier. He can brief AI tools with precision, iterate rapidly, and ship working products. This is his approach to supply chain work too: identify the tool, use it well, deliver results.</p>
+        </div>
+        <div class="modal-tags">
+          <span>Claude AI</span><span>HTML/CSS/JS</span><span>GSAP</span><span>AI Design</span><span>Productivity</span><span>No-Code Adjacent</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- LIGHTBOX -->
+  <div class="gallery-lightbox" id="gallery-lightbox" role="dialog" aria-modal="true">
+    <button class="lightbox-close" id="lightbox-close" aria-label="Close">✕</button>
+    <img id="lightbox-img" src="" alt="" />
+    <div class="lightbox-caption" id="lightbox-caption"></div>
+  </div>
+
+  <!-- ═══════════════ CHATBOT ═══════════════ -->
+  <div id="chatbot-widget">
+    <button id="chatbot-toggle" aria-label="Chat with Abhi's AI assistant">
+      <div class="bot-avatar">
+        <!-- Teenage boy with butterfly SVG -->
+        <svg viewBox="0 0 80 90" xmlns="http://www.w3.org/2000/svg" width="48" height="54">
+          <!-- Body -->
+          <rect x="22" y="52" width="36" height="28" rx="8" fill="#2a4a7a"/>
+          <!-- Neck -->
+          <rect x="34" y="47" width="12" height="8" rx="4" fill="#f5c09a"/>
+          <!-- Head -->
+          <ellipse cx="40" cy="36" rx="18" ry="20" fill="#f5c09a"/>
+          <!-- Hair -->
+          <ellipse cx="40" cy="18" rx="19" ry="10" fill="#3a2410"/>
+          <ellipse cx="24" cy="26" rx="7" ry="12" fill="#3a2410"/>
+          <ellipse cx="56" cy="26" rx="7" ry="12" fill="#3a2410"/>
+          <!-- Eyes -->
+          <ellipse cx="33" cy="36" rx="3.5" ry="4" fill="white"/>
+          <ellipse cx="47" cy="36" rx="3.5" ry="4" fill="white"/>
+          <circle cx="34" cy="37" r="2" fill="#1a1a2e"/>
+          <circle cx="48" cy="37" r="2" fill="#1a1a2e"/>
+          <circle cx="34.8" cy="36.2" r=".7" fill="white"/>
+          <circle cx="48.8" cy="36.2" r=".7" fill="white"/>
+          <!-- Smile -->
+          <path d="M34 44 Q40 49 46 44" stroke="#c0765a" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+          <!-- Butterfly on head -->
+          <!-- Left wings -->
+          <ellipse cx="28" cy="10" rx="10" ry="7" fill="#f5b642" opacity="0.9" transform="rotate(-20 28 10)"/>
+          <ellipse cx="24" cy="16" rx="7" ry="5" fill="#f5b642" opacity="0.7" transform="rotate(-30 24 16)"/>
+          <!-- Right wings -->
+          <ellipse cx="52" cy="10" rx="10" ry="7" fill="#f5b642" opacity="0.9" transform="rotate(20 52 10)"/>
+          <ellipse cx="56" cy="16" rx="7" ry="5" fill="#f5b642" opacity="0.7" transform="rotate(30 56 16)"/>
+          <!-- Butterfly body -->
+          <ellipse cx="40" cy="13" rx="2" ry="6" fill="#3a2410"/>
+          <!-- Antennae -->
+          <line x1="39" y1="8" x2="33" y2="2" stroke="#3a2410" stroke-width="1"/>
+          <circle cx="33" cy="2" r="1.5" fill="#f5b642"/>
+          <line x1="41" y1="8" x2="47" y2="2" stroke="#3a2410" stroke-width="1"/>
+          <circle cx="47" cy="2" r="1.5" fill="#f5b642"/>
+          <!-- Shirt collar -->
+          <path d="M30 52 L40 58 L50 52" stroke="white" stroke-width="1.5" fill="none"/>
+        </svg>
+      </div>
+      <div class="chatbot-ping"></div>
+    </button>
+
+    <div id="chatbot-window" role="dialog" aria-label="Chat with Abhi's assistant">
+      <div class="chatbot-header">
+        <div class="chatbot-header-avatar">
+          <svg viewBox="0 0 80 90" xmlns="http://www.w3.org/2000/svg" width="36" height="40">
+            <rect x="22" y="52" width="36" height="28" rx="8" fill="#2a4a7a"/>
+            <rect x="34" y="47" width="12" height="8" rx="4" fill="#f5c09a"/>
+            <ellipse cx="40" cy="36" rx="18" ry="20" fill="#f5c09a"/>
+            <ellipse cx="40" cy="18" rx="19" ry="10" fill="#3a2410"/>
+            <ellipse cx="24" cy="26" rx="7" ry="12" fill="#3a2410"/>
+            <ellipse cx="56" cy="26" rx="7" ry="12" fill="#3a2410"/>
+            <ellipse cx="33" cy="36" rx="3.5" ry="4" fill="white"/>
+            <ellipse cx="47" cy="36" rx="3.5" ry="4" fill="white"/>
+            <circle cx="34" cy="37" r="2" fill="#1a1a2e"/>
+            <circle cx="48" cy="37" r="2" fill="#1a1a2e"/>
+            <path d="M34 44 Q40 49 46 44" stroke="#c0765a" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+            <ellipse cx="28" cy="10" rx="10" ry="7" fill="#f5b642" opacity="0.9" transform="rotate(-20 28 10)"/>
+            <ellipse cx="24" cy="16" rx="7" ry="5" fill="#f5b642" opacity="0.7" transform="rotate(-30 24 16)"/>
+            <ellipse cx="52" cy="10" rx="10" ry="7" fill="#f5b642" opacity="0.9" transform="rotate(20 52 10)"/>
+            <ellipse cx="56" cy="16" rx="7" ry="5" fill="#f5b642" opacity="0.7" transform="rotate(30 56 16)"/>
+            <ellipse cx="40" cy="13" rx="2" ry="6" fill="#3a2410"/>
+          </svg>
+        </div>
+        <div>
+          <div class="chatbot-name">Ask Abhi's Assistant</div>
+          <div class="chatbot-status"><span class="chatbot-online"></span> Online</div>
+        </div>
+        <button id="chatbot-close" aria-label="Close chat">✕</button>
+      </div>
+      <div class="chatbot-messages" id="chatbot-messages">
+        <div class="chat-msg bot">
+          <span>Hey there! 👋 I'm Abhi's little assistant. Ask me anything about Abhijit — his education, work experience, skills, or projects!</span>
+        </div>
+        <div class="chatbot-suggestions">
+          <button class="suggestion-chip" data-q="Who is Abhijit?">Who is Abhijit?</button>
+          <button class="suggestion-chip" data-q="Where does he work?">Where does he work?</button>
+          <button class="suggestion-chip" data-q="What is his education?">His education?</button>
+          <button class="suggestion-chip" data-q="What projects has he done?">His projects?</button>
+        </div>
+      </div>
+      <div class="chatbot-input-row">
+        <input type="text" id="chatbot-input" placeholder="Ask me about Abhijit…" autocomplete="off" />
+        <button id="chatbot-send" aria-label="Send">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script src="main.js"></script>
+</body>
+</html>

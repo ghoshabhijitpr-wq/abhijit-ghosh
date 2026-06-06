@@ -1,0 +1,2630 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Emami Agrotech | Healthy &amp; Tasty · SAMA</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&family=JetBrains+Mono:wght@400;500&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1"></script>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --p:#0B8457;--p-l:#0fa368;--p-d:#07613e;--p-pale:#E6F4EA;--p-mid:#b2dfc0;
+  --amber:#D97706;--red:#DC2626;--blue:#2563EB;--indigo:#6366f1;
+  --bg:#F9FAFB;--surface:#FFFFFF;--surface2:#f3f7f4;--surface3:#eaf2ed;
+  --border:#E5E7EB;--border2:#d4e4da;--text:#111827;--text2:#374151;--muted:#6B7280;--faint:#9CA3AF;
+  --radius:12px;--radius-sm:8px;--radius-xs:6px;
+  --shadow:0 1px 3px rgba(0,0,0,.06),0 4px 16px rgba(0,0,0,.04);
+  --shadow-md:0 4px 20px rgba(0,0,0,.1);--shadow-lg:0 20px 60px rgba(0,0,0,.18);
+  --sidebar-w:220px;--topbar-h:56px;
+  --glass:rgba(255,255,255,.72);
+  --glass-border:rgba(255,255,255,.5);
+  --bg-surface:rgba(255,255,245,.92);
+  --text-primary:#1e2a1f;
+}
+.dark-mode{--bg-surface:rgba(10,20,12,.92);--text-primary:#fef3d6}
+html,body{height:100%;overflow:hidden}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);font-size:14px;line-height:1.5;-webkit-font-smoothing:antialiased}
+.hidden{display:none!important}
+/* ─── LOADER ─────────────────────────────────────── */
+#loader{position:fixed;inset:0;background:#fff;display:flex;align-items:center;justify-content:center;z-index:9999;flex-direction:column;gap:16px;transition:opacity .4s,visibility .4s}
+#loader.gone{opacity:0;visibility:hidden}
+.loader-logo{width:52px;height:52px;background:var(--p);border-radius:14px;display:flex;align-items:center;justify-content:center;animation:loaderPulse 1.2s ease infinite}
+@keyframes loaderPulse{0%,100%{transform:scale(1);box-shadow:0 0 0 0 rgba(11,132,87,.4)}50%{transform:scale(1.06);box-shadow:0 0 0 12px rgba(11,132,87,0)}}
+.loader-text{font-size:13px;color:var(--muted);font-weight:500;letter-spacing:.3px}
+.loader-bar{width:140px;height:3px;background:var(--p-pale);border-radius:4px;overflow:hidden}
+.loader-bar-fill{height:100%;background:var(--p);border-radius:4px;animation:loadBar 1.4s ease-in-out infinite}
+@keyframes loadBar{0%{width:0;margin-left:0}60%{width:80%;margin-left:0}100%{width:0;margin-left:140px}}
+
+/* ─── LANDING / LOGIN ────────────────────────────── */
+#loginPage{position:fixed;inset:0;z-index:100;overflow-y:auto;overflow-x:hidden;background:#fefaf5;color:#1c2e1f;font-family:'Plus Jakarta Sans','Inter',sans-serif;scroll-behavior:smooth}
+#loginPage::-webkit-scrollbar{width:7px}
+#loginPage::-webkit-scrollbar-track{background:#e8ede5;border-radius:10px}
+#loginPage::-webkit-scrollbar-thumb{background:#2b5e3b;border-radius:10px}
+@keyframes fadeUp{0%{opacity:0;transform:translateY(40px)}100%{opacity:1;transform:translateY(0)}}
+@keyframes slideLeft{0%{opacity:0;transform:translateX(-50px)}100%{opacity:1;transform:translateX(0)}}
+@keyframes slideRight{0%{opacity:0;transform:translateX(50px)}100%{opacity:1;transform:translateX(0)}}
+@keyframes marqueeScroll{0%{transform:translateX(100%)}100%{transform:translateX(-100%)}}
+@keyframes floatGlow{0%{transform:translateY(0) scale(1);opacity:.8}100%{transform:translateY(-12px) scale(1.02);opacity:1}}
+@keyframes pulseGlow{0%{box-shadow:0 0 0 0 rgba(43,94,59,.2)}70%{box-shadow:0 0 0 12px rgba(43,94,59,0)}100%{box-shadow:0 0 0 0 rgba(43,94,59,0)}}
+@keyframes loginEntry{from{opacity:0;transform:translateY(28px) scale(.97)}to{opacity:1;transform:translateY(0) scale(1)}}
+@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+#loginPage .reveal{opacity:0;transform:translateY(40px);transition:opacity .8s ease,transform .8s ease}
+#loginPage .reveal.active{opacity:1;transform:translateY(0)}
+#loginPage .landing-navbar{position:fixed;top:0;left:0;width:100%;background:rgba(255,255,245,.96);backdrop-filter:blur(12px);z-index:5;padding:.8rem 6%;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid rgba(43,94,59,.12);transition:all .2s}
+#loginPage .landing-logo{display:flex;align-items:center;gap:12px}
+#loginPage .landing-logo-icon{background:linear-gradient(135deg,#1f4a2c,#2b5e3b);width:44px;height:44px;border-radius:16px;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:1.3rem;color:#fff;box-shadow:0 8px 20px rgba(43,94,59,.25);transition:transform .2s}
+#loginPage .landing-logo-icon:hover{transform:scale(1.03)}
+#loginPage .landing-logo-text{font-size:1.6rem;font-weight:800;letter-spacing:0;background:linear-gradient(120deg,#1f4a2c,#3c7a53);-webkit-background-clip:text;background-clip:text;color:transparent}
+#loginPage .landing-nav-links{display:flex;gap:2.2rem;align-items:center}
+#loginPage .landing-nav-links a{text-decoration:none;font-weight:600;color:#2c3e2a;transition:.2s;font-size:.95rem}
+#loginPage .landing-nav-links a:hover{color:#2b5e3b}
+#loginPage .landing-login-link{background:#2b5e3b;color:#fff!important;padding:8px 24px;border-radius:40px;box-shadow:0 4px 12px rgba(43,94,59,.2)}
+#loginPage .landing-login-link:hover{background:#1e452a;transform:translateY(-2px);box-shadow:0 10px 20px rgba(43,94,59,.3)}
+#loginPage .landing-hero{min-height:100vh;background:radial-gradient(circle at 90% 20%,rgba(220,240,210,.4) 0%,#fefaf5 70%);display:flex;align-items:center;justify-content:space-between;padding:8rem 8% 5rem;gap:3rem;flex-wrap:wrap;position:relative;overflow:hidden}
+#loginPage .landing-hero::before{content:"";position:absolute;width:500px;height:500px;background:radial-gradient(circle,rgba(43,94,59,.08) 0%,transparent 70%);bottom:-100px;left:-150px;border-radius:50%;pointer-events:none}
+#loginPage .hero-content{flex:1.2;z-index:2;animation:fadeUp .8s cubic-bezier(.2,.9,.4,1.1) forwards}
+#loginPage .hero-badge{background:rgba(43,94,59,.12);display:inline-block;padding:5px 18px;border-radius:40px;font-size:.8rem;font-weight:600;color:#2b5e3b;margin-bottom:1.5rem;backdrop-filter:blur(4px)}
+#loginPage .hero-content h1{font-size:3.7rem;line-height:1.2;font-weight:800;letter-spacing:0;margin-bottom:1.2rem;color:#1c2e1f}
+#loginPage .hero-highlight{background:linear-gradient(120deg,#2b5e3b,#4c8b5e);background-clip:text;-webkit-background-clip:text;color:transparent}
+#loginPage .hero-description{font-size:1.1rem;color:#4a5c48;margin-bottom:2rem;line-height:1.5;max-width:520px}
+#loginPage .hero-buttons{display:flex;gap:1rem;flex-wrap:wrap}
+#loginPage .landing-btn-primary,#loginPage .landing-btn-outline{border-radius:50px;font-weight:700;cursor:pointer;transition:all .2s;font-family:'Plus Jakarta Sans','Inter',sans-serif;font-size:1rem}
+#loginPage .landing-btn-primary{background:#2b5e3b;border:none;padding:12px 34px;color:#fff;box-shadow:0 8px 20px rgba(43,94,59,.25)}
+#loginPage .landing-btn-primary:hover{background:#1e452a;transform:translateY(-3px);box-shadow:0 15px 30px rgba(43,94,59,.35)}
+#loginPage .landing-btn-outline{background:transparent;border:2px solid #2b5e3b;padding:10px 32px;color:#2b5e3b}
+#loginPage .landing-btn-outline:hover{background:#2b5e3b10;transform:translateY(-2px)}
+#loginPage .hero-visual{flex:1;display:flex;justify-content:center;position:relative}
+#loginPage .floating-image,#loginPage .floating-bottle{width:100%;max-width:480px;border-radius:42px;animation:floatGlow 3.5s infinite alternate ease-in-out;filter:drop-shadow(0 30px 25px rgba(0,0,0,.12))}
+#loginPage .marquee-section{background:#1c2e1f;color:#fef4e2;padding:1rem 0;overflow:hidden;white-space:nowrap;border-top:1px solid rgba(255,255,210,.15);border-bottom:1px solid rgba(255,255,210,.15)}
+#loginPage .marquee-content{display:inline-block;animation:marqueeScroll 50s linear infinite;font-size:1.05rem;font-weight:500;letter-spacing:0}
+#loginPage .marquee-content span{margin:0 2rem}
+#loginPage .marquee-content i{font-style:normal;background:rgba(255,245,200,.2);padding:4px 14px;border-radius:40px;margin:0 10px}
+#loginPage .product-showcase{padding:5rem 6%;background:#fefaf5}
+#loginPage .section-header{text-align:center;margin-bottom:3.5rem}
+#loginPage .section-header h2,#loginPage .section-header h3{font-size:2.4rem;font-weight:700;margin-bottom:.5rem}
+#loginPage .section-header p{color:#666;font-size:1rem}
+#loginPage .products-grid{display:flex;flex-wrap:wrap;justify-content:center;gap:2rem}
+#loginPage .product-card{background:#fff;border-radius:36px;padding:2rem 1.5rem;text-align:center;width:240px;transition:all .3s cubic-bezier(.2,.9,.4,1.1);cursor:pointer;box-shadow:0 8px 20px rgba(0,0,0,.02);border:1px solid #eef0e5}
+#loginPage .product-card:hover{transform:translateY(-12px) scale(1.02);box-shadow:0 25px 35px -10px rgba(0,32,0,.2);border-color:#b8d5c4}
+#loginPage .product-img{width:130px;height:130px;object-fit:contain;margin-bottom:1rem;transition:transform .2s}
+#loginPage .product-card:hover .product-img{transform:scale(1.04)}
+#loginPage .product-card h4{font-size:1.2rem;margin-bottom:.5rem}
+#loginPage .product-card p{font-size:.85rem;color:#5f6c5f}
+#loginPage .sustainability-section{position:relative;min-height:520px;margin:2rem 4%;border-radius:56px;overflow:hidden;background:#17351f;color:#fff;display:flex;align-items:flex-end}
+#loginPage .sustainability-section::before{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(8,31,18,.12) 0%,rgba(8,31,18,.82) 100%);z-index:1}
+#loginPage .sustainability-section img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+#loginPage .sustainability-copy{position:relative;z-index:2;max-width:760px;padding:4rem 6%}
+#loginPage .sustainability-copy h2{font-size:2.4rem;line-height:1.15;margin-bottom:1rem;font-weight:800;letter-spacing:0}
+#loginPage .sustainability-copy p{font-size:1.04rem;line-height:1.7;color:#edf7e7;margin-bottom:1.25rem}
+#loginPage .sustainability-points{display:flex;flex-wrap:wrap;gap:.7rem}
+#loginPage .sustainability-points span{background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.25);border-radius:40px;padding:.45rem .9rem;font-size:.88rem;font-weight:700;backdrop-filter:blur(6px)}
+#loginPage .video-showcase{background:linear-gradient(105deg,#f5f9f0,#fff6e8);padding:5rem 6%;border-radius:56px;margin:2rem 5%;backdrop-filter:blur(2px)}
+#loginPage .video-title{text-align:center;font-size:1.8rem;font-weight:700;margin-bottom:2rem;color:#1c3624}
+#loginPage .video-grid{display:flex;flex-wrap:wrap;gap:2rem;justify-content:center}
+#loginPage .video-card{flex:1;min-width:300px;background:rgba(255,255,245,.85);backdrop-filter:blur(8px);border-radius:40px;padding:1rem;box-shadow:0 20px 30px -12px rgba(0,0,0,.1);transition:all .3s}
+#loginPage .video-card:hover{transform:translateY(-8px);box-shadow:0 30px 40px -15px rgba(0,0,0,.2)}
+#loginPage .video-wrapper{position:relative;border-radius:28px;overflow:hidden}
+#loginPage .video-wrapper video,#loginPage .video-wrapper iframe{width:100%;border-radius:28px;display:block;aspect-ratio:16/9;object-fit:cover}
+#loginPage .video-wrapper iframe{height:315px;border:0}
+#loginPage .video-caption{font-weight:600;margin-top:1rem;text-align:center;font-size:.9rem;color:#2b5e3b}
+#loginPage .trust-badge{text-align:center;padding:3rem 6%;font-size:1rem;background:#fff;margin:1rem 0}
+#loginPage .trust-icons{display:flex;justify-content:center;gap:2.5rem;flex-wrap:wrap;margin-top:1rem}
+#loginPage .trust-icons i{font-size:2rem;color:#2b5e3b;opacity:.8}
+#loginPage .trust-icons i:hover{transform:scale(1.15)}
+#loginPage .landing-cta{background:#1c2e1f;color:#fff;padding:4rem 8%;text-align:center;border-radius:48px;margin:2rem 6% 4rem;box-shadow:0 25px 35px -12px rgba(0,0,0,.2)}
+#loginPage .landing-cta h3{font-size:2rem;font-weight:700;margin-bottom:1rem}
+#loginPage .landing-cta .landing-btn-primary{background:#fecb6e;color:#1f2a1b;box-shadow:none}
+#loginPage .landing-cta .landing-btn-primary:hover{background:#fdbc3a;transform:scale(1.02)}
+#loginPage footer{background:#0b1f12;color:#cbd5c6;padding:2.5rem 6%;text-align:center;border-top:1px solid #2f4534}
+#loginPage .login-panel{display:none;position:fixed;inset:0;z-index:10;align-items:center;justify-content:center;padding:24px;background:rgba(10,31,18,.52);backdrop-filter:blur(8px)}
+#loginPage .login-panel.open{display:flex}
+.login-card{background:rgba(255,255,255,.97);border-radius:20px;padding:34px 32px;width:100%;max-width:420px;box-shadow:0 32px 80px rgba(0,0,0,.35);position:relative;animation:loginEntry .6s cubic-bezier(.16,1,.3,1) forwards;backdrop-filter:blur(12px)}
+.login-close{position:absolute;top:12px;right:12px;width:32px;height:32px;border:none;border-radius:50%;background:#eef7f0;color:#2b5e3b;font-size:20px;line-height:1;cursor:pointer}
+.login-brand{display:flex;align-items:center;gap:14px;margin-bottom:8px}
+.login-logo{width:48px;height:48px;background:var(--p);border-radius:13px;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:15px;color:#fff;letter-spacing:.5px;flex-shrink:0;box-shadow:0 4px 16px rgba(11,132,87,.35)}
+.login-brand-text strong{display:block;font-size:22px;font-weight:700;color:var(--text);letter-spacing:0}
+.login-brand-text span{font-size:12px;color:var(--muted);font-weight:400}
+.login-tagline{font-size:13px;color:var(--muted);margin-bottom:24px;padding-top:8px;border-top:1px solid var(--border);margin-top:16px;padding-left:62px}
+.login-field{margin-bottom:16px}
+.login-field label{display:block;font-size:12px;font-weight:600;color:var(--muted);margin-bottom:6px;text-transform:uppercase;letter-spacing:.5px}
+.login-field input{width:100%;padding:11px 14px;border:1.5px solid var(--border);border-radius:var(--radius-sm);font-family:'Inter',sans-serif;font-size:14px;color:var(--text);background:#fafafa;outline:none;transition:border-color .2s,box-shadow .2s,background .2s}
+.login-field input:focus{border-color:var(--p);background:#fff;box-shadow:0 0 0 3px rgba(11,132,87,.1)}
+.login-submit{width:100%;padding:13px;background:var(--p);color:#fff;border:none;border-radius:var(--radius-sm);font-family:'Inter',sans-serif;font-size:14px;font-weight:600;cursor:pointer;margin-top:8px;transition:all .2s;letter-spacing:.2px;position:relative;overflow:hidden}
+.login-submit:hover{background:var(--p-l);transform:translateY(-1px);box-shadow:0 6px 20px rgba(11,132,87,.35)}
+.login-submit:active{transform:translateY(0)}
+.login-error{background:#fef2f2;border:1px solid #fecaca;color:var(--red);padding:10px 14px;border-radius:var(--radius-xs);font-size:12.5px;margin-bottom:16px;animation:shake .3s ease}
+.login-demo-hint{margin-top:20px;padding:14px;background:var(--p-pale);border-radius:var(--radius-sm);border:1px solid var(--p-mid)}
+.login-demo-hint p{font-size:11.5px;color:var(--p-d);font-weight:500;margin-bottom:8px}
+.demo-accounts{display:flex;flex-direction:column;gap:6px}
+.demo-account{display:flex;justify-content:space-between;font-size:11px;color:var(--muted);gap:10px}
+.demo-account code{font-family:'JetBrains Mono',monospace;font-size:10.5px;color:var(--p-d);font-weight:500;background:rgba(11,132,87,.08);padding:2px 6px;border-radius:4px}
+.login-footer{text-align:center;font-size:11px;color:var(--faint);margin-top:24px}
+@media(max-width:900px){
+  #loginPage .landing-hero{flex-direction:column;text-align:center;padding:7rem 6% 3.5rem}
+  #loginPage .hero-content h1{font-size:2.5rem}
+  #loginPage .landing-nav-links a:not(.landing-login-link){display:none}
+  #loginPage .landing-logo-text{font-size:1.2rem}
+  #loginPage .marquee-content{animation-duration:70s}
+  #loginPage .video-card{min-width:280px}
+}
+
+/* ─── PREMIUM DARK LANDING OVERRIDE ───────────────── */
+#loginPage{
+  background:
+    linear-gradient(135deg,rgba(15,30,20,.92),rgba(0,0,0,.75)),
+    url("emami-agrotech-passes-on-benefits-of-input-cost-cuts-to-consumers.jpg.webp");
+  background-size:cover;
+  background-position:center;
+  background-attachment:fixed;
+  color:#fff;
+}
+#loginPage::before{
+  content:"";
+  position:fixed;
+  inset:0;
+  background:repeating-linear-gradient(0deg,rgba(0,0,0,.025) 0,rgba(0,0,0,.025) 2px,transparent 2px,transparent 6px);
+  pointer-events:none;
+  z-index:0;
+}
+#loginPage>*{position:relative;z-index:1}
+#loginPage::-webkit-scrollbar{width:6px}
+#loginPage::-webkit-scrollbar-track{background:#1f2e22}
+#loginPage::-webkit-scrollbar-thumb{background:#f5b642}
+#loginPage .landing-navbar{background:rgba(10,20,12,.75);border-bottom:1px solid rgba(245,182,66,.3);backdrop-filter:blur(16px)}
+#loginPage .landing-logo-icon{background:linear-gradient(135deg,#f5b642,#c97e1a);color:#0e1e12;box-shadow:0 8px 20px rgba(0,0,0,.3)}
+#loginPage .landing-logo-text{background:linear-gradient(120deg,#fff3cf,#f5b642);-webkit-background-clip:text;background-clip:text;color:transparent}
+#loginPage .landing-nav-links a{color:#fef3d6}
+#loginPage .landing-nav-links a:hover{color:#f5b642}
+#loginPage .landing-login-link{background:#f5b642;color:#0e1e12!important;box-shadow:0 4px 12px rgba(245,182,66,.3);font-weight:700}
+#loginPage .landing-login-link:hover{background:#ffcd7e;box-shadow:0 12px 20px rgba(245,182,66,.4)}
+#loginPage .landing-hero{min-height:100vh;background:transparent;display:flex;flex-direction:column;justify-content:center;align-items:center;padding:6rem 5% 4rem;text-align:center}
+#loginPage .landing-hero::before{display:none}
+#loginPage .hero-content{max-width:800px;flex:0 1 auto;margin-bottom:2.5rem}
+#loginPage .hero-badge{background:rgba(245,182,66,.2);border:1px solid rgba(245,182,66,.4);color:#f5b642;backdrop-filter:blur(8px)}
+#loginPage .hero-content h1{font-size:4rem;color:#fff;text-shadow:0 2px 15px rgba(0,0,0,.3)}
+#loginPage .hero-highlight{background:linear-gradient(120deg,#f5b642,#ffde9c);-webkit-background-clip:text;background-clip:text;color:transparent}
+#loginPage .hero-description{color:#f0f0e0;margin-left:auto;margin-right:auto}
+#loginPage .landing-btn-primary{background:#f5b642;color:#0e1e12;font-weight:800;box-shadow:0 8px 20px rgba(245,182,66,.3)}
+#loginPage .landing-btn-primary:hover{background:#ffcd7e;box-shadow:0 15px 30px rgba(245,182,66,.5)}
+#loginPage .landing-btn-outline{border-color:#f5b642;color:#f5b642;backdrop-filter:blur(4px)}
+#loginPage .landing-btn-outline:hover{background:rgba(245,182,66,.15)}
+#loginPage .video-grid-premium{display:flex;flex-wrap:wrap;justify-content:center;gap:2rem;width:100%;max-width:1100px;margin-top:1rem;animation:fadeUp .8s ease .2s both}
+#loginPage .video-card-premium{flex:1;min-width:280px;background:rgba(0,0,0,.4);backdrop-filter:blur(12px);border-radius:32px;padding:.8rem;border:1px solid rgba(255,215,130,.3);transition:all .4s cubic-bezier(.2,.9,.4,1.1);box-shadow:0 20px 30px -10px rgba(0,0,0,.3)}
+#loginPage .video-card-premium:hover{transform:translateY(-10px) scale(1.02);border-color:#f5b642;box-shadow:0 30px 40px -12px rgba(0,0,0,.5)}
+#loginPage .video-card-premium .video-caption{color:#ffefcf}
+#loginPage .video-wrapper video,#loginPage .video-wrapper iframe{background:#000}
+#loginPage .marquee-section{width:100%;background:rgba(0,0,0,.65);backdrop-filter:blur(10px);border-top:1px solid rgba(245,182,66,.4);border-bottom:1px solid rgba(245,182,66,.4);margin-top:2rem;color:#fef4e2}
+#loginPage .marquee-content{animation-duration:55s;font-size:1rem}
+#loginPage .marquee-content i{background:rgba(245,182,66,.2)}
+#loginPage .product-showcase{background:rgba(10,20,12,.85);backdrop-filter:blur(4px);padding:4rem 6%}
+#loginPage .section-header h2,#loginPage .section-header h3,#loginPage .video-title{color:#ffefcf}
+#loginPage .section-header p{color:#ddd}
+#loginPage .product-card{width:220px;background:rgba(255,255,245,.1);backdrop-filter:blur(8px);border:1px solid rgba(245,182,66,.3);box-shadow:none}
+#loginPage .product-card:hover{background:rgba(245,182,66,.2);border-color:#f5b642;transform:translateY(-12px)}
+#loginPage .product-card h4{color:#fff}
+#loginPage .product-card p{color:#e0ddcc}
+#loginPage .product-img{width:110px;height:110px;filter:drop-shadow(0 5px 8px rgba(0,0,0,.2))}
+#loginPage .sustainability-section,#loginPage .video-showcase,#loginPage .trust-badge{background:rgba(0,0,0,.45);border:1px solid rgba(245,182,66,.22)}
+#loginPage .video-card{background:rgba(255,255,245,.1);border:1px solid rgba(245,182,66,.25)}
+#loginPage .video-caption{color:#ffefcf}
+#loginPage .trust-icons i{color:#f5b642}
+#loginPage .landing-cta{background:linear-gradient(95deg,#1e2a1c,#0e1e12);border:1px solid rgba(245,182,66,.3)}
+#loginPage .landing-cta h3{color:#f5b642}
+#loginPage footer{background:#051008;color:#b9c5b4}
+@media(max-width:800px){
+  #loginPage .hero-content h1{font-size:2.6rem}
+  #loginPage .video-grid-premium{flex-direction:column;align-items:center}
+  #loginPage .landing-hero{padding-top:5rem}
+}
+
+/* ─── CUSTOMER PORTAL POLISH ─────────────────────── */
+#app.customer-mode{
+  background:
+    radial-gradient(circle at 18% 0%,rgba(245,182,66,.16),transparent 30%),
+    linear-gradient(145deg,#f4faf5 0%,#eef5ed 100%);
+}
+#app.customer-mode .sidebar{
+  width:240px;
+  background:linear-gradient(180deg,#0a2f1f 0%,#0b3b25 100%);
+  box-shadow:4px 0 24px rgba(0,0,0,.1);
+}
+#app.customer-mode .sidebar-brand{padding:20px;border-bottom:1px solid rgba(255,255,255,.1)}
+#app.customer-mode .sidebar-logo{width:40px;height:40px;border-radius:14px;font-size:16px;font-weight:800}
+#app.customer-mode .nav-item{padding:12px 14px;border-radius:12px;transition:all .2s}
+#app.customer-mode .nav-item:hover{transform:translateX(4px)}
+#app.customer-mode .nav-item.active{background:rgba(255,255,255,.16);box-shadow:0 2px 10px rgba(0,0,0,.12)}
+#app.customer-mode .topbar{
+  height:64px;
+  background:rgba(255,255,255,.82);
+  backdrop-filter:blur(12px);
+  padding:0 28px;
+}
+#app.customer-mode .topbar-title{
+  font-size:18px;
+  font-weight:800;
+  background:linear-gradient(135deg,var(--p),var(--p-l));
+  -webkit-background-clip:text;
+  background-clip:text;
+  color:transparent;
+}
+#app.customer-mode .view{padding:28px 32px}
+#app.customer-mode .customer-hero{
+  position:relative;
+  overflow:hidden;
+  min-height:250px;
+  border-radius:26px;
+  margin-bottom:22px;
+  padding:26px;
+  display:grid;
+  grid-template-columns:minmax(0,1.1fr) minmax(280px,.9fr);
+  gap:24px;
+  align-items:center;
+  background:
+    linear-gradient(110deg,rgba(8,35,22,.94),rgba(8,35,22,.64)),
+    url("emami-agrotech-passes-on-benefits-of-input-cost-cuts-to-consumers.jpg.webp") center/cover no-repeat;
+  color:#fff;
+  box-shadow:0 24px 55px rgba(10,47,31,.22);
+}
+#app.customer-mode .customer-hero::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:linear-gradient(180deg,transparent,rgba(0,0,0,.12));
+  pointer-events:none;
+}
+#app.customer-mode .customer-hero-copy,#app.customer-mode .customer-hero-media{position:relative;z-index:1}
+#app.customer-mode .customer-kicker{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  padding:6px 12px;
+  border-radius:999px;
+  background:rgba(245,182,66,.18);
+  border:1px solid rgba(245,182,66,.35);
+  color:#ffe4a3;
+  font-size:12px;
+  font-weight:800;
+  margin-bottom:14px;
+}
+#app.customer-mode .customer-hero h2{
+  font-size:30px;
+  line-height:1.15;
+  letter-spacing:0;
+  margin-bottom:10px;
+}
+#app.customer-mode .customer-hero p{
+  color:rgba(255,255,255,.84);
+  font-size:14px;
+  line-height:1.7;
+  max-width:560px;
+}
+#app.customer-mode .customer-quick-row{
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px;
+  margin-top:18px;
+}
+#app.customer-mode .customer-quick-row span{
+  padding:8px 11px;
+  border-radius:12px;
+  background:rgba(255,255,255,.12);
+  border:1px solid rgba(255,255,255,.18);
+  font-size:12px;
+  font-weight:700;
+  color:#fff8e8;
+}
+#app.customer-mode .customer-hero-media{
+  display:grid;
+  grid-template-columns:92px 1fr;
+  gap:12px;
+  align-items:center;
+}
+#app.customer-mode .customer-logo-tile,#app.customer-mode .customer-anniversary-tile{
+  background:rgba(255,255,255,.92);
+  border-radius:20px;
+  padding:12px;
+  box-shadow:0 14px 30px rgba(0,0,0,.18);
+}
+#app.customer-mode .customer-logo-tile img,#app.customer-mode .customer-anniversary-tile img{
+  display:block;
+  width:100%;
+  height:auto;
+  border-radius:14px;
+}
+#app.customer-mode .customer-anniversary-tile{align-self:stretch;display:flex;align-items:center}
+#app.customer-mode .section-intro{
+  border:none;
+  border-radius:18px;
+  padding:14px 18px;
+  background:rgba(255,255,255,.8);
+  box-shadow:var(--shadow);
+  color:var(--text2);
+}
+#app.customer-mode .card{
+  background:rgba(255,255,255,.88);
+  backdrop-filter:blur(12px);
+  border:1px solid rgba(255,255,255,.68);
+  border-radius:24px;
+  padding:24px;
+  margin-bottom:20px;
+  box-shadow:var(--shadow);
+  transition:transform .2s,box-shadow .2s;
+}
+#app.customer-mode .card:hover{transform:translateY(-2px);box-shadow:var(--shadow-md)}
+#app.customer-mode .step-badge{
+  width:34px;
+  height:34px;
+  border-radius:12px;
+  background:linear-gradient(135deg,var(--p),var(--p-l));
+  color:#fff;
+  border:none;
+}
+#app.customer-mode .btn{
+  border-radius:999px;
+  padding:10px 22px;
+}
+#app.customer-mode .btn-primary{
+  background:linear-gradient(135deg,var(--p),var(--p-l));
+  box-shadow:0 8px 20px rgba(11,132,87,.24);
+}
+#app.customer-mode .complaint-card{
+  background:rgba(255,255,255,.94);
+  border-radius:20px;
+  transition:all .2s;
+}
+#app.customer-mode .complaint-card:hover{
+  transform:translateX(4px);
+  border-left:3px solid var(--p);
+  box-shadow:var(--shadow-md);
+}
+@media(max-width:900px){
+  #app.customer-mode .customer-hero{grid-template-columns:1fr;padding:22px}
+  #app.customer-mode .customer-hero h2{font-size:24px}
+  #app.customer-mode .customer-hero-media{max-width:360px}
+}
+
+/* ─── SHELL ──────────────────────────────────────── */
+#app{display:flex;height:100vh;overflow:hidden}
+/* ─── SIDEBAR ─────────────────────────────────────── */
+.sidebar{width:var(--sidebar-w);flex-shrink:0;background:var(--p-d);display:flex;flex-direction:column;overflow:hidden;z-index:10;position:relative}
+.sidebar::before{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(255,255,255,.04) 0%,transparent 100%);pointer-events:none}
+.sidebar-brand{padding:16px 16px 14px;border-bottom:1px solid rgba(255,255,255,.09);display:flex;align-items:center;gap:10px;flex-shrink:0}
+.sidebar-logo{width:34px;height:34px;background:rgba(255,255,255,.15);border-radius:10px;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:13px;color:#fff;letter-spacing:.5px;flex-shrink:0;border:1px solid rgba(255,255,255,.12)}
+.sidebar-brand-text strong{display:block;font-size:14px;font-weight:700;color:#fff;letter-spacing:-.2px}
+.sidebar-brand-text span{font-size:10.5px;color:rgba(255,255,255,.45);font-weight:400}
+.sidebar-user{padding:12px 14px;border-bottom:1px solid rgba(255,255,255,.07);flex-shrink:0}
+.sidebar-user-chip{display:flex;align-items:center;gap:9px}
+.user-avatar{width:28px;height:28px;background:rgba(255,255,255,.18);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:#fff;flex-shrink:0}
+.user-info strong{display:block;font-size:12px;font-weight:600;color:rgba(255,255,255,.9);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:140px}
+.user-info span{font-size:10px;color:rgba(255,255,255,.45);text-transform:uppercase;letter-spacing:.5px}
+.sidebar-nav{padding:10px 10px;flex:1;display:flex;flex-direction:column;gap:2px;overflow-y:auto}
+.nav-section-label{font-size:9.5px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:rgba(255,255,255,.3);padding:8px 10px 4px;margin-top:4px}
+.nav-item{width:100%;background:none;border:none;cursor:pointer;display:flex;align-items:center;gap:10px;padding:9px 10px;border-radius:var(--radius-xs);color:rgba(255,255,255,.6);font-family:'Inter',sans-serif;font-size:13px;font-weight:500;text-align:left;transition:background .15s,color .15s;position:relative}
+.nav-item:hover{background:rgba(255,255,255,.08);color:rgba(255,255,255,.9)}
+.nav-item.active{background:rgba(255,255,255,.14);color:#fff}
+.nav-item.active::before{content:'';position:absolute;left:0;top:20%;height:60%;width:3px;background:#6ee7a0;border-radius:0 3px 3px 0}
+.nav-icon{width:16px;height:16px;flex-shrink:0;opacity:.8}
+.nav-item.active .nav-icon,.nav-item:hover .nav-icon{opacity:1}
+.sidebar-footer{padding:12px 14px;border-top:1px solid rgba(255,255,255,.07);flex-shrink:0}
+.net-chip{display:flex;align-items:center;gap:7px;font-size:11px;color:rgba(255,255,255,.45)}
+.net-dot{width:6px;height:6px;border-radius:50%;background:#4ade80;flex-shrink:0;animation:netPulse 2s ease infinite}
+@keyframes netPulse{0%,100%{opacity:1}50%{opacity:.5}}
+/* ─── MAIN ────────────────────────────────────────── */
+.main{flex:1;display:flex;flex-direction:column;overflow:hidden;min-width:0}
+/* ─── TOPBAR ─────────────────────────────────────── */
+.topbar{height:var(--topbar-h);border-bottom:1px solid var(--border);display:flex;align-items:center;padding:0 22px;background:var(--surface);gap:14px;flex-shrink:0;z-index:5}
+.topbar-left{flex:1;min-width:0;display:flex;align-items:center;gap:10px}
+.topbar-title{font-size:15px;font-weight:600;color:var(--text);letter-spacing:-.1px}
+.topbar-sep{color:var(--faint);font-size:12px}
+.topbar-sub{font-size:12px;color:var(--muted)}
+.topbar-right{display:flex;align-items:center;gap:8px}
+.count-chip{display:flex;align-items:center;gap:5px;background:var(--p-pale);border:1px solid var(--p-mid);border-radius:20px;padding:3px 10px}
+.count-chip .num{font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:600;color:var(--p)}
+.count-chip .lbl{font-size:10.5px;color:var(--p);opacity:.8}
+.live-chip{display:inline-flex;align-items:center;gap:5px;background:var(--p-pale);border:1px solid var(--p-mid);border-radius:20px;padding:2px 8px;font-size:10.5px;font-weight:600;color:var(--p)}
+.live-chip::before{content:'';width:5px;height:5px;background:var(--p);border-radius:50%;animation:netPulse 1.5s ease infinite}
+.topbar-logout{display:flex;align-items:center;gap:6px;padding:6px 12px;border:1.5px solid var(--border);border-radius:var(--radius-xs);background:#fff;color:var(--muted);font-family:'Inter',sans-serif;font-size:12px;font-weight:500;cursor:pointer;transition:all .15s}
+.topbar-logout:hover{border-color:var(--red);color:var(--red);background:#fef2f2}
+/* ─── VIEW AREA ──────────────────────────────────── */
+.view-area{flex:1;overflow:hidden;position:relative}
+.view{position:absolute;inset:0;overflow-y:auto;padding:22px 24px;display:none;opacity:0;transform:translateY(8px);transition:opacity .25s,transform .25s}
+.view.active{display:block;opacity:1;transform:translateY(0)}
+.view::-webkit-scrollbar{width:5px}
+.view::-webkit-scrollbar-track{background:transparent}
+.view::-webkit-scrollbar-thumb{background:var(--border2);border-radius:4px}
+/* ── Animated dashboard background ── */
+.view#view-ho{
+  background:linear-gradient(135deg,#f0f7f4 0%,#fff 100%);
+  position:absolute;
+  overflow:hidden;
+}
+.view#view-ho::before{
+  content:"";
+  position:absolute;
+  top:-100px;
+  left:-100px;
+  width:400px;
+  height:400px;
+  background:radial-gradient(circle,rgba(11,132,87,.05) 0%,transparent 70%);
+  border-radius:50%;
+  animation:floatBg 15s ease-in-out infinite alternate;
+  pointer-events:none;
+}
+.view#view-ho::after{
+  content:"";
+  position:absolute;
+  right:-80px;
+  bottom:-80px;
+  width:300px;
+  height:300px;
+  background:radial-gradient(circle,rgba(37,99,235,.04) 0%,transparent 70%);
+  border-radius:50%;
+  animation:floatBg 20s ease-in-out infinite alternate-reverse;
+  pointer-events:none;
+}
+.view#view-ho>*{position:relative;z-index:1}
+@keyframes floatBg{
+  0%{transform:translate(0,0) scale(1)}
+  100%{transform:translate(40px,30px) scale(1.1)}
+}
+/* ─── CARDS ──────────────────────────────────────── */
+.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:20px;margin-bottom:14px;box-shadow:var(--shadow)}
+.card-header{display:flex;align-items:flex-start;gap:12px;margin-bottom:18px}
+.step-badge{width:30px;height:30px;border-radius:9px;background:var(--p-pale);border:1.5px solid var(--p-mid);display:flex;align-items:center;justify-content:center;font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:500;color:var(--p);flex-shrink:0;margin-top:2px}
+.card-header h3{font-size:14px;font-weight:600;margin-bottom:2px;color:var(--text)}
+.card-header p{font-size:12px;color:var(--muted)}
+/* ─── FORM ───────────────────────────────────────── */
+.form-grid{display:grid;gap:12px}
+.form-grid.g2{grid-template-columns:1fr 1fr}
+.form-grid.g3{grid-template-columns:1fr 1fr 1fr}
+@media(max-width:900px){.form-grid.g3{grid-template-columns:1fr 1fr}}
+@media(max-width:640px){.form-grid.g2,.form-grid.g3{grid-template-columns:1fr}}
+label.field{display:flex;flex-direction:column;gap:5px;font-size:12px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.4px}
+label.field input,label.field select,label.field textarea{
+  font-family:'Inter',sans-serif;font-size:13.5px;color:var(--text);background:var(--bg);font-weight:400;text-transform:none;letter-spacing:0;
+  border:1.5px solid var(--border);border-radius:var(--radius-sm);padding:9px 12px;
+  transition:border-color .15s,box-shadow .15s;outline:none
+}
+label.field input:focus,label.field select:focus,label.field textarea:focus{border-color:var(--p);box-shadow:0 0 0 3px rgba(11,132,87,.1);background:#fff}
+label.field input::placeholder,label.field textarea::placeholder{color:var(--faint)}
+label.field textarea{resize:vertical;min-height:80px}
+label.field select{cursor:pointer;appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%236B7280'%3E%3Cpath d='M4 6l4 4 4-4'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 10px center;background-size:15px;padding-right:32px;background-color:var(--bg)}
+/* ─── ISSUE GRID ─────────────────────────────────── */
+.issue-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:12px}
+@media(max-width:700px){.issue-grid{grid-template-columns:repeat(2,1fr)}}
+.issue-card{cursor:pointer;border:1.5px solid var(--border);border-radius:var(--radius-sm);padding:12px;display:flex;flex-direction:column;gap:5px;transition:all .15s;position:relative;background:var(--bg)}
+.issue-card input[type=radio]{position:absolute;opacity:0;pointer-events:none}
+.issue-card:hover{border-color:var(--p-mid);background:var(--p-pale)}
+.issue-card:has(input:checked){border-color:var(--p);background:var(--p-pale);box-shadow:0 0 0 3px rgba(11,132,87,.08)}
+.issue-card:has(input:checked)::after{content:'✓';position:absolute;top:8px;right:10px;font-size:10px;color:var(--p);font-weight:700;background:rgba(11,132,87,.12);width:18px;height:18px;display:flex;align-items:center;justify-content:center;border-radius:50%}
+.issue-icon{font-size:20px}
+.issue-card strong{font-size:12.5px;font-weight:600;color:var(--text)}
+.issue-card small{font-size:11px;color:var(--muted)}
+/* ─── UPLOAD ─────────────────────────────────────── */
+.upload-zone{border:2px dashed var(--border);border-radius:var(--radius-sm);padding:16px;text-align:center;cursor:pointer;transition:all .15s;margin-top:12px}
+.upload-zone:hover{border-color:var(--p);background:var(--p-pale)}
+.upload-label{cursor:pointer;display:inline-flex;align-items:center;gap:8px;color:var(--muted);font-size:13px;font-weight:500}
+#photoInput{display:none}
+.preview-list{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px;justify-content:center}
+.preview-list img{width:68px;height:68px;object-fit:cover;border-radius:8px;border:2px solid var(--p-mid)}
+/* ─── BUTTONS ─────────────────────────────────────── */
+.btn{display:inline-flex;align-items:center;gap:6px;padding:9px 18px;border-radius:var(--radius-sm);font-family:'Inter',sans-serif;font-size:13px;font-weight:500;cursor:pointer;border:none;transition:all .15s;white-space:nowrap;letter-spacing:.1px}
+.btn-primary{background:var(--p);color:#fff}
+.btn-primary:hover{background:var(--p-l);transform:translateY(-1px);box-shadow:0 6px 18px rgba(11,132,87,.3)}
+.btn-primary:active{transform:translateY(0);box-shadow:none}
+.btn-secondary{background:var(--surface);color:var(--text2);border:1.5px solid var(--border)}
+.btn-secondary:hover{border-color:var(--p);color:var(--p)}
+.btn-sm{padding:5px 11px;font-size:12px;border-radius:6px}
+.btn-danger{background:#fef2f2;color:var(--red);border:1.5px solid #fecaca}
+.btn-danger:hover{background:var(--red);color:#fff}
+.btn-ghost{background:transparent;color:var(--muted);border:1.5px solid transparent}
+.btn-ghost:hover{background:var(--surface2);color:var(--text)}
+.form-actions{display:flex;gap:10px;justify-content:flex-end;padding-top:4px}
+/* ─── PILLS ──────────────────────────────────────── */
+.pill{display:inline-flex;align-items:center;padding:3px 9px;border-radius:20px;font-size:11px;font-weight:600;white-space:nowrap;letter-spacing:.2px}
+.pill-submitted{background:#eff6ff;color:#1d4ed8;border:1px solid #bfdbfe}
+.pill-review{background:#fef3c7;color:#92400e;border:1px solid #fde68a}
+.pill-resolved{background:#f0fdf4;color:#166534;border:1px solid #bbf7d0}
+.pill-closed{background:#f5f5f5;color:#52525b;border:1px solid #d4d4d4}
+.pill-normal{background:#f0f9ff;color:#075985;border:1px solid #bae6fd}
+.pill-high{background:#fff7ed;color:#c2410c;border:1px solid #fed7aa}
+.pill-critical{background:#fef2f2;color:#b91c1c;border:1px solid #fecaca}
+/* ─── TOOLBAR ────────────────────────────────────── */
+.toolbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px;gap:12px;flex-wrap:wrap}
+.toolbar-left h2{font-size:17px;font-weight:700;letter-spacing:-.2px;color:var(--text)}
+.toolbar-left p{font-size:12px;color:var(--muted);margin-top:2px}
+.toolbar-right{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.filter-select{font-family:'Inter',sans-serif;font-size:12.5px;border:1.5px solid var(--border);border-radius:var(--radius-xs);padding:7px 28px 7px 10px;background:var(--surface);color:var(--text);appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%236B7280'%3E%3Cpath d='M4 6l4 4 4-4'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 7px center;background-size:13px;cursor:pointer;outline:none;transition:border-color .15s}
+.filter-select:focus{border-color:var(--p)}
+/* ─── COMPLAINT CARDS ───────────────────────────── */
+.complaint-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:16px 18px;margin-bottom:10px;display:flex;justify-content:space-between;align-items:flex-start;gap:16px;box-shadow:var(--shadow);animation:slideUp .22s ease forwards;opacity:0;transition:box-shadow .15s,border-color .15s}
+.complaint-card:hover{box-shadow:var(--shadow-md);border-color:var(--border2)}
+@keyframes slideUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+.complaint-id{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--p);font-weight:500;display:block;margin-bottom:4px}
+.complaint-title{font-size:14px;font-weight:600;margin-bottom:6px;color:var(--text)}
+.complaint-meta{display:flex;flex-wrap:wrap;gap:3px 12px;font-size:12px;color:var(--muted)}
+.card-right{display:flex;flex-direction:column;align-items:flex-end;gap:6px;flex-shrink:0}
+/* ─── EMPTY STATE ─────────────────────────────────── */
+.empty-state{text-align:center;padding:60px 20px;color:var(--muted)}
+.empty-state .icon{font-size:40px;margin-bottom:14px;opacity:.4}
+.empty-state p{font-size:13px}
+/* ─── SECTION INTRO ──────────────────────────────── */
+.section-intro{margin-bottom:16px;padding:12px 16px;background:var(--p-pale);border-left:3px solid var(--p);border-radius:0 var(--radius-xs) var(--radius-xs) 0;font-size:13px;color:var(--muted)}
+/* ─── HO DASHBOARD ───────────────────────────────── */
+.ho-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:18px;flex-wrap:wrap;gap:10px}
+.ho-header h2{font-size:18px;font-weight:700;letter-spacing:-.3px}
+.ho-header p{font-size:12px;color:var(--muted);margin-top:2px}
+.ho-header-right{display:flex;gap:8px}
+.kpi-row{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:18px}
+@media(max-width:900px){.kpi-row{grid-template-columns:repeat(2,1fr)}}
+.kpi-card{background:rgba(255,255,255,.8);border:1px solid rgba(255,255,255,.6);border-radius:var(--radius);padding:18px 18px 16px;box-shadow:var(--shadow);position:relative;overflow:hidden;animation:kpiPop .3s ease forwards;opacity:0;cursor:default;backdrop-filter:blur(2px);-webkit-backdrop-filter:blur(2px);transition:transform .25s ease,box-shadow .25s ease}
+.kpi-card:hover{transform:translateY(-6px);box-shadow:0 20px 35px rgba(0,0,0,.08)}
+.kpi-accent{position:absolute;top:0;left:0;right:0;height:3px;border-radius:var(--radius) var(--radius) 0 0;background:linear-gradient(90deg,var(--p),#0fa368,var(--p));background-size:200% 100%;animation:shimmer 4s ease infinite}
+@keyframes shimmer{0%{background-position:200% 0}100%{background-position:-200% 0}}
+@keyframes kpiPop{from{opacity:0;transform:translateY(6px) scale(.98)}to{opacity:1;transform:translateY(0) scale(1)}}
+.kpi-label{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.6px;color:var(--muted);margin-bottom:8px}
+.kpi-value{font-family:'JetBrains Mono',monospace;font-size:30px;font-weight:700;color:var(--text);line-height:1;letter-spacing:-1px}
+.kpi-sub{font-size:11px;color:var(--faint);margin-top:5px}
+.ho-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media(max-width:900px){.ho-grid{grid-template-columns:1fr}}
+.ho-full{grid-column:1/-1}
+.chart-title{font-size:13px;font-weight:600;color:var(--text);margin-bottom:14px;display:flex;align-items:center;justify-content:space-between}
+.bar-row{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+.bar-label{font-size:12px;width:120px;flex-shrink:0;color:var(--text2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.bar-track{flex:1;height:8px;background:var(--p-pale);border-radius:4px;overflow:hidden}
+.bar-fill{height:100%;background:var(--p);border-radius:4px;width:0;transition:width .7s cubic-bezier(.16,1,.3,1)}
+.bar-count{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--muted);width:22px;text-align:right}
+.donut-wrap{display:flex;align-items:center;gap:24px;flex-wrap:wrap;padding:8px 0}
+.donut-svg{width:110px;height:110px;flex-shrink:0}
+.donut-legend{display:flex;flex-direction:column;gap:10px}
+.donut-item{display:flex;align-items:center;gap:8px;font-size:12.5px;color:var(--text2)}
+.donut-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0}
+/* ─── TABLE ──────────────────────────────────────── */
+.table-wrap{overflow-x:auto;border-radius:var(--radius-sm);border:1px solid var(--border)}
+.data-table{width:100%;border-collapse:collapse;font-size:12.5px;min-width:700px}
+.data-table thead{background:var(--surface2)}
+.data-table th{padding:10px 12px;text-align:left;font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--muted);white-space:nowrap;border-bottom:1px solid var(--border)}
+.data-table td{padding:10px 12px;border-bottom:1px solid var(--border);vertical-align:middle;color:var(--text2)}
+.data-table tbody tr{transition:background .12s}
+.data-table tbody tr:last-child td{border-bottom:none}
+.data-table tbody tr:hover{background:var(--p-pale)}
+.cell-id{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--p);font-weight:500}
+/* ─── HELP ───────────────────────────────────────── */
+.help-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media(max-width:700px){.help-grid{grid-template-columns:1fr}}
+.help-full{grid-column:1/-1}
+.help-list{padding-left:0;list-style:none;display:flex;flex-direction:column;gap:9px}
+.help-list li{display:flex;gap:10px;font-size:13px;color:var(--text2);padding:2px 0}
+.help-list li::before{content:'→';color:var(--p);font-weight:700;flex-shrink:0}
+.status-legend{display:flex;flex-direction:column;gap:10px}
+.status-legend>div{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--muted)}
+/* ─── DIALOG ─────────────────────────────────────── */
+dialog{border:none;border-radius:16px;padding:0;box-shadow:var(--shadow-lg);max-width:400px;width:92vw;animation:dialogPop .25s cubic-bezier(.16,1,.3,1)}
+dialog::backdrop{background:rgba(0,0,0,.4);backdrop-filter:blur(3px)}
+@keyframes dialogPop{from{opacity:0;transform:scale(.93) translateY(10px)}to{opacity:1;transform:scale(1) translateY(0)}}
+.dialog-body{padding:32px}
+.success-ring{width:68px;height:68px;margin:0 auto 18px;display:flex;align-items:center;justify-content:center}
+.success-ring svg{width:68px;height:68px}
+.ring-circle{stroke-dasharray:188;stroke-dashoffset:188;animation:ringDraw .55s .1s cubic-bezier(.16,1,.3,1) forwards}
+.check-path{stroke-dasharray:30;stroke-dashoffset:30;animation:checkDraw .35s .55s ease forwards}
+@keyframes ringDraw{to{stroke-dashoffset:0}}
+@keyframes checkDraw{to{stroke-dashoffset:0}}
+.dialog-body h2{font-size:18px;font-weight:700;text-align:center;margin-bottom:6px;letter-spacing:-.2px}
+.dialog-body>p{font-size:13px;color:var(--muted);text-align:center;line-height:1.6}
+.id-chip{font-family:'JetBrains Mono',monospace;font-size:13.5px;background:var(--p-pale);border:1.5px solid var(--p-mid);color:var(--p);padding:10px 18px;border-radius:var(--radius-sm);margin:16px auto 6px;display:block;text-align:center;font-weight:600;letter-spacing:.5px}
+.id-hint{font-size:11px;color:var(--faint);text-align:center;margin-bottom:20px}
+.dialog-actions{display:flex;gap:8px;justify-content:flex-end;margin-top:18px}
+.dialog-body h3{font-size:15px;font-weight:600;margin-bottom:10px;color:var(--text)}
+.dialog-body select{width:100%;font-family:'Inter',sans-serif;font-size:13.5px;border:1.5px solid var(--border);border-radius:var(--radius-sm);padding:9px 12px;outline:none;background:var(--bg);color:var(--text);appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%236B7280'%3E%3Cpath d='M4 6l4 4 4-4'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 10px center;background-size:14px}
+.dialog-body select:focus{border-color:var(--p)}
+.dialog-id-sub{font-size:11.5px;color:var(--muted);margin-bottom:12px;font-family:'JetBrains Mono',monospace}
+/* ─── TOAST ──────────────────────────────────────── */
+#toast{position:fixed;bottom:28px;left:50%;transform:translateX(-50%) translateY(10px);background:var(--text);color:#fff;padding:11px 20px;border-radius:var(--radius-sm);font-size:13px;font-weight:500;opacity:0;transition:opacity .22s,transform .22s;pointer-events:none;z-index:99999;white-space:nowrap;max-width:90vw}
+#toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+/* ─── EMA GIST ───────────────────────────────────── */
+.gist-btn{display:inline-flex;align-items:center;gap:4px;padding:4px 8px;border-radius:5px;font-family:'Inter',sans-serif;font-size:10.5px;font-weight:600;cursor:pointer;border:1px solid var(--p-mid);background:var(--p-pale);color:var(--p-d);transition:all .15s}
+.gist-btn:hover{background:var(--p);color:#fff;border-color:var(--p)}
+.gist-tooltip{font-size:11.5px;color:var(--muted);background:var(--surface2);border:1px solid var(--border);border-radius:6px;padding:6px 10px;margin-top:4px;font-style:italic;animation:fadeIn .2s ease}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+/* ─── CHATBOT ─────────────────────────────────────── */
+.chat-fab{position:fixed;bottom:28px;right:28px;width:56px;height:56px;background:var(--p);border-radius:50%;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 6px 24px rgba(11,132,87,.4);z-index:1000;transition:all .25s;font-size:22px}
+.chat-fab:hover{transform:scale(1.08);box-shadow:0 8px 30px rgba(11,132,87,.5)}
+.chat-fab.open{background:var(--text);border-radius:14px;font-size:18px}
+.chat-fab .notif-dot{position:absolute;top:10px;right:10px;width:8px;height:8px;background:#f87171;border-radius:50%;border:2px solid #fff}
+.chat-window{position:fixed;bottom:96px;right:28px;width:360px;height:520px;background:var(--surface);border-radius:18px;box-shadow:0 24px 70px rgba(0,0,0,.2);z-index:999;display:flex;flex-direction:column;overflow:hidden;transform:scale(.9) translateY(20px);opacity:0;pointer-events:none;transform-origin:bottom right;transition:all .25s cubic-bezier(.16,1,.3,1);border:1px solid var(--border)}
+.chat-window.open{transform:scale(1) translateY(0);opacity:1;pointer-events:all}
+.chat-header{background:linear-gradient(135deg,var(--p-d),var(--p));padding:14px 16px;display:flex;align-items:center;gap:10px;flex-shrink:0}
+.chat-avatar{width:36px;height:36px;background:rgba(255,255,255,.2);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;border:2px solid rgba(255,255,255,.3)}
+.chat-header-text strong{display:block;font-size:14px;font-weight:600;color:#fff}
+.chat-header-text span{font-size:11px;color:rgba(255,255,255,.65)}
+.chat-header-right{margin-left:auto;display:flex;gap:6px}
+.chat-head-btn{background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.2);border-radius:7px;color:#fff;width:28px;height:28px;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:13px;transition:background .15s}
+.chat-head-btn:hover{background:rgba(255,255,255,.25)}
+.chat-head-btn.active{background:rgba(255,255,255,.3)}
+.chat-msgs{flex:1;overflow-y:auto;padding:14px 14px;display:flex;flex-direction:column;gap:10px;scroll-behavior:smooth}
+.chat-msgs::-webkit-scrollbar{width:3px}
+.chat-msgs::-webkit-scrollbar-thumb{background:var(--border);border-radius:3px}
+.msg{max-width:85%;animation:msgPop .2s ease forwards}
+@keyframes msgPop{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+.msg-bot{align-self:flex-start}
+.msg-user{align-self:flex-end}
+.msg-bubble{padding:9px 13px;border-radius:14px;font-size:13px;line-height:1.5}
+.msg-bot .msg-bubble{background:var(--surface2);color:var(--text);border-radius:4px 14px 14px 14px;border:1px solid var(--border)}
+.msg-user .msg-bubble{background:var(--p);color:#fff;border-radius:14px 14px 4px 14px}
+.msg-time{font-size:10px;color:var(--faint);margin-top:3px;text-align:right}
+.msg-bot .msg-time{text-align:left}
+.msg-typing .msg-bubble{display:flex;gap:4px;align-items:center;padding:12px 16px}
+.typing-dot{width:7px;height:7px;background:var(--muted);border-radius:50%;animation:typingBounce .9s ease infinite}
+.typing-dot:nth-child(2){animation-delay:.15s}
+.typing-dot:nth-child(3){animation-delay:.3s}
+@keyframes typingBounce{0%,60%,100%{transform:translateY(0)}30%{transform:translateY(-6px)}}
+.chat-input-area{padding:12px 12px;border-top:1px solid var(--border);display:flex;gap:8px;align-items:flex-end;flex-shrink:0;background:var(--surface)}
+.chat-input{flex:1;font-family:'Inter',sans-serif;font-size:13px;border:1.5px solid var(--border);border-radius:10px;padding:8px 12px;outline:none;resize:none;max-height:80px;min-height:38px;line-height:1.4;transition:border-color .15s;background:var(--bg);color:var(--text)}
+.chat-input:focus{border-color:var(--p);background:#fff}
+.chat-action-btn{width:36px;height:36px;border-radius:9px;border:none;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:16px;transition:all .15s;flex-shrink:0}
+.chat-send-btn{background:var(--p);color:#fff}
+.chat-send-btn:hover{background:var(--p-l)}
+.chat-mic-btn{background:var(--surface2);color:var(--muted);border:1.5px solid var(--border)}
+.chat-mic-btn:hover{border-color:var(--p);color:var(--p)}
+.chat-mic-btn.listening{background:#fef2f2;border-color:#f87171;color:#ef4444;animation:micPulse 1s ease infinite}
+@keyframes micPulse{0%,100%{box-shadow:0 0 0 0 rgba(239,68,68,.4)}50%{box-shadow:0 0 0 8px rgba(239,68,68,0)}}
+/* ─── SPINNER ─────────────────────────────────────── */
+@keyframes spin{to{transform:rotate(360deg)}}
+.spinner{width:14px;height:14px;border:2px solid rgba(255,255,255,.3);border-top-color:#fff;border-radius:50%;animation:spin .5s linear infinite}
+/* ─── CUSTOM CURSOR ──────────────────────────────── */
+.cursor{
+  width:28px;
+  height:28px;
+  background:rgba(245,182,66,.7);
+  border-radius:50%;
+  position:fixed;
+  pointer-events:none;
+  z-index:9999;
+  transition:transform .1s,width .2s,height .2s,background .2s;
+  transform:translate(-50%,-50%);
+  backdrop-filter:blur(4px);
+  mix-blend-mode:difference;
+}
+.cursor.expand{
+  width:70px;
+  height:70px;
+  background:rgba(245,182,66,.9);
+  mix-blend-mode:normal;
+}
+@media(pointer:coarse){
+  .cursor{display:none}
+}
+#particle-canvas{
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  pointer-events:none;
+  z-index:0;
+}
+.ema-preview-tooltip{
+  position:fixed;
+  background:rgba(0,0,0,.85);
+  backdrop-filter:blur(12px);
+  color:#f5b642;
+  padding:8px 16px;
+  border-radius:40px;
+  font-size:12px;
+  font-weight:500;
+  white-space:nowrap;
+  z-index:10000;
+  pointer-events:none;
+  border:1px solid rgba(245,182,66,.4);
+  transition:opacity .2s;
+  font-family:'JetBrains Mono',monospace;
+}
+</style>
+</head>
+<body>
+
+<!-- LOADER -->
+<div id="loader">
+  <div class="loader-logo">
+    <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><path d="M11 2 L11 20 M2 11 L20 11 M5 5 L17 17 M17 5 L5 17" stroke="white" stroke-width="2.2" stroke-linecap="round" opacity=".7"/><circle cx="11" cy="11" r="3" fill="white"/></svg>
+  </div>
+  <div class="loader-bar"><div class="loader-bar-fill"></div></div>
+  <div class="loader-text">Loading SAMA…</div>
+</div>
+
+<!-- LANDING / LOGIN PAGE -->
+<div id="loginPage" class="hidden">
+  <nav class="landing-navbar">
+    <div class="landing-logo">
+      <div class="landing-logo-icon">EA</div>
+      <div class="landing-logo-text">Emami Agrotech</div>
+    </div>
+    <div class="landing-nav-links">
+      <a href="#landingHome">Home</a>
+      <a href="#products">Products</a>
+      <a href="#sustainability">Sustainability</a>
+      <a href="#story">Who We Are</a>
+      <a href="#portalLogin" class="landing-login-link" id="enterSamaBtn">SAMA Portal</a>
+    </div>
+  </nav>
+
+  <section class="landing-hero" id="landingHome">
+    <div class="hero-content">
+      <div class="hero-badge"><i class="fas fa-leaf"></i> Since 1994 - India's Most Trusted</div>
+      <h1>Let's make <span class="hero-highlight">every meal</span><br>Healthy &amp; Tasty</h1>
+      <p class="hero-description">Purity, nutrition and happiness, crafted for millions of families.</p>
+      <div class="hero-buttons">
+        <button class="landing-btn-primary" id="discoverBtn">Discover our range <i class="fas fa-arrow-right"></i></button>
+        <button class="landing-btn-outline" id="exploreStory">Explore story</button>
+      </div>
+    </div>
+
+    <div class="video-grid-premium">
+      <div class="video-card-premium">
+        <div class="video-wrapper">
+          <video controls autoplay muted loop playsinline poster="Frame_520_28e963d1ba.png" preload="metadata">
+            <source src="Amitabh02b_1eea1cd9c6.mp4" type="video/mp4">
+          </video>
+        </div>
+        <div class="video-caption">Smart Balance - Ab Har Nivala Immunity Wala</div>
+      </div>
+      <div class="video-card-premium">
+        <div class="video-wrapper">
+          <video controls autoplay muted loop playsinline poster="emami-agrotech-passes-on-benefits-of-input-cost-cuts-to-consumers.jpg.webp" preload="metadata">
+            <source src="Let%27s%20%23CookForOurHeroes%20with%20Emami%20Healthy%20%26%20Tasty.mp4" type="video/mp4">
+          </video>
+        </div>
+        <div class="video-caption">#CookForOurHeroes - Thank you, emerging heroes</div>
+      </div>
+    </div>
+
+    <div class="marquee-section">
+      <div class="marquee-content">
+        <span><i class="fas fa-utensils"></i> স্বাস্থ্য আর স্বাদের অটুট বন্ধন - Emami Healthy &amp; Tasty</span>
+        <span><i class="fas fa-heart"></i> ঘরের রান্নার গন্ধে মা-এর হাতের নকশি, এমামি অয়েলে সোনালি পুষ্টি</span>
+        <span><i class="fas fa-leaf"></i> রাঁধুনীর বিশ্বাস, পুষ্টির আস্থা</span>
+        <span><i class="fas fa-star-of-life"></i> হিমানি বেস্ট চয়েস - স্বাস্থ্যেই হিট, বাজেটেই ফিট</span>
+        <span><i class="fas fa-fire"></i> #CookForOurHeroes | Chefs' choice for Healthy &amp; Tasty</span>
+        <span><i class="fas fa-seedling"></i> খাঁটি ঘানি, কাঁচি ঘানির তেলের ঐতিহ্য</span>
+        <span><i class="fas fa-smile"></i> ঘরে ঘরে এমামি, মুখরোচক সব পদ</span>
+        <span><i class="fas fa-wheat-awn"></i> নরম রুটি, ঘরের উষ্ণতা - Emami Atta</span>
+        <span><i class="fas fa-bowl-food"></i> মশলার ঘ্রাণে জমে উঠুক প্রতিটি রান্না</span>
+        <span><i class="fas fa-hand-holding-heart"></i> পুষ্টি, স্বাদ আর যত্ন - প্রতিদিনের পরিবারের পাশে</span>
+      </div>
+    </div>
+  </section>
+
+  <div class="product-showcase" id="products">
+    <div class="section-header reveal">
+      <h2>Our <span class="hero-highlight">Premium</span> Range</h2>
+      <p>Pure, nutritious oils and kitchen essentials for modern India</p>
+    </div>
+    <div class="products-grid">
+      <div class="product-card reveal"><img src="https://images.emamiagrotech.in/prod/sunflower-oil-1l.png" alt="Sunflower Oil" class="product-img" onerror="this.src='https://placehold.co/150x150/2b5e3b/FFFFFF?text=Sunflower+Oil'"><h4>Sunflower Oil</h4><p>Rich in Vitamin E and PUFA</p></div>
+      <div class="product-card reveal"><img src="https://images.emamiagrotech.in/prod/mustard-oil-1l.png" alt="Kachi Ghani" class="product-img" onerror="this.src='https://placehold.co/150x150/2b5e3b/FFFFFF?text=Mustard+Oil'"><h4>Kachi Ghani Mustard</h4><p>Cold-pressed, pungent and pure</p></div>
+      <div class="product-card reveal"><img src="https://images.emamiagrotech.in/prod/rice-bran-oil-1l.png" alt="Rice Bran Oil" class="product-img" onerror="this.src='https://placehold.co/150x150/2b5e3b/FFFFFF?text=Rice+Bran+Oil'"><h4>Rice Bran Oil</h4><p>Oryzanol rich, high smoke point</p></div>
+      <div class="product-card reveal"><img src="https://images.emamiagrotech.in/prod/chakki-atta-5kg.png" alt="Chakki Atta" class="product-img" onerror="this.src='https://placehold.co/150x150/2b5e3b/FFFFFF?text=Chakki+Atta'"><h4>Fresh Chakki Atta</h4><p>Zero maida, soft rotis</p></div>
+      <div class="product-card reveal"><img src="https://placehold.co/150x150/8b4b22/FFFFFF?text=Masala" alt="Emami Mantra Masala" class="product-img"><h4>Mantra Masala</h4><p>Aromatic blends for everyday cooking</p></div>
+      <div class="product-card reveal"><img src="https://placehold.co/150x150/d97706/FFFFFF?text=Soya+Chunks" alt="Advans Soya Chunks" class="product-img"><h4>Advans Soya Chunks</h4><p>Protein-rich, wholesome and versatile</p></div>
+    </div>
+  </div>
+
+  <section class="sustainability-section reveal" id="sustainability">
+    <img src="istockphoto_154935182_1024x1024_5_9bf032c374.png" alt="Sustainable green agriculture fields">
+    <div class="sustainability-copy">
+      <h2>Growing With Care, Serving With Responsibility</h2>
+      <p>From responsible sourcing to quality-led processing, Emami Agrotech brings kitchen essentials to families with a focus on trust, consistency, and a healthier tomorrow.</p>
+      <div class="sustainability-points">
+        <span>Responsible sourcing</span>
+        <span>Quality testing</span>
+        <span>Farmer-first thinking</span>
+        <span>Better everyday nutrition</span>
+      </div>
+    </div>
+  </section>
+
+  <div class="video-showcase" id="campaigns">
+    <div class="video-title reveal"><i class="fas fa-play-circle"></i> Emami Experiences | Campaigns</div>
+    <div class="video-grid">
+      <div class="video-card reveal">
+        <div class="video-wrapper">
+          <video controls poster="https://placehold.co/800x450/2a5937/white?text=%23CookForOurHeroes" preload="metadata">
+            <source src="Let%27s%20%23CookForOurHeroes%20with%20Emami%20Healthy%20%26%20Tasty.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+          </video>
+        </div>
+        <div class="video-caption">#CookForOurHeroes - Emami Healthy &amp; Tasty Campaign</div>
+      </div>
+      <div class="video-card reveal">
+        <div class="video-wrapper">
+          <video controls poster="Frame_520_28e963d1ba.png" preload="metadata">
+            <source src="Amitabh02b_1eea1cd9c6.mp4" type="video/mp4">
+            <a href="https://youtu.be/M07JPpbHO-g?si=vBvob_-ri59Y12ZV">Watch the Emami Healthy &amp; Tasty Smart Balance TVC</a>
+          </video>
+        </div>
+        <div class="video-caption">Emami Healthy &amp; Tasty Smart Balance TVC</div>
+      </div>
+      <div class="video-card reveal">
+        <div class="video-wrapper">
+          <video controls poster="https://placehold.co/800x450/8f5b38/white?text=Emami+Atta" preload="metadata">
+            <source src="Roti_720p_1_8f52794590.mp4" type="video/mp4">
+          </video>
+        </div>
+        <div class="video-caption">Emami Atta - Soft Roti Everyday</div>
+      </div>
+      <div class="video-card reveal">
+        <div class="video-wrapper">
+          <video controls poster="https://placehold.co/800x450/d97706/white?text=Advans+Soya+Chunks" preload="metadata">
+            <source src="Advans_Soya_Chunks_77085770cf.mp4" type="video/mp4">
+          </video>
+        </div>
+        <div class="video-caption">Advans Soya Chunks - Protein for Every Plate</div>
+      </div>
+      <div class="video-card reveal">
+        <div class="video-wrapper">
+          <video controls poster="https://placehold.co/800x450/8b4b22/white?text=Mantra+Masala" preload="metadata">
+            <source src="Mantra_Katrina_3b3a655ba6.mp4" type="video/mp4">
+          </video>
+        </div>
+        <div class="video-caption">Mantra Masala - Flavorful Indian Cooking</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="trust-badge reveal" id="story">
+    <div class="section-header">
+      <h3>Making Lives Happier for 5+ Decades</h3>
+      <div class="trust-icons">
+        <i class="fas fa-tractor"></i>
+        <i class="fas fa-flask"></i>
+        <i class="fas fa-certificate"></i>
+        <i class="fas fa-users"></i>
+      </div>
+      <p style="margin-top:24px;">FSSAI certified - ISO 22000 - HACCP</p>
+    </div>
+  </div>
+
+  <section class="landing-cta reveal">
+    <h3>Ready to File a Complaint or Track Your Issue?</h3>
+    <p style="margin-bottom:1.5rem">The SAMA portal gives you real-time visibility on customer grievances and supports HO decision-making.</p>
+    <button class="landing-btn-primary" id="ctaSamaBtn">Launch SAMA Platform</button>
+  </section>
+
+  <footer>
+    <p>© 2025 Emami Agrotech Ltd. - Healthy &amp; Tasty, Himani Best Choice, Smart Balance. Crafted for happiness.</p>
+    <p style="margin-top:10px;"><i class="fas fa-phone-alt"></i> 1800-103-2206 | <i class="fas fa-envelope"></i> customercare@emamiagro.com</p>
+  </footer>
+
+  <div class="login-panel" id="portalLogin" aria-hidden="true">
+    <div class="login-card">
+      <button class="login-close" id="loginCloseBtn" type="button" aria-label="Close login">×</button>
+      <div class="login-brand">
+        <div class="login-logo">EA</div>
+        <div class="login-brand-text">
+          <strong>SAMA</strong>
+          <span>Emami Agrotech Ltd.</span>
+        </div>
+      </div>
+      <div class="login-tagline">Smart Addressal &amp; Management of Accounts - Secure Portal</div>
+      <div id="loginError" class="login-error hidden">Invalid credentials. Please try again.</div>
+      <div class="login-field">
+        <label for="loginUser">Username / Email</label>
+        <input type="text" id="loginUser" placeholder="Enter your username" autocomplete="username">
+      </div>
+      <div class="login-field">
+        <label for="loginPass">Password</label>
+        <input type="password" id="loginPass" placeholder="Enter your password" autocomplete="current-password">
+      </div>
+      <button class="login-submit" id="loginBtn">Sign In to SAMA</button>
+      <div class="login-demo-hint">
+        <p>Demo Access Credentials</p>
+        <div class="demo-accounts">
+          <div class="demo-account"><span>HO Staff</span><span><code>Debanjan Chakrobarti</code> / <code>123</code></span></div>
+          <div class="demo-account"><span>Customer</span><span><code>demo@customer.com</code> / <code>customer123</code></span></div>
+        </div>
+      </div>
+      <div class="login-footer">Made by Emami Agrotech Ltd. - SAMA v2.0</div>
+    </div>
+  </div>
+</div>
+
+<!-- MAIN APP -->
+<div id="app" class="hidden">
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-brand">
+      <div class="sidebar-logo">EA</div>
+      <div class="sidebar-brand-text">
+        <strong>SAMA</strong>
+        <span>Emami Agrotech</span>
+      </div>
+    </div>
+    <div class="sidebar-user">
+      <div class="sidebar-user-chip">
+        <div class="user-avatar" id="sideUserAvatar">U</div>
+        <div class="user-info">
+          <strong id="sideUserName">User</strong>
+          <span id="sideUserRole">Role</span>
+        </div>
+      </div>
+    </div>
+    <nav class="sidebar-nav" id="sideNav"></nav>
+    <div class="sidebar-footer">
+      <div class="net-chip"><div class="net-dot"></div><span id="netLabel">Connected</span></div>
+    </div>
+  </aside>
+
+  <div class="main">
+    <div class="topbar">
+      <div class="topbar-left">
+        <span class="topbar-title" id="topTitle">Dashboard</span>
+        <span class="topbar-sep">·</span>
+        <span class="topbar-sub" id="topSub">SAMA Platform</span>
+      </div>
+      <div class="topbar-right">
+        <div class="count-chip"><span class="num" id="totalCountChip">0</span><span class="lbl">complaints</span></div>
+        <div class="live-chip">Live</div>
+        <button class="topbar-logout" id="logoutBtn">
+          <svg width="13" height="13" viewBox="0 0 20 20" fill="none"><path d="M13 7l4 3-4 3M17 10H8M8 4H5a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h3" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          Logout
+        </button>
+      </div>
+    </div>
+
+    <div class="view-area">
+      <!-- NEW COMPLAINT VIEW -->
+      <div class="view" id="view-new">
+        <section class="customer-hero" aria-label="Customer portal welcome">
+          <div class="customer-hero-copy">
+            <div class="customer-kicker"><i class="fas fa-leaf"></i> SAMA Customer Care</div>
+            <h2>Raise a product concern with confidence.</h2>
+            <p>Share your product, batch, invoice, and photo details here. SAMA keeps your complaint organized from submission to resolution, with EMA available for quick guidance.</p>
+            <div class="customer-quick-row">
+              <span>24 hr acknowledgement</span>
+              <span>7-10 day resolution target</span>
+              <span>1800-103-2206</span>
+            </div>
+          </div>
+          <div class="customer-hero-media">
+            <div class="customer-logo-tile"><img src="unnamed-2.jpg" alt="Emami Agrotech logo"></div>
+            <div class="customer-anniversary-tile"><img src="Frame_520_28e963d1ba.png" alt="50 years making lives happier"></div>
+          </div>
+        </section>
+        <div class="section-intro">📋 File a new complaint against a product or delivery. All fields marked are required. Your complaint will be assigned a unique tracking ID.</div>
+        <form id="complaintForm" autocomplete="off">
+          <!-- Step 1 -->
+          <div class="card">
+            <div class="card-header">
+              <div class="step-badge">01</div>
+              <div><h3>Customer Information</h3><p>Your contact and location details</p></div>
+            </div>
+            <div class="form-grid g3">
+              <label class="field">Full Name <input type="text" name="customerName" id="f_customerName" placeholder="e.g. Rajesh Kumar" required></label>
+              <label class="field">Mobile Number <input type="tel" name="phone" placeholder="10-digit mobile" pattern="[0-9]{10}" required></label>
+              <label class="field">Email Address <input type="email" name="email" placeholder="optional"></label>
+            </div>
+            <div class="form-grid g2" style="margin-top:12px">
+              <label class="field">City / District <input type="text" name="location" id="f_location" placeholder="e.g. Kolkata, West Bengal" required></label>
+              <label class="field">Dealer / Distributor <input type="text" name="dealer" placeholder="Dealer name (if known)"></label>
+            </div>
+          </div>
+          <!-- Step 2 -->
+          <div class="card">
+            <div class="card-header">
+              <div class="step-badge">02</div>
+              <div><h3>Product Details</h3><p>Information about the product in question</p></div>
+            </div>
+            <div class="form-grid g3">
+              <label class="field">Product Name
+                <select name="productName" required>
+                  <option value="">Select product</option>
+                  <option>Emami Healthy &amp; Tasty Refined Sunflower Oil</option>
+                  <option>Emami Healthy &amp; Tasty Kachi Ghani Mustard Oil</option>
+                  <option>Emami Healthy &amp; Tasty Refined Soybean Oil</option>
+                  <option>Emami Healthy &amp; Tasty Refined Rice Bran Oil</option>
+                  <option>Emami Healthy &amp; Tasty Refined Groundnut Oil</option>
+                  <option>Emami Smart Balance Refined Oil</option>
+                  <option>Emami Healthy &amp; Tasty Premium Mustard Oil</option>
+                  <option>Emami Agro Vanaspati</option>
+                  <option>Other</option>
+                </select>
+              </label>
+              <label class="field">Pack Size / SKU <input type="text" name="sku" placeholder="e.g. 1L, 5L, 15L"></label>
+              <label class="field">Batch / Lot Number <input type="text" name="batch" placeholder="e.g. BT240501"></label>
+            </div>
+            <div class="form-grid g3" style="margin-top:12px">
+              <label class="field">Invoice / LR Number <input type="text" name="invoice" placeholder="Required for dispatch issues" required></label>
+              <label class="field">Delivery Date <input type="date" name="deliveryDate"></label>
+              <label class="field">Vehicle Number <input type="text" name="vehicle" placeholder="e.g. WB 24 AB 1234"></label>
+            </div>
+            <div class="form-grid g2" style="margin-top:12px">
+              <label class="field">Quantity Affected <input type="text" name="quantity" placeholder="e.g. 5 pouches, 2 tins"></label>
+              <label class="field" id="priorityFieldWrap">Priority
+                <select name="priority">
+                  <option value="Normal">Normal</option>
+                  <option value="High">High</option>
+                  <option value="Critical">Critical</option>
+                </select>
+              </label>
+            </div>
+          </div>
+          <!-- Step 3 -->
+          <div class="card">
+            <div class="card-header">
+              <div class="step-badge">03</div>
+              <div><h3>Issue Type &amp; Description</h3><p>Help us understand the nature of the problem</p></div>
+            </div>
+            <div class="issue-grid">
+              <label class="issue-card"><input type="radio" name="issueType" value="Quality / Taste Issue"><div class="issue-icon">🧪</div><strong>Quality / Taste</strong><small>Off-taste, odour, colour change</small></label>
+              <label class="issue-card"><input type="radio" name="issueType" value="Leakage / Damage"><div class="issue-icon">💧</div><strong>Leakage / Damage</strong><small>Pouch or tin damaged</small></label>
+              <label class="issue-card"><input type="radio" name="issueType" value="Short Delivery"><div class="issue-icon">📦</div><strong>Short Delivery</strong><small>Less quantity received</small></label>
+              <label class="issue-card"><input type="radio" name="issueType" value="Wrong Product"><div class="issue-icon">🔄</div><strong>Wrong Product</strong><small>Different SKU dispatched</small></label>
+              <label class="issue-card"><input type="radio" name="issueType" value="Expiry / Labelling"><div class="issue-icon">⏰</div><strong>Expiry / Labelling</strong><small>Near/past expiry, label error</small></label>
+              <label class="issue-card"><input type="radio" name="issueType" value="Delayed Delivery"><div class="issue-icon">🚛</div><strong>Delayed Delivery</strong><small>Dispatch not on schedule</small></label>
+            </div>
+            <label class="field">Detailed Description
+              <textarea name="description" rows="4" placeholder="Please describe the issue clearly — batch number, exact problem, when noticed, etc." required></textarea>
+            </label>
+            <div class="upload-zone">
+              <label class="upload-label" for="photoInput">
+                <svg width="18" height="18" viewBox="0 0 20 20" fill="none"><path d="M13 7l-3-3-3 3M10 4v9M3 14v1a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-1" stroke="#6B7280" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                Attach Photos (optional, max 5)
+              </label>
+              <input type="file" id="photoInput" accept="image/*" multiple>
+            </div>
+            <div class="preview-list" id="previewList"></div>
+          </div>
+          <!-- Actions -->
+          <div class="form-actions">
+            <button type="reset" class="btn btn-secondary">
+              <svg width="14" height="14" viewBox="0 0 20 20" fill="none"><path d="M4 4l12 12M4 16L16 4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+              Reset
+            </button>
+            <button type="submit" class="btn btn-primary" id="submitBtn">
+              <svg width="14" height="14" viewBox="0 0 20 20" fill="none"><path d="M4 10h12M12 6l4 4-4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              Submit Complaint
+            </button>
+          </div>
+        </form>
+      </div>
+
+      <!-- MY COMPLAINTS (Customer) -->
+      <div class="view" id="view-mycomplaints">
+        <div class="toolbar">
+          <div class="toolbar-left">
+            <h2>My Complaints</h2>
+            <p>Track complaints you have submitted</p>
+          </div>
+          <div class="toolbar-right">
+            <select class="filter-select" id="myStatusFilter">
+              <option>All</option><option>Submitted</option><option>Under review</option><option>Resolved</option><option>Closed</option>
+            </select>
+          </div>
+        </div>
+        <div id="myComplaintList"></div>
+      </div>
+
+      <!-- HO DASHBOARD -->
+      <div class="view" id="view-ho">
+        <div class="ho-header">
+          <div><h2>HO Operations Dashboard</h2><p>Real-time complaint analytics — Emami Agrotech Ltd.</p></div>
+          <div class="ho-header-right">
+            <button class="btn btn-secondary btn-sm" id="hoRefreshBtn">
+              <svg width="13" height="13" viewBox="0 0 20 20" fill="none"><path d="M4 10a6 6 0 0 1 10.5-4M16 4v4h-4M16 10a6 6 0 0 1-10.5 4M4 16v-4h4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              Refresh
+            </button>
+            <button class="btn btn-secondary btn-sm" id="hoExportBtn">
+              <svg width="13" height="13" viewBox="0 0 20 20" fill="none"><path d="M4 14v2a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1v-2M10 4v9M7 11l3 3 3-3" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              Export Excel
+            </button>
+          </div>
+        </div>
+        <div class="kpi-row" id="kpiRow"></div>
+        <div class="ho-grid">
+          <div class="card">
+            <div class="chart-title">Issues by Type <span style="font-size:10.5px;color:var(--muted);font-weight:400">Last 25 complaints</span></div>
+            <div id="issueChart"></div>
+          </div>
+          <div class="card">
+            <div class="chart-title">Priority Distribution</div>
+            <div class="donut-wrap" id="priorityChart"></div>
+          </div>
+          <div class="card ho-full">
+            <div class="chart-title">Recent Complaints <span style="font-size:10.5px;color:var(--muted);font-weight:400">Click "EMA Gist" for AI summary</span></div>
+            <div class="table-wrap">
+              <table class="data-table">
+                <thead><tr><th>ID</th><th>Customer</th><th>Product</th><th>Issue</th><th>Priority</th><th>Status</th><th>Date</th><th>Action</th></tr></thead>
+                <tbody id="hoTableBody"></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ALL COMPLAINTS (HO) -->
+      <div class="view" id="view-track">
+        <div class="toolbar">
+          <div class="toolbar-left">
+            <h2>All Complaints</h2>
+            <p>View, filter, and update complaint statuses</p>
+          </div>
+          <div class="toolbar-right">
+            <select class="filter-select" id="statusFilter">
+              <option>All</option><option>Submitted</option><option>Under review</option><option>Resolved</option><option>Closed</option>
+            </select>
+            <button class="btn btn-secondary btn-sm" id="exportJsonBtn">JSON</button>
+            <button class="btn btn-secondary btn-sm" id="exportExcelBtn">Excel</button>
+          </div>
+        </div>
+        <div id="complaintList"></div>
+      </div>
+
+      <!-- HELP -->
+      <div class="view" id="view-help">
+        <div class="toolbar-left" style="margin-bottom:18px">
+          <h2>Help &amp; Reference</h2>
+          <p>Guidelines, SLA, and contact information for SAMA platform</p>
+        </div>
+        <div class="help-grid">
+          <div class="card">
+            <div class="card-header"><div class="step-badge">?</div><div><h3>Complaint Registration</h3><p>Step-by-step process</p></div></div>
+            <ul class="help-list">
+              <li>Fill all required fields in the "New Complaint" form</li>
+              <li>Select the correct issue type and priority</li>
+              <li>Attach photos of damage (if applicable)</li>
+              <li>Submit — you will receive a tracking ID (e.g. EA-XXXXXX)</li>
+              <li>Track your complaint status under "My Complaints"</li>
+            </ul>
+          </div>
+          <div class="card">
+            <div class="card-header"><div class="step-badge">⏱</div><div><h3>SLA &amp; Timelines</h3><p>Expected resolution times</p></div></div>
+            <div class="status-legend">
+              <div><span class="pill pill-submitted">Submitted</span><span style="margin-left:10px;font-size:13px">Acknowledged within 24 hours</span></div>
+              <div><span class="pill pill-review">Under Review</span><span style="margin-left:10px;font-size:13px">Investigation within 3 business days</span></div>
+              <div><span class="pill pill-resolved">Resolved</span><span style="margin-left:10px;font-size:13px">Resolution confirmed with customer</span></div>
+              <div><span class="pill pill-closed">Closed</span><span style="margin-left:10px;font-size:13px">Case archived post-verification</span></div>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-header"><div class="step-badge">📞</div><div><h3>Escalation Matrix</h3><p>Contact for urgent cases</p></div></div>
+            <ul class="help-list">
+              <li>Toll-free helpline: 1800-103-2206 (Mon–Sat, 9am–6pm)</li>
+              <li>Email: customercare@emamiagro.com</li>
+              <li>Regional HO Kolkata: +91-33-6613-6000</li>
+              <li>Quality team (Critical issues): quality@emamiagro.com</li>
+            </ul>
+          </div>
+          <div class="card">
+            <div class="card-header"><div class="step-badge">🛡</div><div><h3>Priority Guide</h3><p>When to raise priority level</p></div></div>
+            <ul class="help-list">
+              <li><strong>Normal:</strong> Minor labelling, slight deviation, general feedback</li>
+              <li><strong>High:</strong> Leakage, short delivery, taste/quality concern</li>
+              <li><strong>Critical:</strong> Food safety risk, large volume, contamination suspected</li>
+            </ul>
+          </div>
+          <div class="card help-full">
+            <div class="card-header"><div class="step-badge">💡</div><div><h3>About SAMA</h3><p>Smart Addressal &amp; Management of Accounts</p></div></div>
+            <p style="font-size:13px;color:var(--muted);line-height:1.7">SAMA is Emami Agrotech Ltd.'s proprietary complaint management and customer support platform. Built to streamline complaint registration, tracking, and resolution across our extensive product and distribution network — spanning sunflower, mustard, soybean, rice bran, groundnut oils and more. The embedded AI assistant EMA provides 24/7 support to customers. All complaint data is stored locally for privacy; exports are available in JSON and Excel formats.</p>
+          </div>
+        </div>
+      </div>
+    </div><!-- /view-area -->
+  </div><!-- /main -->
+</div><!-- /app -->
+
+<!-- SUCCESS DIALOG -->
+<dialog id="successDialog">
+  <div class="dialog-body">
+    <div class="success-ring">
+      <svg viewBox="0 0 68 68" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle class="ring-circle" cx="34" cy="34" r="30" stroke="#0B8457" stroke-width="3" stroke-linecap="round"/>
+        <path class="check-path" d="M20 34l10 10 18-18" stroke="#0B8457" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </div>
+    <h2>Complaint Registered!</h2>
+    <p>Your complaint has been submitted successfully.<br>Please save your Complaint ID for tracking.</p>
+    <div class="id-chip" id="generatedId">EA-000000</div>
+    <div class="id-hint">Save this ID to track your complaint status</div>
+    <div class="dialog-actions">
+      <button class="btn btn-secondary" id="copyIdBtn">Copy ID</button>
+      <button class="btn btn-primary" id="dialogClose">Track Complaint →</button>
+    </div>
+  </div>
+</dialog>
+
+<!-- STATUS DIALOG (HO only) -->
+<dialog id="statusDialog">
+  <div class="dialog-body">
+    <h3>Update Complaint Status</h3>
+    <div class="dialog-id-sub" id="statusDialogId">EA-000000</div>
+    <select id="statusSelect">
+      <option>Submitted</option>
+      <option>Under review</option>
+      <option>Resolved</option>
+      <option>Closed</option>
+    </select>
+    <div class="dialog-actions">
+      <button class="btn btn-secondary" id="statusCancel">Cancel</button>
+      <button class="btn btn-primary" id="statusSave">Save Status</button>
+    </div>
+  </div>
+</dialog>
+
+<!-- TOAST -->
+<div id="toast"></div>
+
+<!-- EMA CHATBOT -->
+<button class="chat-fab hidden" id="chatFab" title="Chat with EMA">🤖<div class="notif-dot hidden" id="chatNotif"></div></button>
+<div class="chat-window hidden" id="chatWindow">
+  <div class="chat-header">
+    <div class="chat-avatar">🤖</div>
+    <div class="chat-header-text"><strong>EMA Assistant</strong><span>Emami Agrotech Support AI</span></div>
+    <div class="chat-header-right">
+      <button class="chat-head-btn" id="voiceToggleBtn" title="Toggle voice output">🔊</button>
+      <button class="chat-head-btn" id="chatCloseBtn" title="Close">✕</button>
+    </div>
+  </div>
+  <div class="chat-msgs" id="chatMsgs"></div>
+  <div class="chat-input-area">
+    <textarea class="chat-input" id="chatInput" placeholder="Ask EMA anything…" rows="1"></textarea>
+    <button class="chat-action-btn chat-mic-btn" id="micBtn" title="Voice input">🎙</button>
+    <button class="chat-action-btn chat-send-btn" id="chatSendBtn" title="Send">
+      <svg width="16" height="16" viewBox="0 0 20 20" fill="none"><path d="M4 10h12M12 6l4 4-4 4" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+  </div>
+</div>
+
+<script>
+// ═══════════════════════════════════════════════════════
+//  SOUND ENGINE (Web Audio API)
+// ═══════════════════════════════════════════════════════
+const AC = new (window.AudioContext || window.webkitAudioContext)();
+function playTone(type) {
+  try {
+    const g = AC.createGain();
+    g.connect(AC.destination);
+    const o = AC.createOscillator();
+    o.connect(g);
+    const profiles = {
+      click:   { f:[600,400], t:[0,.06,.12], v:[0,.15,0], wt:'sine' },
+      submit:  { f:[523,659,784], t:[0,.1,.25,.4], v:[0,.2,.18,0], wt:'sine' },
+      success: { f:[523,659,784,1047], t:[0,.08,.18,.3,.5], v:[0,.25,.22,.2,0], wt:'sine' },
+      error:   { f:[220,180], t:[0,.1,.25], v:[0,.2,0], wt:'sawtooth' },
+      export:  { f:[440,550], t:[0,.08,.2], v:[0,.15,0], wt:'sine' },
+      notify:  { f:[800,900], t:[0,.05,.15], v:[0,.18,0], wt:'sine' },
+      listen:  { f:[440,880,440], t:[0,.1,.2,.35], v:[0,.15,.12,0], wt:'sine' },
+      login:   { f:[523,659,784,1047,1319], t:[0,.07,.15,.25,.38,.5], v:[0,.2,.18,.16,.14,0], wt:'sine' }
+    };
+    const p = profiles[type] || profiles.click;
+    o.type = p.wt;
+    const now = AC.currentTime;
+    p.f.forEach((f, i) => {
+      o.frequency.setValueAtTime(f, now + (p.t[i] || 0));
+    });
+    p.v.forEach((v, i) => {
+      const fn = i === 0 ? 'setValueAtTime' : 'linearRampToValueAtTime';
+      g.gain[fn](v, now + (p.t[i] || 0));
+    });
+    o.start(now);
+    o.stop(now + p.t[p.t.length - 1]);
+  } catch(e) {}
+}
+
+// ═══════════════════════════════════════════════════════
+//  AUTH SYSTEM
+// ═══════════════════════════════════════════════════════
+const ACCOUNTS = {
+  'Debanjan Chakrobarti': { pass:'123', role:'ho', name:'Debanjan Chakrobarti', id:'ho-001' },
+  'demo@customer.com':    { pass:'customer123', role:'customer', name:'Demo Customer', id:'demo-cust-001' }
+};
+const getSession = () => {
+  try { return JSON.parse(sessionStorage.getItem('sama_session')); } catch { return null; }
+};
+const setSession = d => sessionStorage.setItem('sama_session', JSON.stringify(d));
+const clearSession = () => sessionStorage.removeItem('sama_session');
+
+// ═══════════════════════════════════════════════════════
+//  STORAGE
+// ═══════════════════════════════════════════════════════
+const getComplaints = () => {
+  try { return JSON.parse(localStorage.getItem('sama_complaints')) || []; } catch { return []; }
+};
+const saveComplaints = d => localStorage.setItem('sama_complaints', JSON.stringify(d));
+
+const makeId = () => {
+  const n = String(Math.floor(Math.random()*900000)+100000);
+  return `EA-${n}`;
+};
+
+// ═══════════════════════════════════════════════════════
+//  TOAST
+// ═══════════════════════════════════════════════════════
+let toastTimer;
+function toast(msg, dur=2800) {
+  const el = document.getElementById('toast');
+  el.textContent = msg;
+  el.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => el.classList.remove('show'), dur);
+}
+
+// ═══════════════════════════════════════════════════════
+//  FORMAT HELPERS
+// ═══════════════════════════════════════════════════════
+const fmtDate = iso => new Intl.DateTimeFormat('en-IN',{day:'2-digit',month:'short',year:'numeric'}).format(new Date(iso));
+const pillClass = s => ({'Submitted':'pill-submitted','Under review':'pill-review','Resolved':'pill-resolved','Closed':'pill-closed'}[s]||'');
+const prioClass = p => ({'Normal':'pill-normal','High':'pill-high','Critical':'pill-critical'}[p]||'');
+
+// ═══════════════════════════════════════════════════════
+//  PREMIUM MOTION HELPERS
+// ═══════════════════════════════════════════════════════
+let particleResizeHandler = null;
+function startParticleCanvas() {
+  if (document.getElementById('particle-canvas')) return;
+  const canvas = document.createElement('canvas');
+  canvas.id = 'particle-canvas';
+  document.body.insertBefore(canvas, document.body.firstChild);
+  const ctx = canvas.getContext('2d');
+  let particles = [];
+  function resizeCanvas() {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+  }
+  particleResizeHandler = resizeCanvas;
+  window.addEventListener('resize', resizeCanvas);
+  resizeCanvas();
+  for (let i = 0; i < 60; i++) {
+    particles.push({
+      x: Math.random() * canvas.width,
+      y: Math.random() * canvas.height,
+      radius: Math.random() * 3 + 1,
+      alpha: Math.random() * 0.3 + 0.1,
+      speedX: (Math.random() - 0.5) * 0.3,
+      speedY: (Math.random() - 0.5) * 0.3
+    });
+  }
+  function animateParticles() {
+    if (!canvas.isConnected) return;
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    particles.forEach(p => {
+      p.x += p.speedX;
+      p.y += p.speedY;
+      if (p.x < 0) p.x = canvas.width;
+      if (p.x > canvas.width) p.x = 0;
+      if (p.y < 0) p.y = canvas.height;
+      if (p.y > canvas.height) p.y = 0;
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(245, 182, 66, ${p.alpha})`;
+      ctx.fill();
+    });
+    requestAnimationFrame(animateParticles);
+  }
+  animateParticles();
+}
+function stopParticleCanvas() {
+  const canvas = document.getElementById('particle-canvas');
+  if (canvas) canvas.remove();
+  if (particleResizeHandler) {
+    window.removeEventListener('resize', particleResizeHandler);
+    particleResizeHandler = null;
+  }
+}
+function attachComplaintPreviews(container, complaints) {
+  if (!container) return;
+  container.querySelectorAll('.complaint-card').forEach((card, i) => {
+    const c = complaints[i];
+    if (!c || card.dataset.previewReady) return;
+    card.dataset.previewReady = 'true';
+    card.addEventListener('mouseenter', () => {
+      const tooltip = document.createElement('div');
+      tooltip.className = 'ema-preview-tooltip';
+      const desc = c.description || '';
+      const summary = desc ? desc.slice(0, 80) + (desc.length > 80 ? '…' : '') : `${c.issueType} - ${c.productName}`;
+      tooltip.textContent = `✨ EMA: ${summary}`;
+      document.body.appendChild(tooltip);
+      const move = ev => {
+        tooltip.style.left = (ev.clientX + 15) + 'px';
+        tooltip.style.top = (ev.clientY - 30) + 'px';
+      };
+      window.addEventListener('mousemove', move);
+      card.addEventListener('mouseleave', () => {
+        tooltip.remove();
+        window.removeEventListener('mousemove', move);
+      }, { once: true });
+    });
+  });
+}
+
+// ═══════════════════════════════════════════════════════
+//  NAVIGATION
+// ═══════════════════════════════════════════════════════
+const HO_NAV = [
+  { view:'ho', icon:'<path d="M3 17V9l7-6 7 6v8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><rect x="7" y="12" width="6" height="5" rx="1" stroke="currentColor" stroke-width="1.5"/>', label:'HO Dashboard' },
+  { view:'track', icon:'<rect x="3" y="3" width="14" height="14" rx="3" stroke="currentColor" stroke-width="1.8"/><path d="M7 10h6M7 7h4M7 13h3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>', label:'All Complaints' },
+  { view:'help', icon:'<circle cx="10" cy="10" r="7" stroke="currentColor" stroke-width="1.8"/><path d="M10 11.5V12M10 8a2 2 0 0 1 1 3.732" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>', label:'Help' }
+];
+const CUST_NAV = [
+  { view:'new', icon:'<path d="M10 4v12M4 10h12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>', label:'New Complaint' },
+  { view:'mycomplaints', icon:'<rect x="3" y="3" width="14" height="14" rx="3" stroke="currentColor" stroke-width="1.8"/><path d="M7 10h6M7 7h4M7 13h3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>', label:'My Complaints' },
+  { view:'help', icon:'<circle cx="10" cy="10" r="7" stroke="currentColor" stroke-width="1.8"/><path d="M10 11.5V12M10 8a2 2 0 0 1 1 3.732" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>', label:'Help' }
+];
+const VIEW_TITLES = {
+  ho:{ title:'HO Dashboard', sub:'Real-time Operations Analytics' },
+  track:{ title:'All Complaints', sub:'Manage & Update' },
+  help:{ title:'Help & Reference', sub:'SAMA User Guide' },
+  new:{ title:'New Complaint', sub:'Register a complaint' },
+  mycomplaints:{ title:'My Complaints', sub:'Track your submissions' }
+};
+
+let currentView = '';
+function switchView(view) {
+  if (currentView === view) return;
+  playTone('click');
+  document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(n => {
+    n.classList.toggle('active', n.dataset.view === view);
+  });
+  const el = document.getElementById('view-' + view);
+  if (el) { el.classList.add('active'); }
+  currentView = view;
+  const t = VIEW_TITLES[view] || {};
+  document.getElementById('topTitle').textContent = t.title || view;
+  document.getElementById('topSub').textContent = t.sub || '';
+  if (view === 'ho') renderHO();
+  if (view === 'track') renderComplaints();
+  if (view === 'mycomplaints') renderMyComplaints();
+}
+
+function buildNav(role) {
+  const nav = role === 'ho' ? HO_NAV : CUST_NAV;
+  const el = document.getElementById('sideNav');
+  el.innerHTML = nav.map(n => `
+    <button class="nav-item" data-view="${n.view}" type="button">
+      <svg class="nav-icon" viewBox="0 0 20 20" fill="none">${n.icon}</svg>
+      ${n.label}
+    </button>
+  `).join('');
+  el.querySelectorAll('.nav-item').forEach(btn => {
+    btn.addEventListener('click', () => switchView(btn.dataset.view));
+  });
+}
+
+// ═══════════════════════════════════════════════════════
+//  BOOT / LOGIN
+// ═══════════════════════════════════════════════════════
+function bootApp(session) {
+  const role = session.role;
+  document.getElementById('app').classList.toggle('customer-mode', role === 'customer');
+  document.getElementById('sideUserName').textContent = session.name.split(' ')[0];
+  document.getElementById('sideUserRole').textContent = role === 'ho' ? 'HO Staff' : 'Customer';
+  document.getElementById('sideUserAvatar').textContent = session.name[0].toUpperCase();
+  buildNav(role);
+  // Hide priority for customers
+  if (role === 'customer') {
+    document.getElementById('priorityFieldWrap').style.display = 'none';
+    // Pre-fill name
+    document.getElementById('f_customerName').value = session.name;
+    document.getElementById('f_location').value = 'Kolkata, West Bengal';
+    document.getElementById('chatFab').classList.remove('hidden');
+    document.getElementById('chatWindow').classList.remove('hidden');
+    switchView('new');
+  } else {
+    document.getElementById('chatFab').classList.add('hidden');
+    document.getElementById('chatWindow').classList.add('hidden');
+    switchView('ho');
+  }
+  updateCount();
+  startParticleCanvas();
+}
+
+function login(user, pass) {
+  const acc = ACCOUNTS[user];
+  if (!acc || acc.pass !== pass) return false;
+  const session = { user, name:acc.name, role:acc.role, id:acc.id };
+  setSession(session);
+  return session;
+}
+
+document.getElementById('loginBtn').addEventListener('click', () => {
+  const user = document.getElementById('loginUser').value.trim();
+  const pass = document.getElementById('loginPass').value;
+  const err = document.getElementById('loginError');
+  const session = login(user, pass);
+  if (!session) {
+    err.classList.remove('hidden');
+    playTone('error');
+    return;
+  }
+  err.classList.add('hidden');
+  playTone('login');
+  document.getElementById('portalLogin').classList.remove('open');
+  document.getElementById('portalLogin').setAttribute('aria-hidden', 'true');
+  document.getElementById('loginPage').classList.add('hidden');
+  document.getElementById('app').classList.remove('hidden');
+  bootApp(session);
+});
+document.getElementById('loginPass').addEventListener('keydown', e => {
+  if (e.key === 'Enter') document.getElementById('loginBtn').click();
+});
+
+const portalLogin = document.getElementById('portalLogin');
+function openPortalLogin(e) {
+  if (e) e.preventDefault();
+  playTone('click');
+  portalLogin.classList.add('open');
+  portalLogin.setAttribute('aria-hidden', 'false');
+  setTimeout(() => document.getElementById('loginUser').focus(), 80);
+}
+function closePortalLogin() {
+  playTone('click');
+  portalLogin.classList.remove('open');
+  portalLogin.setAttribute('aria-hidden', 'true');
+}
+document.getElementById('enterSamaBtn').addEventListener('click', openPortalLogin);
+document.getElementById('ctaSamaBtn').addEventListener('click', openPortalLogin);
+document.getElementById('loginCloseBtn').addEventListener('click', closePortalLogin);
+portalLogin.addEventListener('click', e => {
+  if (e.target === portalLogin) closePortalLogin();
+});
+document.getElementById('discoverBtn').addEventListener('click', () => {
+  playTone('click');
+  document.getElementById('products').scrollIntoView({ behavior:'smooth', block:'start' });
+});
+document.getElementById('exploreStory').addEventListener('click', () => {
+  playTone('notify');
+  document.getElementById('story').scrollIntoView({ behavior:'smooth', block:'start' });
+});
+if ('IntersectionObserver' in window) {
+  const revealObserver = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('active');
+        revealObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.18 });
+  document.querySelectorAll('#loginPage .reveal').forEach(el => revealObserver.observe(el));
+} else {
+  document.querySelectorAll('#loginPage .reveal').forEach(el => el.classList.add('active'));
+}
+
+document.getElementById('logoutBtn').addEventListener('click', () => {
+  clearSession();
+  document.getElementById('app').classList.add('hidden');
+  document.getElementById('app').classList.remove('customer-mode');
+  stopParticleCanvas();
+  document.getElementById('loginPage').classList.remove('hidden');
+  portalLogin.classList.remove('open');
+  portalLogin.setAttribute('aria-hidden', 'true');
+  playTone('click');
+  toast('Logged out successfully.');
+});
+
+// ═══════════════════════════════════════════════════════
+//  COMPLAINT FORM
+// ═══════════════════════════════════════════════════════
+let selectedPhotos = [];
+const previewList = document.getElementById('previewList');
+
+document.getElementById('photoInput').addEventListener('change', async e => {
+  const files = Array.from(e.target.files).slice(0, 5);
+  selectedPhotos = await Promise.all(files.map(f => new Promise((res, rej) => {
+    const r = new FileReader();
+    r.onload = () => res({ name: f.name, dataUrl: r.result });
+    r.onerror = () => rej();
+    r.readAsDataURL(f);
+  })));
+  previewList.innerHTML = selectedPhotos.map(p => `<img src="${p.dataUrl}" alt="${p.name}">`).join('');
+});
+
+document.getElementById('complaintForm').addEventListener('submit', e => {
+  e.preventDefault();
+  const session = getSession();
+  const fd = new FormData(e.target);
+  const complaint = {
+    id: makeId(), status: 'Submitted',
+    createdAt: new Date().toISOString(),
+    customerId: session ? session.id : 'anon',
+    customerName: fd.get('customerName'),
+    phone: fd.get('phone'), email: fd.get('email') || '',
+    location: fd.get('location'), dealer: fd.get('dealer') || '',
+    productName: fd.get('productName'),
+    sku: fd.get('sku'), batch: fd.get('batch') || '',
+    invoice: fd.get('invoice'), deliveryDate: fd.get('deliveryDate') || '',
+    vehicle: fd.get('vehicle') || '',
+    quantity: fd.get('quantity'), priority: fd.get('priority') || 'Normal',
+    issueType: fd.get('issueType'), description: fd.get('description'),
+    photos: selectedPhotos
+  };
+  saveComplaints([complaint, ...getComplaints()]);
+  e.target.reset();
+  selectedPhotos = [];
+  previewList.innerHTML = '';
+  document.getElementById('generatedId').textContent = complaint.id;
+  playTone('submit');
+  setTimeout(() => {
+    playTone('success');
+    const canvasConfetti = window.canvasConfetti || window.confetti;
+    if (typeof canvasConfetti === 'function') {
+      canvasConfetti({
+        particleCount: 150,
+        spread: 70,
+        origin: { y: 0.6 },
+        colors: ['#f5b642', '#2b5e3b', '#ffde9c']
+      });
+    }
+  }, 300);
+  document.getElementById('successDialog').showModal();
+  updateCount();
+});
+document.getElementById('complaintForm').addEventListener('reset', () => {
+  selectedPhotos = []; previewList.innerHTML = '';
+});
+
+document.getElementById('dialogClose').addEventListener('click', () => {
+  document.getElementById('successDialog').close();
+  const session = getSession();
+  switchView(session && session.role === 'customer' ? 'mycomplaints' : 'track');
+});
+
+document.getElementById('copyIdBtn').addEventListener('click', () => {
+  const id = document.getElementById('generatedId').textContent;
+  navigator.clipboard.writeText(id).then(() => toast('ID copied to clipboard!'));
+  playTone('click');
+});
+
+// ═══════════════════════════════════════════════════════
+//  MY COMPLAINTS (Customer)
+// ═══════════════════════════════════════════════════════
+function renderMyComplaints() {
+  const session = getSession();
+  const filter = document.getElementById('myStatusFilter').value;
+  let all = getComplaints().filter(c => !session || c.customerId === session.id || c.customerId === 'anon');
+  if (filter !== 'All') all = all.filter(c => c.status === filter);
+  const el = document.getElementById('myComplaintList');
+  if (!all.length) {
+    el.innerHTML = `<div class="empty-state"><div class="icon">📭</div><p>No complaints found${filter !== 'All' ? ' for this filter' : ''}.<br>File a new one using the "New Complaint" tab.</p></div>`;
+    return;
+  }
+  el.innerHTML = all.map((c, i) => `
+    <article class="complaint-card" style="animation-delay:${i*30}ms">
+      <div style="min-width:0">
+        <span class="complaint-id">${c.id}</span>
+        <div class="complaint-title">${c.issueType}</div>
+        <div class="complaint-meta">
+          <span>${c.productName}</span><span>${c.sku}</span><span>Inv: ${c.invoice}</span><span>${fmtDate(c.createdAt)}</span>
+        </div>
+        <div style="margin-top:7px;font-size:12px;color:var(--muted);line-height:1.5">${c.description.length > 120 ? c.description.slice(0,117)+'…' : c.description}</div>
+      </div>
+      <div class="card-right">
+        <span class="pill ${pillClass(c.status)}">${c.status}</span>
+        <span class="pill ${prioClass(c.priority)}">${c.priority}</span>
+      </div>
+    </article>
+  `).join('');
+  attachComplaintPreviews(el, all);
+}
+document.getElementById('myStatusFilter').addEventListener('change', renderMyComplaints);
+
+// ═══════════════════════════════════════════════════════
+//  TRACK / ALL COMPLAINTS (HO)
+// ═══════════════════════════════════════════════════════
+function renderComplaints() {
+  const filter = document.getElementById('statusFilter').value;
+  let all = getComplaints();
+  if (filter !== 'All') all = all.filter(c => c.status === filter);
+  const el = document.getElementById('complaintList');
+  if (!all.length) {
+    el.innerHTML = `<div class="empty-state"><div class="icon">📭</div><p>No complaints found${filter !== 'All' ? ' for this filter' : ''}.</p></div>`;
+    return;
+  }
+  el.innerHTML = all.map((c, i) => `
+    <article class="complaint-card" style="animation-delay:${i*30}ms">
+      <div style="min-width:0">
+        <span class="complaint-id">${c.id}</span>
+        <div class="complaint-title">${c.issueType}</div>
+        <div class="complaint-meta">
+          <span>${c.customerName}</span><span>${c.productName}</span><span>${c.sku}</span><span>Inv: ${c.invoice}</span><span>${fmtDate(c.createdAt)}</span>
+        </div>
+        <div class="gist-container" id="gist-${c.id}"></div>
+      </div>
+      <div class="card-right">
+        <span class="pill ${pillClass(c.status)}">${c.status}</span>
+        <span class="pill ${prioClass(c.priority)}">${c.priority}</span>
+        <button class="btn btn-secondary btn-sm" onclick="openStatusDialog('${c.id}','${c.status}')">Edit</button>
+        <button class="gist-btn" onclick="emaGist('${c.id}')">✨ EMA Gist</button>
+      </div>
+    </article>
+  `).join('');
+  attachComplaintPreviews(el, all);
+}
+document.getElementById('statusFilter').addEventListener('change', renderComplaints);
+
+// EMA Gist — extractive summary
+window.emaGist = function(id) {
+  const c = getComplaints().find(x => x.id === id);
+  if (!c) return;
+  playTone('notify');
+  const desc = c.description || '';
+  const sentences = desc.split(/[.!?]+/).map(s => s.trim()).filter(Boolean);
+  let summary;
+  if (!sentences.length) { summary = `${c.issueType} — ${c.productName} (${c.sku}).`; }
+  else {
+    const s = sentences[0];
+    summary = s.length > 120 ? s.slice(0, 117) + '…' : s;
+  }
+  const el = document.getElementById('gist-' + id);
+  if (el) {
+    el.innerHTML = `<div class="gist-tooltip">🤖 EMA: <em>"${summary}"</em></div>`;
+  }
+};
+
+// ═══════════════════════════════════════════════════════
+//  STATUS DIALOG
+// ═══════════════════════════════════════════════════════
+let statusTarget = null;
+window.openStatusDialog = (id, curr) => {
+  playTone('click');
+  statusTarget = id;
+  document.getElementById('statusDialogId').textContent = id;
+  document.getElementById('statusSelect').value = curr;
+  document.getElementById('statusDialog').showModal();
+};
+document.getElementById('statusCancel').addEventListener('click', () => {
+  document.getElementById('statusDialog').close();
+});
+document.getElementById('statusSave').addEventListener('click', () => {
+  const all = getComplaints();
+  const newStatus = document.getElementById('statusSelect').value;
+  const idx = all.findIndex(c => c.id === statusTarget);
+  if (idx >= 0) { all[idx].status = newStatus; saveComplaints(all); }
+  document.getElementById('statusDialog').close();
+  playTone('click');
+  toast('Status updated to: ' + newStatus);
+  renderComplaints();
+  updateCount();
+});
+
+// ═══════════════════════════════════════════════════════
+//  COUNT
+// ═══════════════════════════════════════════════════════
+function animateNumber(element, start, end, duration = 800) {
+  if (!element) return;
+  const range = end - start;
+  const startTime = performance.now();
+  const update = currentTime => {
+    const elapsed = currentTime - startTime;
+    const progress = Math.min(elapsed / duration, 1);
+    const value = Math.floor(start + range * progress);
+    element.textContent = value;
+    if (progress < 1) requestAnimationFrame(update);
+  };
+  requestAnimationFrame(update);
+}
+
+function updateCount() {
+  const countEl = document.getElementById('totalCountChip');
+  const oldCount = parseInt(countEl.textContent, 10) || 0;
+  const newCount = getComplaints().length;
+  animateNumber(countEl, oldCount, newCount);
+}
+
+// ═══════════════════════════════════════════════════════
+//  HO DASHBOARD
+// ═══════════════════════════════════════════════════════
+function renderHO() {
+  const data = getComplaints();
+  renderKPIs(data);
+  renderBarChart(data);
+  renderDonut(data);
+  renderHOTable(data);
+}
+function renderKPIs(data) {
+  const total = data.length;
+  const open = data.filter(c => ['Submitted','Under review'].includes(c.status)).length;
+  const critical = data.filter(c => c.priority === 'Critical').length;
+  const resolved = data.filter(c => ['Resolved','Closed'].includes(c.status)).length;
+  const rate = total ? Math.round(resolved/total*100) : 0;
+  document.getElementById('kpiRow').innerHTML = [
+    { cls:'k-green', label:'Total Complaints', val:total, sub:'All time' },
+    { cls:'k-amber', label:'Open / Active', val:open, sub:'Needs attention' },
+    { cls:'k-red', label:'Critical Priority', val:critical, sub:'Escalate immediately' },
+    { cls:'k-blue', label:'Resolved / Closed', val:resolved, sub:`Completion rate: ${rate}%` }
+  ].map((k,i) => `
+    <div class="kpi-card ${k.cls}" style="animation-delay:${i*70}ms">
+      <div class="kpi-accent"></div>
+      <div class="kpi-label">${k.label}</div>
+      <div class="kpi-value">${k.val}</div>
+      <div class="kpi-sub">${k.sub}</div>
+    </div>
+  `).join('');
+}
+function renderBarChart(data) {
+  const counts = {};
+  data.forEach(c => { counts[c.issueType] = (counts[c.issueType]||0) + 1; });
+  const el = document.getElementById('issueChart');
+  if (!Object.keys(counts).length) { el.innerHTML = `<div style="color:var(--muted);font-size:13px;padding:20px 0">No data yet.</div>`; return; }
+  const max = Math.max(1, ...Object.values(counts));
+  el.innerHTML = Object.entries(counts).sort((a,b) => b[1]-a[1]).map(([label, count]) => `
+    <div class="bar-row">
+      <div class="bar-label" title="${label}">${label}</div>
+      <div class="bar-track"><div class="bar-fill" data-pct="${Math.round(count/max*100)}"></div></div>
+      <div class="bar-count">${count}</div>
+    </div>
+  `).join('');
+  setTimeout(() => el.querySelectorAll('.bar-fill').forEach(b => b.style.width = b.dataset.pct+'%'), 50);
+}
+function renderDonut(data) {
+  const counts = { Normal:0, High:0, Critical:0 };
+  data.forEach(c => { if (counts[c.priority] !== undefined) counts[c.priority]++; });
+  const total = data.length || 1;
+  const colors = { Normal:'#2563EB', High:'#D97706', Critical:'#DC2626' };
+  const r=42, cx=55, cy=55, circ=2*Math.PI*r;
+  let offset = 0;
+  const arcs = Object.entries(counts).map(([label, count]) => {
+    const pct = count / total;
+    const dash = pct * circ;
+    const arc = `<circle cx="${cx}" cy="${cy}" r="${r}" fill="none" stroke="${colors[label]}" stroke-width="14" stroke-dasharray="${dash} ${circ}" stroke-dashoffset="${-offset}" transform="rotate(-90 ${cx} ${cy})"/>`;
+    offset += dash;
+    return { arc, label, count, color:colors[label] };
+  });
+  document.getElementById('priorityChart').innerHTML = `
+    <svg class="donut-svg" viewBox="0 0 110 110">
+      <circle cx="${cx}" cy="${cy}" r="${r}" fill="none" stroke="var(--p-pale)" stroke-width="14"/>
+      ${arcs.map(a=>a.arc).join('')}
+    </svg>
+    <div class="donut-legend">
+      ${arcs.map(a=>`<div class="donut-item"><div class="donut-dot" style="background:${a.color}"></div><span><strong>${a.count}</strong> ${a.label}</span></div>`).join('')}
+    </div>
+  `;
+}
+function renderHOTable(data) {
+  const tbody = document.getElementById('hoTableBody');
+  const recent = [...data].slice(0, 25);
+  if (!recent.length) {
+    tbody.innerHTML = `<tr><td colspan="8" style="text-align:center;padding:40px;color:var(--muted);font-size:13px">No complaints yet. Data will appear here once customers submit.</td></tr>`;
+    return;
+  }
+  tbody.innerHTML = recent.map(c => `
+    <tr>
+      <td class="cell-id">${c.id}</td>
+      <td>${c.customerName}</td>
+      <td style="max-width:160px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${c.productName}</td>
+      <td>${c.issueType}</td>
+      <td><span class="pill ${prioClass(c.priority)}">${c.priority}</span></td>
+      <td><span class="pill ${pillClass(c.status)}">${c.status}</span></td>
+      <td>${fmtDate(c.createdAt)}</td>
+      <td style="white-space:nowrap">
+        <button class="btn btn-secondary btn-sm" onclick="openStatusDialog('${c.id}','${c.status}')">Edit</button>
+        <button class="gist-btn" style="margin-left:4px" onclick="hoEmaGist(event,'${c.id}')">✨ Gist</button>
+      </td>
+    </tr>
+    <tr id="hoGist-${c.id}" style="display:none"><td colspan="8" style="padding:4px 12px 8px;font-size:12px;color:var(--muted);font-style:italic;background:var(--p-pale)"></td></tr>
+  `).join('');
+}
+window.hoEmaGist = (ev, id) => {
+  ev.stopPropagation();
+  const c = getComplaints().find(x => x.id === id);
+  if (!c) return;
+  playTone('notify');
+  const row = document.getElementById('hoGist-' + id);
+  if (!row) return;
+  if (row.style.display !== 'none') { row.style.display = 'none'; return; }
+  const desc = c.description || '';
+  const sentences = desc.split(/[.!?]+/).map(s => s.trim()).filter(Boolean);
+  const summary = sentences[0] ? (sentences[0].length > 130 ? sentences[0].slice(0,127)+'…' : sentences[0]) : `${c.issueType} for ${c.productName}.`;
+  row.querySelector('td').textContent = `🤖 EMA Gist: "${summary}"`;
+  row.style.display = 'table-row';
+};
+
+// ═══════════════════════════════════════════════════════
+//  EXPORTS
+// ═══════════════════════════════════════════════════════
+document.getElementById('exportJsonBtn').addEventListener('click', () => {
+  const data = getComplaints();
+  if (!data.length) { toast('No complaints to export.'); return; }
+  const blob = new Blob([JSON.stringify(data, null, 2)], { type:'application/json' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a'); a.href = url;
+  a.download = `SAMA-Complaints-${new Date().toISOString().slice(0,10)}.json`;
+  a.click(); URL.revokeObjectURL(url);
+  playTone('export'); toast('JSON exported!');
+});
+
+function loadXLSX(cb) {
+  if (window.XLSX) { cb(); return; }
+  const s = document.createElement('script');
+  s.src = 'https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js';
+  s.onload = cb; document.head.appendChild(s);
+}
+function doExcelExport() {
+  loadXLSX(() => {
+    const raw = getComplaints();
+    if (!raw.length) { toast('No complaints to export.'); return; }
+    const rows = raw.map(c => ({
+      'Complaint ID':c.id, 'Status':c.status, 'Date':fmtDate(c.createdAt),
+      'Customer':c.customerName, 'Phone':c.phone, 'Email':c.email||'',
+      'Location':c.location, 'Product':c.productName, 'SKU':c.sku,
+      'Batch':c.batch||'', 'Invoice / LR':c.invoice,
+      'Delivery Date':c.deliveryDate, 'Vehicle':c.vehicle||'',
+      'Issue Type':c.issueType, 'Quantity':c.quantity,
+      'Priority':c.priority, 'Description':c.description
+    }));
+    const ws = XLSX.utils.json_to_sheet(rows);
+    ws['!cols'] = [16,14,14,24,14,24,16,30,10,12,16,14,14,20,12,10,40].map(w => ({ wch:w }));
+    const wb = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, 'Complaints');
+    XLSX.writeFile(wb, `SAMA-Complaints-${new Date().toISOString().slice(0,10)}.xlsx`);
+    playTone('export'); toast('Excel exported!');
+  });
+}
+document.getElementById('exportExcelBtn').addEventListener('click', doExcelExport);
+document.getElementById('hoExportBtn').addEventListener('click', doExcelExport);
+document.getElementById('hoRefreshBtn').addEventListener('click', () => { renderHO(); playTone('click'); toast('Dashboard refreshed.'); });
+
+// ═══════════════════════════════════════════════════════
+//  EMA AI CHATBOT ENGINE
+// ═══════════════════════════════════════════════════════
+
+// ── Knowledge Base ────────────────────────────────────
+// Compact Q&A array — 200+ rich pairs covering all required topics
+const QA = [
+// COMPANY INFO
+{"q":"what is emami agrotech","a":"Emami Agrotech Ltd. is one of India's leading FMCG companies in the edible oil segment, headquartered in Kolkata, West Bengal. It is a flagship subsidiary of the Emami Group."},
+{"q":"when was emami agrotech founded","a":"Emami Agrotech Ltd. was incorporated and has grown substantially since the early 2000s as part of the diversified Emami Group conglomerate."},
+{"q":"where is emami agrotech headquartered","a":"Emami Agrotech Ltd. is headquartered in Kolkata, West Bengal, India. The registered office is at Emami Tower, 687 Anandapur, E.M. Bypass, Kolkata - 700107."},
+{"q":"who owns emami agrotech","a":"Emami Agrotech Ltd. is a subsidiary of the Emami Group, which is promoted by the Goenka and Agarwal families — prominent industrialists from Kolkata."},
+{"q":"what products does emami agrotech make","a":"Emami Agrotech manufactures a wide range of edible oils including Sunflower Oil, Kachi Ghani Mustard Oil, Soybean Oil, Rice Bran Oil, Groundnut Oil, Smart Balance Oil (a blended oil), and Vanaspati. All products are marketed under the 'Healthy & Tasty' brand."},
+{"q":"what is the healthy and tasty brand","a":"'Healthy & Tasty' is the flagship brand of Emami Agrotech for its edible oils. It covers refined sunflower, mustard, soybean, rice bran, and blended oils across multiple pack sizes."},
+{"q":"is emami agrotech publicly listed","a":"Emami Agrotech Ltd. is a private limited company and part of the Emami Group. Its parent, Emami Limited, is publicly listed on BSE and NSE."},
+{"q":"what is emami group","a":"The Emami Group is a leading diversified Indian conglomerate with presence in FMCG, healthcare, real estate, and agro-processing. It is promoted by the Goenka and Agarwal families."},
+{"q":"contact emami agrotech","a":"You can contact Emami Agrotech at: Toll-free: 1800-103-2206 | Email: customercare@emamiagro.com | Headquarters: Emami Tower, 687 Anandapur, Kolkata 700107."},
+{"q":"emami agrotech customer care number","a":"Emami Agrotech's customer care helpline is 1800-103-2206 (toll-free), available Monday to Saturday, 9 AM to 6 PM."},
+{"q":"emami agrotech email","a":"For complaints and support, email us at customercare@emamiagro.com. For quality concerns, write to quality@emamiagro.com."},
+// PRODUCTS
+{"q":"sunflower oil","a":"Emami Healthy & Tasty Refined Sunflower Oil is light, high in Vitamin E and PUFA, ideal for everyday cooking. Available in 1L, 2L, 5L, 15L, and bulk packs."},
+{"q":"mustard oil","a":"Emami Healthy & Tasty Kachi Ghani Mustard Oil is cold-pressed (Kachi Ghani method), retaining natural pungency and nutrients. Rich in omega-3 and omega-6. Available in 500ml, 1L, 2L, 5L packs."},
+{"q":"kachi ghani mustard oil","a":"Kachi Ghani refers to cold-press extraction of mustard oil, preserving natural glucosinolates and erucic acid. Emami's Kachi Ghani Mustard Oil is FSSAI compliant and popular in eastern India."},
+{"q":"soybean oil","a":"Emami Healthy & Tasty Refined Soybean Oil is high in polyunsaturated fats and Vitamin E. It is light in colour and ideal for deep-frying and baking. Available in 1L, 5L, 15L packs."},
+{"q":"rice bran oil","a":"Emami Healthy & Tasty Refined Rice Bran Oil contains oryzanol, a natural antioxidant. It has a high smoke point (240°C), making it ideal for Indian cooking including deep-frying. Available in 1L, 5L, 15L packs."},
+{"q":"groundnut oil","a":"Emami Healthy & Tasty Refined Groundnut Oil (peanut oil) is rich in monounsaturated fatty acids. It has a mild nutty flavour and is popular in western and southern India. Available in 1L, 5L packs."},
+{"q":"smart balance oil","a":"Emami Smart Balance is a blended refined oil, specially formulated with an optimal ratio of saturated, monounsaturated, and polyunsaturated fats for a balanced diet. Available in 1L, 5L, 15L packs."},
+{"q":"vanaspati","a":"Emami Agro Vanaspati is a hydrogenated vegetable fat used in bakery and confectionery applications. It has a high melting point suitable for industrial and household use."},
+{"q":"premium mustard oil","a":"Emami Healthy & Tasty Premium Mustard Oil is a filtered grade mustard oil with distinct pungency and golden colour, suited for pickling and traditional recipes. Available in 500ml, 1L, 5L."},
+{"q":"what pack sizes are available","a":"Emami Healthy & Tasty oils are available in 500ml, 1L, 2L, 5L, 15L consumer packs and bulk/industrial packaging (15L tins, carboys). Pack availability varies by product and region."},
+{"q":"1 litre sunflower oil price","a":"Pricing varies by region and distributor. Please check with your local dealer or visit our website for the latest MRP. MRP for 1L sunflower oil is typically in the range of ₹150–180 (subject to market rates)."},
+{"q":"is emami oil good for heart","a":"Emami Healthy & Tasty oils are formulated keeping heart health in mind. Rice Bran Oil contains oryzanol; Sunflower Oil is high in Vitamin E; Smart Balance provides an optimal fatty acid ratio. However, always consult a nutritionist for medical advice."},
+// NUTRITIONAL FACTS
+{"q":"nutritional value of sunflower oil","a":"Per 100ml: Energy ~900 kcal, Total Fat 100g (Saturated 11g, MUFA 23g, PUFA 66g), Vitamin E 62mg. Free of cholesterol and trans fat."},
+{"q":"nutritional value of mustard oil","a":"Per 100ml: Energy ~900 kcal, Total Fat 100g (Saturated 5g, MUFA 60g, PUFA 35g including omega-3 ALA 14g). Contains natural glucosinolates."},
+{"q":"nutritional value of rice bran oil","a":"Per 100ml: Energy ~900 kcal, Total Fat 100g, contains Oryzanol 500mg+, Vitamin E, and a balanced fatty acid profile. Known as the 'world's healthiest oil'."},
+{"q":"does emami oil have cholesterol","a":"No. All Emami Healthy & Tasty refined oils are cholesterol-free as they are vegetable-based."},
+{"q":"is there trans fat in emami oil","a":"Emami Healthy & Tasty refined oils are free from trans fats (partially hydrogenated fats). They are processed using modern refining techniques to eliminate trans fatty acids."},
+{"q":"smoke point of rice bran oil","a":"Emami Healthy & Tasty Refined Rice Bran Oil has a smoke point of approximately 230–240°C, making it one of the best oils for high-temperature cooking, including deep-frying and stir-frying."},
+{"q":"which emami oil is best for frying","a":"Rice Bran Oil is best for deep-frying due to its high smoke point (~240°C) and stability. Sunflower Oil and Groundnut Oil are also good options for frying."},
+{"q":"which oil for daily cooking","a":"Emami Smart Balance or Rice Bran Oil are recommended for daily cooking due to their balanced fatty acid profiles and high smoke points. Sunflower Oil is also an excellent everyday choice."},
+// QUALITY & CERTIFICATIONS
+{"q":"is emami oil fssai certified","a":"Yes. All Emami Healthy & Tasty edible oils are compliant with FSSAI (Food Safety and Standards Authority of India) regulations and carry the FSSAI license number on packaging."},
+{"q":"quality certifications emami agrotech","a":"Emami Agrotech holds ISO 9001:2015 (Quality Management), HACCP certification, and FSSAI compliance across its manufacturing plants."},
+{"q":"manufacturing plants emami agrotech","a":"Emami Agrotech operates multiple manufacturing facilities including a major plant at Haldia, West Bengal, and others across India, with state-of-the-art refining and packaging infrastructure."},
+{"q":"haldia plant emami","a":"The Emami Agrotech Haldia plant is a key manufacturing facility in West Bengal, involved in large-scale refining and packaging of edible oils for eastern India and beyond."},
+{"q":"is emami oil adulterated","a":"No. Emami Agrotech maintains strict quality control at every stage — from procurement to packaging. All products undergo lab testing for purity, acidity, and nutritional parameters before dispatch."},
+// DISTRIBUTION
+{"q":"where is emami oil available","a":"Emami Healthy & Tasty oils are available across India through a vast distribution network covering 4+ million retail outlets, including general trade, modern trade (Big Bazaar, D-Mart, etc.), and e-commerce platforms."},
+{"q":"how to find a dealer distributor","a":"To find your nearest Emami Agrotech dealer or distributor, call our helpline 1800-103-2206 or email customercare@emamiagro.com with your city/district details."},
+{"q":"is emami oil available online","a":"Yes. Emami Healthy & Tasty oils are available on major e-commerce platforms like Amazon, Flipkart, BigBasket, and JioMart."},
+{"q":"can i become a distributor","a":"For distributor/dealer enquiries, please write to sales@emamiagro.com with your business details, location, and investment capacity."},
+// COMPLAINT PROCESS
+{"q":"how to file a complaint","a":"To file a complaint: 1) Go to 'New Complaint' in SAMA, 2) Fill in your contact and product details, 3) Select the issue type and describe the problem, 4) Submit. You'll receive a unique Complaint ID (e.g., EA-XXXXXX) for tracking."},
+{"q":"how to track complaint","a":"Use your Complaint ID (e.g., EA-123456) in the 'My Complaints' section of SAMA to track the current status of your complaint."},
+{"q":"what information is needed to file complaint","a":"You will need: your name, mobile number, location, product name, pack size, batch number (on pack), invoice/LR number, date of delivery, and a description of the issue. Photos help expedite resolution."},
+{"q":"complaint tracking id","a":"After submitting a complaint in SAMA, you receive a unique Complaint ID in the format EA-XXXXXX. Save this ID to track and reference your complaint."},
+{"q":"how long to resolve complaint","a":"Acknowledgement: within 24 hours. Investigation and update: within 3 business days. Resolution (for quality/replacement): up to 7–10 business days depending on complexity and logistics."},
+{"q":"complaint sla timeline","a":"SAMA SLA: Submitted complaints acknowledged in 24 hrs; Under Review status updated within 3 business days; Resolution within 7–10 days; Closed after customer verification."},
+{"q":"what happens after submitting complaint","a":"After submission, our customer care team reviews your complaint and contacts you within 24 hours. For product quality issues, a field executive or quality team may visit or request samples."},
+{"q":"can i withdraw my complaint","a":"Yes. Contact our customer care at 1800-103-2206 and provide your Complaint ID. We will update the status to 'Closed' upon your request."},
+// REPLACEMENT POLICY
+{"q":"replacement policy","a":"Emami Agrotech offers product replacement for genuine quality defects. Once the complaint is verified (typically 5–7 business days), a replacement or refund is arranged through your local distributor."},
+{"q":"how to get replacement for damaged product","a":"File a complaint on SAMA with photos of the damaged product and your invoice. Our team will verify and coordinate replacement through your dealer/distributor within 7–10 days."},
+{"q":"refund policy emami","a":"Refunds or replacements are processed for verified product quality issues. Contact us via SAMA or call 1800-103-2206. Refunds are typically credited through the supply chain (dealer/distributor)."},
+// TROUBLESHOOTING
+{"q":"oil is leaking from pouch","a":"Leakage from pouches can occur due to handling damage or seal failure. Please photograph the pouch and submit a complaint on SAMA. Do not discard the product — it may be needed for quality verification."},
+{"q":"oil has strange smell","a":"A strange smell may indicate quality degradation, contamination, or the oil being near/past its best-before date. Check the batch number and expiry date. File a complaint with product details and photos."},
+{"q":"oil colour is different","a":"Colour variation can occur between batches due to raw material differences. However, if the colour is significantly off (e.g., black, cloudy, or rancid-looking), file a complaint immediately with the batch number."},
+{"q":"received wrong product","a":"If you received a different SKU or brand than ordered, please file a 'Wrong Product' complaint on SAMA with your invoice number. We will investigate with the distributor and arrange correction."},
+{"q":"short delivery received fewer cartons","a":"File a 'Short Delivery' complaint with your invoice/LR number showing the original quantity ordered vs. received. Our logistics team will verify and reconcile."},
+{"q":"oil tastes bitter","a":"Bitterness in edible oil can indicate oxidation, rancidity, or contamination. Check the expiry date. If the product is within validity, file a quality complaint with batch number and photos for lab testing."},
+{"q":"product is near expiry","a":"If you received products near their expiry date, file an 'Expiry / Labelling' complaint with invoice and batch details. Our team will review FIFO compliance with the distributor."},
+{"q":"label is damaged or incorrect","a":"If the product label is damaged, missing, or incorrect, file an 'Expiry / Labelling' complaint. Incorrect labels are a quality concern and will be investigated promptly."},
+{"q":"tin is dented","a":"A dented tin may compromise product integrity. File a 'Leakage / Damage' complaint with photos. Replacement is typically arranged through your local distributor after verification."},
+{"q":"delivery was late","a":"For delayed deliveries, file a 'Delayed Delivery' complaint with your purchase order/LR number. Our logistics team will investigate and respond within 48 hours."},
+// SAMA PLATFORM
+{"q":"what is sama","a":"SAMA stands for Smart Addressal & Management of Accounts. It is Emami Agrotech's proprietary digital platform for customer complaint registration, tracking, and resolution."},
+{"q":"how to use sama","a":"SAMA has two roles: Customers can file new complaints and track them using 'My Complaints'. HO staff can view all complaints, update statuses, and access the analytics dashboard. Login with your credentials to begin."},
+{"q":"sama customer login","a":"Customer login credentials for the demo: Username: demo@customer.com | Password: customer123. For actual access, contact your Emami sales representative."},
+{"q":"ho dashboard sama","a":"The HO Dashboard in SAMA shows KPI cards (total, open, critical, resolved complaints), an issue-type bar chart, a priority donut chart, and a recent complaints table with EMA Gist summaries."},
+{"q":"ema gist feature","a":"EMA Gist is an AI feature in SAMA that generates a concise one-line summary of any complaint description. HO staff can click 'EMA Gist' on any complaint to get a quick AI-powered overview."},
+{"q":"export complaints","a":"In SAMA's 'All Complaints' or 'HO Dashboard' view, HO staff can export all complaint data to Excel (.xlsx) or JSON format using the Export buttons."},
+// EMA CHATBOT
+{"q":"who is ema","a":"EMA (Emami Management Assistant) is Emami Agrotech's AI-powered customer support chatbot on the SAMA platform. She can answer product queries, help with the complaint process, and check your complaint status."},
+{"q":"what can ema help with","a":"EMA can answer questions about Emami Agrotech products, nutritional information, complaint filing process, order tracking, replacement policy, and general company information."},
+{"q":"can ema check my complaint status","a":"Yes! Just say 'Check my complaint status' or tell EMA your Complaint ID (e.g., EA-123456) and she'll look it up from your account."},
+// GENERAL / CHITCHAT
+{"q":"hello","a":"Hello! I'm EMA, your Emami Agrotech support assistant. How can I help you today?"},
+{"q":"hi","a":"Hi there! I'm EMA. Ask me anything about Emami Healthy & Tasty products or use SAMA to file a complaint."},
+{"q":"good morning","a":"Good morning! EMA here. How can I assist you with Emami Agrotech products or services today?"},
+{"q":"good evening","a":"Good evening! I'm EMA, your 24/7 support assistant. What can I help you with?"},
+{"q":"thank you","a":"You're welcome! Is there anything else I can help you with?"},
+{"q":"thanks","a":"Happy to help! Feel free to ask if you have more questions."},
+{"q":"bye","a":"Goodbye! Take care, and thank you for using SAMA by Emami Agrotech."},
+{"q":"help","a":"Sure! I can help you with: product information, nutritional queries, complaint filing, complaint status, replacement policy, and dealer locations. What would you like to know?"},
+{"q":"who are you","a":"I'm EMA — Emami Management Assistant — the AI-powered support bot for Emami Agrotech's SAMA platform. I'm here to help 24/7!"},
+{"q":"what can you do","a":"I can answer questions about Emami products, nutrition, complaint registration, complaint tracking, replacement policy, SLA timelines, dealer information, and more. Try me!"},
+{"q":"are you a robot","a":"I'm an AI assistant — not quite a robot, but close! I'm EMA, here to help you with any Emami Agrotech queries on the SAMA platform."},
+// EXTENDED PRODUCT Q&A
+{"q":"which oil is healthiest","a":"Each oil has unique health benefits: Rice Bran Oil has oryzanol (cholesterol-lowering); Sunflower Oil is rich in Vitamin E; Mustard Oil is high in omega-3. For overall balance, Emami Smart Balance blended oil is recommended."},
+{"q":"how to store edible oil","a":"Store edible oil in a cool, dry place away from direct sunlight. Keep lids tightly closed. Avoid storing in copper or iron containers. Refrigeration is not required but extends shelf life."},
+{"q":"shelf life of emami oil","a":"Emami Healthy & Tasty refined oils generally have a shelf life of 12–18 months from the date of manufacture (as indicated on the pack). Mustard oil shelf life is 12 months. Always check the 'Best Before' date."},
+{"q":"how to check batch number","a":"The batch number (lot number) is printed on the bottom or side of the pack. It typically starts with 'BT' followed by a date code. Include this when filing a complaint."},
+{"q":"what is best before date","a":"The 'Best Before' date indicates the period during which the product retains its optimum quality. It is printed on every Emami Healthy & Tasty pack. Do not use the product after this date."},
+{"q":"can i use rice bran oil for baking","a":"Yes! Emami Healthy & Tasty Rice Bran Oil is excellent for baking due to its mild flavour, high smoke point, and light texture. It works well in cakes, muffins, and pastries."},
+{"q":"is mustard oil good for skin","a":"Mustard oil has traditional use in massage and skin care in Indian households. However, Emami Healthy & Tasty Mustard Oil is a food-grade product intended for culinary use. For cosmetic applications, use food-grade oil at your own discretion."},
+{"q":"how many calories in 1 tsp oil","a":"Approximately 40–45 kcal per teaspoon (5ml) of edible oil, regardless of variety, as all oils are pure fat (9 kcal/gram)."},
+{"q":"omega 3 content mustard oil","a":"Emami Kachi Ghani Mustard Oil contains approximately 5–14% ALA (alpha-linolenic acid), a plant-based omega-3 fatty acid, which is among the highest of any cooking oil."},
+{"q":"oryzanol in rice bran oil benefits","a":"Oryzanol is a natural antioxidant found in rice bran oil. Research suggests it may help reduce LDL (bad) cholesterol, support hormonal balance, and provide anti-inflammatory effects."},
+{"q":"vitamin e in sunflower oil","a":"Emami Healthy & Tasty Sunflower Oil contains approximately 62mg of Vitamin E (alpha-tocopherol) per 100ml — one of the richest natural sources of this antioxidant vitamin."},
+{"q":"difference between refined and kachi ghani","a":"Refined oil is chemically processed (bleached, deodorized) to produce a neutral-tasting, high-smoke-point oil. Kachi Ghani (cold-pressed) mustard oil retains its natural pungency, colour, and nutrients without chemical refining."},
+{"q":"emami oil 5 litre tin","a":"Emami Healthy & Tasty oils are available in 5-litre consumer packs (pouches and tins). The 5L variant is ideal for medium-sized families and regular bulk users."},
+{"q":"15 litre oil price","a":"The 15-litre pack of Emami Healthy & Tasty oils is primarily for commercial/institutional use. For pricing, contact your local distributor or call 1800-103-2206."},
+{"q":"emami oil for restaurants hotels","a":"Emami Agrotech supplies edible oils to restaurants, hotels, and food service companies through institutional/bulk packaging. Contact institutionalsales@emamiagro.com for bulk orders and pricing."},
+{"q":"bulk oil purchase","a":"For bulk purchases (15L+ tins, barrels, or tanker quantities), contact Emami Agrotech's institutional sales team at institutionalsales@emamiagro.com or call 1800-103-2206."},
+{"q":"emami oil export","a":"Emami Agrotech exports edible oils to select international markets. For export enquiries, write to exports@emamiagro.com with your country, volume, and product requirements."},
+// COMPLAINT STATUS RELATED
+{"q":"check my complaint","a":"Sure! Please share your Complaint ID (e.g., EA-123456) and I'll look up the status for you right away."},
+{"q":"my complaint status","a":"Please provide your Complaint ID starting with 'EA-' and I'll check the current status for you."},
+{"q":"complaint not resolved","a":"If your complaint is not resolved within the expected timeline, please escalate by calling 1800-103-2206 or emailing customercare@emamiagro.com with your Complaint ID."},
+{"q":"escalate complaint","a":"To escalate an unresolved complaint, call our toll-free number 1800-103-2206 (Mon–Sat, 9am–6pm) or email customercare@emamiagro.com with your Complaint ID and a note requesting escalation."},
+{"q":"what is under review status","a":"'Under Review' means our quality or logistics team is actively investigating your complaint. You may be contacted for additional information or product samples during this stage."},
+{"q":"what is resolved status","a":"'Resolved' means a resolution has been confirmed — either a replacement, credit note, or corrective action. If you have not received the resolution, contact us immediately."},
+// SUSTAINABILITY
+{"q":"is emami oil sustainable","a":"Emami Agrotech sources raw materials responsibly and is committed to sustainable manufacturing practices, including energy efficiency, waste reduction, and safe effluent management at its plants."},
+{"q":"emami csr activities","a":"The Emami Group has an active CSR program covering education, healthcare, and environment initiatives. Emami Agrotech contributes through community development in areas near its manufacturing plants."},
+// PRICING / PAYMENTS
+{"q":"emami oil mrp","a":"MRPs vary by product, pack size, and state. Check the pack label for the printed MRP or visit our authorized dealers. For bulk/institutional pricing, contact us directly."},
+{"q":"does emami oil have warranty","a":"Emami Agrotech guarantees the quality of its products up to the 'Best Before' date printed on the pack. Complaints for defective products within this period are addressed under the replacement policy."},
+{"q":"invoice needed for complaint","a":"Yes, the invoice or LR (Lorry Receipt) number is required to file dispatch-related complaints. For retail purchases, the shop bill or receipt is sufficient."},
+// EXTENDED KNOWLEDGE BASE — COMPANY & GROUP
+{"q":"emami agrotech history","a":"Emami Agrotech Ltd. was founded as part of the Emami Group's diversification into the edible oil sector. Starting with eastern India, it has grown into a market leader and continues to expand its national footprint."},
+{"q":"emami group subsidiaries","a":"The Emami Group includes Emami Ltd. (FMCG), Emami Paper Mills, Emami Realty, Emami Agrotech (edible oils), and Emami Frank Ross (retail pharmacy chain)."},
+{"q":"emami agrotech turnover","a":"Emami Agrotech is a multi-thousand crore turnover company, rapidly growing its market share in the branded edible oil segment with double-digit annual growth."},
+{"q":"emami agrotech awards","a":"Emami Agrotech has received numerous awards for quality manufacturing, including recognition as one of the fastest-growing edible oil brands in India at regional and national food industry events."},
+{"q":"emami vs other oil brands","a":"Emami Healthy & Tasty competes with Fortune, Saffola, Dhara, and Gemini — offering high quality at competitive prices with a particularly strong eastern India presence and growing national distribution."},
+{"q":"emami agrotech logo","a":"The Emami Agrotech logo incorporates the trusted Emami Group brand identity with a fresh green accent, symbolising purity, naturalness, and health."},
+{"q":"emami agrotech careers","a":"For career opportunities at Emami Agrotech, visit the Emami Group careers page or write to hr@emamiagro.com with your resume and area of interest."},
+{"q":"emami agrotech quality certifications","a":"Emami Agrotech holds ISO 9001:2015 (Quality Management), HACCP certification, and full FSSAI compliance across all manufacturing units, ensuring food safety at every stage."},
+{"q":"emami agrotech csr","a":"The Emami Group has active CSR initiatives in education, healthcare, and environmental sustainability. Emami Agrotech contributes through community development programmes near its plant locations, especially in Haldia."},
+{"q":"emami agrotech leadership","a":"Emami Agrotech is led by experienced professionals from the Emami Group. The management team is focused on quality, innovation, market expansion, and consumer trust."},
+{"q":"emami agrotech vision","a":"Emami Agrotech's vision is to be the most trusted edible oil brand in India by delivering purity, nutrition, and an exceptional consumer experience at every touchpoint."},
+{"q":"emami agrotech mission","a":"Emami Agrotech's mission is to provide high-quality, affordable edible oils while maintaining the highest standards of food safety, sustainability, and ethical business practice."},
+{"q":"emami agrotech target audience","a":"Emami Agrotech serves households, restaurants, caterers, bakeries, and food manufacturers across India and select export markets."},
+{"q":"emami agrotech achievements","a":"Emami Agrotech is recognised as one of the fastest-growing edible oil brands in India with a strong retail presence across 4 million+ outlets and a growing institutional client base."},
+{"q":"emami agrotech growth","a":"Emami Agrotech has shown consistent double-digit growth year on year, expanding its product portfolio, pack sizes, and pan-India distribution network."},
+{"q":"is emami agrotech listed","a":"No, Emami Agrotech Ltd. is a private limited company. However, its parent entity Emami Limited is listed on both BSE and NSE."},
+// EXTENDED — SUNFLOWER OIL
+{"q":"sunflower oil nutritional value","a":"Per 100ml: Energy 900 kcal, Total Fat 100g (Saturated 11g, MUFA 23g, PUFA 66g), Vitamin E ~62mg. Cholesterol-free and trans-fat free."},
+{"q":"sunflower oil health benefits","a":"Emami Sunflower Oil's high PUFA content helps maintain healthy cholesterol. Vitamin E acts as a natural antioxidant. Suitable for heart-conscious individuals when used in moderation."},
+{"q":"sunflower oil cooking tips","a":"Use at medium-high heat; avoid overheating beyond its smoke point. Perfect for stir-fries, light sautéing, salad dressings, and baking. Its neutral flavour does not overpower food."},
+{"q":"sunflower oil deep frying","a":"Sunflower oil is suitable for occasional deep frying. For prolonged deep-frying sessions, Rice Bran Oil is a better choice due to its higher smoke point and greater stability."},
+{"q":"sunflower oil smoke point","a":"Emami Refined Sunflower Oil has a smoke point of approximately 227°C (440°F), making it suitable for most Indian cooking methods."},
+{"q":"sunflower oil shelf life","a":"Emami Healthy & Tasty Sunflower Oil has a shelf life of 18 months from the date of manufacture when stored properly in a cool, dry place away from sunlight."},
+{"q":"sunflower oil storage tips","a":"Keep sunflower oil away from direct sunlight and heat sources. Always close the cap tightly after use. Do not transfer to other containers unnecessarily."},
+{"q":"sunflower oil for diabetic patient","a":"Sunflower oil, as part of a balanced diet, is suitable for diabetic individuals. Its healthy fat profile supports metabolic health. Always consult your doctor for personalised dietary advice."},
+{"q":"sunflower oil for high bp","a":"Sunflower oil is sodium-free and contains healthy unsaturated fats, making it compatible with a low-sodium diet for blood pressure management. Consult a physician for a complete dietary plan."},
+{"q":"sunflower oil for pregnancy","a":"Emami Sunflower Oil is safe for cooking during pregnancy. Vitamin E content is beneficial for both mother and baby. Always follow a balanced diet and consult your gynaecologist."},
+{"q":"sunflower oil for baby food","a":"Refined sunflower oil is safe for cooking baby food for infants over 6 months when used in small amounts. Always consult your paediatrician before introducing any cooking oil to a baby's diet."},
+{"q":"sunflower oil vs olive oil","a":"Sunflower oil has a higher smoke point (~227°C) and a neutral taste, making it better suited for Indian cooking styles. Olive oil has a distinct flavour and lower smoke point, preferred for Mediterranean dishes."},
+{"q":"sunflower oil allergy","a":"Sunflower oil allergies are extremely rare. If you notice any allergic reaction, discontinue use immediately and consult a healthcare professional."},
+// EXTENDED — MUSTARD OIL
+{"q":"mustard oil benefits","a":"Emami Kachi Ghani Mustard Oil is high in omega-3 ALA (~14%), has natural antimicrobial properties, stimulates digestion, and is widely used in traditional Indian and Bengali cooking and massage."},
+{"q":"kachi ghani meaning","a":"'Kachi Ghani' is a Hindi term for cold-press oil extraction. The mustard seeds are pressed at low temperatures, preserving natural glucosinolates, fatty acids, and the characteristic pungent aroma."},
+{"q":"mustard oil smoke point","a":"Emami Kachi Ghani Mustard Oil has a smoke point of approximately 250°C (480°F), making it highly suitable for high-temperature Indian cooking including tadka and deep-frying."},
+{"q":"mustard oil for pickle","a":"Mustard oil is the traditional choice for Indian pickles (achar). Its pungency and natural preservative properties help extend the shelf life and enhance the flavour of pickles."},
+{"q":"mustard oil for massage","a":"While Emami Kachi Ghani Mustard Oil is a food-grade product, many households traditionally use it for massage. For cosmetic use, please use products specifically formulated for external application."},
+{"q":"mustard oil for hair","a":"Mustard oil is traditionally used in Indian households to nourish and strengthen hair. It contains omega-3 fatty acids and is often used as a pre-wash hair treatment."},
+{"q":"mustard oil vs refined oil","a":"Kachi Ghani mustard oil is cold-pressed, retaining natural flavour, aroma, and nutrients. Refined oil is chemically processed for a neutral taste and higher smoke point. Both have distinct culinary uses."},
+{"q":"premium mustard oil vs kachi ghani","a":"Emami Kachi Ghani is cold-pressed for maximum pungency and nutrients. Emami Premium Mustard Oil is filtered-grade, offering a slightly milder profile — both are FSSAI-compliant quality products."},
+// EXTENDED — RICE BRAN OIL
+{"q":"what is oryzanol","a":"Oryzanol is a natural plant sterol and antioxidant found uniquely in rice bran oil. Research indicates it may help reduce LDL cholesterol, support hormonal balance, and provide anti-inflammatory benefits."},
+{"q":"rice bran oil benefits","a":"Emami Rice Bran Oil contains oryzanol, Vitamin E, and a balanced fatty acid profile. Its high smoke point (~240°C) makes it ideal for all Indian cooking methods, especially deep-frying."},
+{"q":"rice bran oil for cholesterol","a":"The oryzanol in rice bran oil has been studied for its potential to lower LDL (bad) cholesterol and raise HDL (good) cholesterol. It is often called the 'world's healthiest oil' for this reason."},
+{"q":"rice bran oil for weight loss","a":"Rice bran oil has a balanced fatty acid profile and natural antioxidants. While no oil directly causes weight loss, using healthy oils like rice bran oil in moderation supports an overall healthy diet."},
+{"q":"rice bran oil for baking","a":"Emami Rice Bran Oil is excellent for baking — its mild, light flavour does not interfere with the taste of baked goods, and its high smoke point handles oven temperatures well."},
+{"q":"rice bran oil smoke point","a":"Emami Healthy & Tasty Refined Rice Bran Oil has a smoke point of approximately 230–240°C, making it one of the most heat-stable cooking oils available."},
+// EXTENDED — SOYBEAN OIL
+{"q":"soybean oil benefits","a":"Emami Refined Soybean Oil is high in polyunsaturated fats (PUFA) and Vitamin E. It contains omega-3 and omega-6 fatty acids in a favourable ratio, supporting heart and brain health."},
+{"q":"soybean oil for deep frying","a":"Refined soybean oil is suitable for deep-frying with a smoke point of around 230°C. Its light colour and neutral taste make it versatile for both Indian and continental cooking."},
+{"q":"soybean oil price","a":"Soybean oil MRP varies by region and pack size. Check the label or contact your local Emami dealer. Call 1800-103-2206 for the latest pricing in your area."},
+// EXTENDED — GROUNDNUT OIL
+{"q":"groundnut oil benefits","a":"Emami Refined Groundnut Oil (peanut oil) is rich in monounsaturated fatty acids (MUFA), which support heart health. Its mild nutty flavour enhances traditional recipes from western and southern India."},
+{"q":"groundnut oil peanut oil same","a":"Yes, groundnut oil and peanut oil are the same product. Emami Healthy & Tasty Refined Groundnut Oil is made from quality groundnuts (peanuts) and refined to high purity standards."},
+{"q":"groundnut oil allergy","a":"People with peanut/groundnut allergies should avoid groundnut oil. Always read the label. Highly refined groundnut oil may have lower allergenicity, but consult your doctor if you are allergic."},
+// EXTENDED — SMART BALANCE / BLENDED OIL
+{"q":"what is blended oil","a":"Blended oil is a mixture of two or more edible oils in a carefully calculated ratio to provide an optimal balance of saturated, monounsaturated, and polyunsaturated fatty acids for better nutrition."},
+{"q":"smart balance oil benefits","a":"Emami Smart Balance Blended Oil offers an ideal fatty acid ratio — high in MUFA and PUFA, low in saturated fat — supporting cardiovascular health and making it suitable for daily family cooking."},
+{"q":"smart balance vs sunflower oil","a":"Smart Balance is a blended oil formulated for nutritional balance, while sunflower oil is single-seed refined oil rich in PUFA and Vitamin E. Both are healthy choices; Smart Balance offers a more diverse fatty acid profile."},
+// EXTENDED — VANASPATI
+{"q":"vanaspati uses","a":"Emami Agro Vanaspati is used in bakery products (biscuits, breads, puffs), confectionery, and traditional Indian sweets (halwa, puri). It provides a solid fat structure ideal for these applications."},
+{"q":"is vanaspati bad for health","a":"Vanaspati is a hydrogenated fat and should be used in moderation. Emami Agro Vanaspati meets FSSAI standards. For everyday cooking, refined oils are generally recommended over vanaspati."},
+{"q":"vanaspati vs ghee","a":"Vanaspati is a plant-based hydrogenated fat, while ghee is clarified butter from cow/buffalo milk. They differ in composition, flavour, and culinary applications. Ghee is more suitable for tempering and traditional dishes."},
+// EXTENDED — HEALTH & NUTRITION
+{"q":"how much oil per day","a":"The Indian Council of Medical Research (ICMR) recommends 3–5 teaspoons (15–25ml) of cooking oil per person per day. Avoid excessive use regardless of oil type."},
+{"q":"which oil for weight loss","a":"No oil promotes weight loss directly. Oils low in saturated fat (like Rice Bran or Sunflower Oil) are healthier choices when used in controlled amounts as part of a calorie-managed diet."},
+{"q":"which oil is best for kids","a":"Refined Sunflower Oil or Rice Bran Oil are good choices for children's food due to their mild flavour, high Vitamin E content, and balanced fatty acid profile. Always use in moderation."},
+{"q":"which oil for elderly person","a":"Rice Bran Oil (for its oryzanol and cholesterol benefits) and Smart Balance Oil are recommended for elderly individuals focused on heart health. Mustard Oil is also traditionally consumed by seniors in eastern India."},
+{"q":"can i mix two cooking oils","a":"Yes, you can blend oils at home (e.g., mustard and sunflower), but Emami Smart Balance is already scientifically formulated for the optimal ratio. Pre-blended oils are more consistent in nutritional profile."},
+{"q":"is cooking oil reusable","a":"Avoid reusing cooking oil more than 2–3 times. Repeated heating degrades oil quality and may produce harmful compounds. Discard oil that becomes dark, foamy, or develops an off-smell."},
+{"q":"how many calories in oil","a":"All edible oils provide approximately 900 kcal per 100ml (9 kcal per gram of fat). This is consistent across all varieties — sunflower, mustard, rice bran, etc."},
+{"q":"is emami oil non gmo","a":"Emami Agrotech uses quality raw materials sourced to FSSAI standards. For specific non-GMO certification queries, contact quality@emamiagro.com."},
+{"q":"is emami oil vegan","a":"Yes. All Emami Healthy & Tasty edible oils are 100% plant-based and suitable for vegan and vegetarian diets."},
+{"q":"is emami oil halal","a":"Emami Agrotech edible oils are plant-based and do not contain any animal-derived ingredients. For specific Halal certification queries, contact customercare@emamiagro.com."},
+{"q":"oil for thyroid patients","a":"Patients with thyroid conditions should consult their endocrinologist for dietary advice. Generally, refined oils used in moderation are considered acceptable. Avoid excessive mustard oil if advised by your doctor."},
+{"q":"oil for kidney patients","a":"Kidney patients should follow their nephrologist's dietary guidelines. Most refined edible oils can be included in moderation. Seek personalised medical advice."},
+{"q":"is cold pressed oil better","a":"Cold-pressed oils (like Kachi Ghani Mustard) retain more natural nutrients and antioxidants than refined oils. However, refined oils have higher smoke points and longer shelf lives. Both have distinct advantages."},
+// EXTENDED — SAMA PLATFORM
+{"q":"what does sama stand for","a":"SAMA stands for Smart Addressal & Management of Accounts — Emami Agrotech's proprietary digital platform for complaint registration, tracking, and resolution."},
+{"q":"is sama free to use","a":"SAMA is Emami Agrotech's internal complaint management platform. Customers with Emami accounts can access it for free to file and track complaints."},
+{"q":"sama login not working","a":"If you cannot log in to SAMA, check your username and password carefully. For the customer demo: username is demo@customer.com and password is customer123. For access issues, contact customercare@emamiagro.com."},
+{"q":"sama ho dashboard features","a":"The SAMA HO Dashboard includes: KPI cards (total, open, critical, resolved complaints), an issue-type bar chart, a priority donut chart, and a recent complaints table with EMA Gist AI summaries."},
+{"q":"sama export feature","a":"SAMA allows HO staff to export all complaint data to Excel (.xlsx) or JSON format using the Export buttons on the All Complaints and HO Dashboard views."},
+{"q":"sama mobile friendly","a":"SAMA is designed to be responsive and accessible on both desktop and mobile browsers for convenient use by field staff and customers on the go."},
+{"q":"ema gist feature","a":"EMA Gist is an AI feature in SAMA that generates a concise one-line summary of any complaint description, helping HO staff quickly understand complaint context without reading the full description."},
+{"q":"how to update complaint status","a":"HO staff can update complaint status by clicking the 'Edit' button next to any complaint in the All Complaints or HO Dashboard view, and selecting the new status from the dropdown."},
+// EXTENDED — EMA CHATBOT
+{"q":"who is ema","a":"EMA stands for Emami Management Assistant. She is Emami Agrotech's AI-powered chatbot embedded in the SAMA platform, available 24/7 to answer product, complaint, and company-related queries."},
+{"q":"ema voice feature","a":"EMA supports voice output — you can enable it using the sound icon in the chat window. Voice input (microphone) is also supported on compatible browsers."},
+{"q":"ema language support","a":"EMA is optimised for English queries in an Indian context. For support in regional languages, contact Emami Agrotech customer care at 1800-103-2206."},
+{"q":"can ema file a complaint for me","a":"EMA can guide you step-by-step through the complaint filing process on SAMA, but the actual form submission must be done by you through the 'New Complaint' section."},
+// EXTENDED — DISTRIBUTION & SALES
+{"q":"emami oil states available","a":"Emami Healthy & Tasty oils are available across all major Indian states, with especially strong presence in West Bengal, Odisha, Jharkhand, Bihar, Assam, and other eastern and northeastern states."},
+{"q":"emami oil modern trade","a":"Emami oils are stocked in major modern trade retail chains such as Reliance Fresh, Big Bazaar, D-Mart, Spencer's, and more across India."},
+{"q":"emami oil ecommerce","a":"Emami Healthy & Tasty oils are available online on Amazon, Flipkart, BigBasket, JioMart, and other leading e-commerce grocery platforms."},
+{"q":"become emami distributor","a":"To become an authorised Emami Agrotech distributor or dealer, write to sales@emamiagro.com with your name, location, business profile, and investment capacity. Our sales team will get in touch."},
+{"q":"emami institutional sales","a":"Emami Agrotech serves hotels, restaurants, hospitals, canteens, and food manufacturers through institutional bulk packaging. Contact institutionalsales@emamiagro.com for bulk order enquiries."},
+{"q":"emami oil export markets","a":"Emami Agrotech exports edible oils to select international markets. For export enquiries, contact exports@emamiagro.com with your country, product requirements, and volume details."},
+// EXTENDED — COMPLAINT NUANCES
+{"q":"complaint id format","a":"Complaint IDs on SAMA follow the format EA-XXXXXX (e.g., EA-123456). Always save your Complaint ID after submission to use for tracking and follow-up."},
+{"q":"can i file multiple complaints","a":"Yes, you can file multiple complaints on SAMA — one for each product or issue. Each complaint receives its own unique Complaint ID."},
+{"q":"photo upload complaint","a":"You can attach up to 5 photos when filing a complaint on SAMA. Photos of the damaged product, label, and batch number help expedite the investigation and resolution process."},
+{"q":"complaint for leakage pouch","a":"For a leaking pouch, file a 'Leakage / Damage' complaint on SAMA. Photograph the pouch clearly showing the leak and include the batch number. Do not discard the product before verification."},
+{"q":"complaint for wrong delivery","a":"If the wrong product or SKU was delivered, file a 'Wrong Product' complaint with your invoice/LR number. Our logistics team will investigate and arrange the correct product."},
+{"q":"complaint for expired product","a":"If you received an expired or near-expiry product, file an 'Expiry / Labelling' complaint immediately. Include the batch number, best-before date, and purchase invoice. We take expiry complaints with high priority."},
+{"q":"how to escalate complaint sama","a":"If your SAMA complaint is not resolved within the stated SLA, call our toll-free number 1800-103-2206 or email customercare@emamiagro.com with your Complaint ID and request for escalation."},
+{"q":"complaint confidential","a":"All complaint information submitted on SAMA is treated as confidential and used solely for the purpose of resolving the reported issue. Your data is protected and not shared with third parties."},
+// EXTENDED — PACKAGING
+{"q":"emami oil tin vs pouch","a":"Emami oils are available in both flexible pouches and rigid tins. Pouches are lighter and economical; tins are more durable for storage and transport. Both ensure product quality and safety."},
+{"q":"emami oil 500ml pack","a":"The 500ml pack of Emami Kachi Ghani Mustard Oil and Premium Mustard Oil is ideal for smaller households or trial purchases. Availability may vary by region."},
+{"q":"emami oil 1 litre pack","a":"The 1-litre pack is the most popular consumer size for Emami Healthy & Tasty oils. Available across all oil variants at general trade, modern trade, and e-commerce."},
+{"q":"emami oil 5 litre pack","a":"The 5-litre pack is ideal for medium to large families and small food businesses. Available in pouch and tin formats for most oil variants."},
+{"q":"emami oil 15 litre tin","a":"The 15-litre tin is designed for commercial/institutional use — hotels, restaurants, dhabas, and caterers. Contact your local Emami distributor or call 1800-103-2206 for availability and pricing."},
+{"q":"is emami packaging recyclable","a":"Emami Agrotech is committed to sustainable packaging practices. The company is progressively working towards recyclable and eco-friendly packaging materials. Check the pack for recycling symbols."},
+// EXTENDED — FOOD SAFETY
+{"q":"is emami oil safe to consume","a":"Yes. All Emami Healthy & Tasty oils undergo rigorous quality control and are FSSAI-certified. They are processed in state-of-the-art facilities and tested for purity before dispatch."},
+{"q":"fssai license number emami","a":"The FSSAI license number is printed on every Emami Healthy & Tasty product pack. Always verify the FSSAI number when purchasing to ensure product authenticity."},
+{"q":"how is emami oil tested for quality","a":"Emami Agrotech conducts comprehensive lab testing at every production stage — checking for acidity, peroxide value, moisture, fatty acid profile, and contaminants — before products are approved for dispatch."},
+{"q":"does emami oil contain preservatives","a":"No. Emami Healthy & Tasty refined edible oils do not contain artificial preservatives. The natural antioxidants present (like Vitamin E) help maintain freshness throughout the shelf life."},
+{"q":"is emami oil fortified","a":"Emami Healthy & Tasty oils are not additionally fortified beyond their natural nutrient content. They retain naturally occurring vitamins (e.g., Vitamin E in sunflower oil and oryzanol in rice bran oil)."},
+// EXTENDED — GENERAL / CHITCHAT
+{"q":"good afternoon","a":"Good afternoon! I'm EMA, Emami Agrotech's support assistant. How may I assist you today with our products or services?"},
+{"q":"good night","a":"Good night! If you have any queries tomorrow, I'll be here. EMA is available 24/7 for all your Emami product and SAMA support needs."},
+{"q":"how are you","a":"I'm doing great, thank you for asking! I'm always ready to help you with Emami Agrotech products, complaints, or any SAMA queries. What can I do for you?"},
+{"q":"nice to meet you","a":"Nice to meet you too! I'm EMA, your Emami Agrotech support assistant. Feel free to ask me anything about our products or the SAMA platform."},
+{"q":"what is your name","a":"My name is EMA — short for Emami Management Assistant. I'm the AI-powered support chatbot for Emami Agrotech's SAMA platform."},
+{"q":"can you speak hindi","a":"I'm currently optimised for English support. For Hindi or regional language assistance, please call our customer care at 1800-103-2206 (Mon–Sat, 9am–6pm)."},
+{"q":"feedback on ema","a":"We'd love to hear your feedback on EMA! Please share your thoughts at customercare@emamiagro.com. Your input helps us improve EMA's knowledge and capabilities."},
+{"q":"not satisfied with answer","a":"I'm sorry if my response wasn't helpful! Please rephrase your question or contact our customer care team at 1800-103-2206 or customercare@emamiagro.com for further assistance."},
+{"q":"connect to human agent","a":"To speak with a human agent, please call our toll-free number 1800-103-2206 (Mon–Sat, 9am–6pm) or email customercare@emamiagro.com with your query details."},
+{"q":"emergency complaint","a":"For urgent or critical complaints (e.g., potential health risk from a product), please call 1800-103-2206 immediately. Do not consume the product and preserve the original packaging for investigation."},
+// COMPLAINT LIFE‑CYCLE & FOLLOW‑UPS
+{"q":"what happens after i submit a complaint","a":"After submission, our team acknowledges your complaint within 24 hours. It's then assigned to a quality or logistics specialist for investigation. You can track progress using your Complaint ID."},
+{"q":"what is the next step after my complaint is submitted","a":"The next step is verification. We review your photos, invoice, and batch details. If needed, a field executive may contact you. Your complaint will move to <em>Under Review</em> within 3 business days."},
+{"q":"how long does it take to move from submitted to under review","a":"Typically within 24–72 hours (3 business days). You'll see the status change in the tracker."},
+{"q":"when will my complaint be resolved","a":"Most complaints are resolved within 7–10 business days, depending on the issue. Critical ones are prioritised."},
+{"q":"my complaint is under review what does that mean","a":"'Under Review' means our team is actively investigating your case. You may be contacted for additional information or a product sample."},
+{"q":"my complaint is resolved what happens now","a":"Once 'Resolved', the corrective action (replacement, credit, or explanation) has been confirmed. You'll receive further communication from your distributor or our team."},
+{"q":"why is my complaint still under review","a":"Complex issues may take longer. If it's been more than 5 business days, email customercare@emamiagro.com with your Complaint ID for an update."},
+{"q":"can i change the details of my complaint","a":"At this stage, you cannot edit the original complaint. Contact us at 1800-103-2206 with your ID, and we'll update it for you."},
+{"q":"i forgot my complaint id how can i find it","a":"Your Complaint ID was shown right after submission. Check your browser's local history or contact our helpline 1800-103-2206 with your name and phone number."},
+{"q":"i want to add more photos to my complaint","a":"Right now, you cannot add photos after submission. Email the photos to customercare@emamiagro.com with your Complaint ID, and we'll attach them."},
+{"q":"how soon will i get a replacement","a":"After a complaint is verified, replacement is usually arranged within 7–10 business days, depending on your location and stock availability."},
+{"q":"what if my replacement doesn't arrive","a":"If you haven't received a replacement within 10 days of the 'Resolved' status, call 1800-103-2206 and quote your Complaint ID for immediate escalation."},
+{"q":"can i talk to a human agent","a":"Of course! Call our toll-free number 1800-103-2206 (Mon–Sat, 9am–6pm) to speak directly with a customer care representative."},
+{"q":"i want to escalate my complaint","a":"To escalate, call 1800-103-2206 and request to speak with a supervisor, or email customercare@emamiagro.com with 'Escalation – Complaint ID EA-XXXXXX' in the subject."},
+{"q":"how do i follow up on my complaint","a":"Simply enter your Complaint ID in the SAMA tracker, or ask me again with the ID. You can also call 1800-103-2206 for a verbal update."},
+{"q":"can i have more than one complaint open","a":"Yes, you can file multiple complaints. Each will have its own unique ID. Track them separately in 'My Complaints'."},
+{"q":"is there a time limit to file a complaint","a":"It's best to file within 7 days of delivery or purchase. For quality issues, we accept complaints as long as the product is within its 'Best Before' date."},
+{"q":"what documents do i need to keep after complaining","a":"Keep the original invoice/LR, photos, and the product (if possible) until the case is closed."},
+{"q":"can i withdraw my complaint after filing","a":"Yes, call 1800-103-2206 with your Complaint ID and request closure. We'll update the status to 'Closed'."},
+{"q":"what does closed mean","a":"'Closed' means the complaint cycle is complete — either resolved to your satisfaction, withdrawn by you, or deemed non-actionable after investigation."},
+{"q":"who sees my complaint","a":"Your complaint is visible to authorised customer care, quality, and logistics teams within Emami Agrotech. We treat your data confidentially."},
+{"q":"is my complaint shared with the distributor","a":"Only the details necessary for resolution are shared, in line with our privacy policy."},
+{"q":"what if i am not satisfied with the resolution","a":"If you're not satisfied, don't close the complaint. Contact us at quality@emamiagro.com or call 1800-103-2206 to request a re-investigation."},
+{"q":"can i refile the same complaint","a":"You can file a new complaint referencing the old ID. Mention 'Re-investigation request' in the description."},
+{"q":"how do i know if my complaint was read","a":"You'll receive an acknowledgement within 24 hours. In SAMA, the status will change from 'Submitted' to 'Under Review' once it's being handled."},
+{"q":"what if i entered wrong phone number","a":"Contact customer care immediately with your Complaint ID and the correct number so we can update your contact details."},
+{"q":"do i get a notification when status changes","a":"Currently, SAMA does not send automatic notifications. Please check your complaint status regularly or ask me with your ID."},
+{"q":"can i track complaint without logging in","a":"Yes, you can use the complaint ID with me, but for full tracking, logging in to SAMA is recommended."},
+{"q":"what if the product was bought from a different distributor","a":"You can still file a complaint. Just provide the invoice/LR number and the distributor's name if known."},
+{"q":"does the company replace the entire batch","a":"Only the affected packs are replaced after verification. The entire batch is not recalled unless a widespread quality issue is confirmed."}
+];
+
+// ── Fuzzy Matching ────────────────────────────────────
+function tokenize(s) {
+  return s.toLowerCase().replace(/[^a-z0-9\s]/g,'').split(/\s+/).filter(Boolean);
+}
+function scoreMatch(input, candidate) {
+  const iTokens = tokenize(input);
+  const cTokens = tokenize(candidate);
+  let score = 0;
+  for (const it of iTokens) {
+    for (const ct of cTokens) {
+      if (ct === it) score += 2;
+      else if (ct.includes(it) || it.includes(ct)) score += 1;
+    }
+  }
+  return score;
+}
+function findAnswer(input) {
+  const msg = input.toLowerCase().trim();
+
+  // ── 1. Greetings & Introductions ─────────────────────
+  const greetings = [
+    /\b(hi|hello|hey|namaste|howdy)\b/i,
+    /\bgood\s+(morning|evening|afternoon|night)\b/i,
+    /\bhow are you\b/i,
+    /\bwhat'?s your name\b/i,
+    /\bwho are you\b/i,
+    /\bbye|goodbye|see you|tata\b/i,
+  ];
+  for (const pattern of greetings) {
+    if (pattern.test(msg)) {
+      if (/bye|goodbye|see you/i.test(msg)) return "Goodbye! 👋 If you ever need help with Emami oils or complaints, I'm here.";
+      if (/good\s+morning/i.test(msg)) return "Good morning! 🌞 How can EMA assist you today?";
+      if (/good\s+evening/i.test(msg)) return "Good evening! 🌆 I'm here for your Emami Agrotech queries.";
+      if (/good\s+night/i.test(msg)) return "Good night! 🌙 Feel free to reach out whenever you need support.";
+      if (/how are you/i.test(msg)) return "I'm doing great, thank you! Ready to answer your questions about Emami oils. 😊";
+      if (/what'?s your name|who are you/i.test(msg)) return "I'm EMA – Emami Management Assistant – your AI helper for Emami Agrotech products and support.";
+      return "Hello! 👋 I'm EMA, your Emami Agrotech support assistant. How can I help you?";
+    }
+  }
+
+  // ── 2. "How to deal with …" / "What to do if …" ─────
+  if (/(how to (deal with|handle|fix|resolve|manage)|what to do (if|in case of|when)|what should i do (about|if|when))/i.test(msg)) {
+    if (/(leak|leaking|spill)/i.test(msg)) {
+      return `<strong>📦 Product Leakage:</strong><br>
+1. <strong>Do not discard</strong> the product – keep it for verification.<br>
+2. Take clear photos of the leaking pouch/tin, including the <strong>batch number</strong> and <strong>label</strong>.<br>
+3. File a complaint in SAMA using 'New Complaint' → issue type <em>Leakage / Damage</em>.<br>
+4. Our team will contact you within 24 hours to arrange replacement through your dealer.<br>
+5. For urgent help, call 1800-103-2206.`;
+    }
+    if (/(damage|damaged|broken|dented|torn)/i.test(msg)) {
+      return `<strong>📦 Product Damage:</strong><br>
+• Photograph the damaged item clearly.<br>
+• Note the invoice/LR number and date of delivery.<br>
+• Raise a complaint under <em>Leakage / Damage</em> in SAMA.<br>
+• We will verify and replace the product via your distributor within 7–10 business days.`;
+    }
+    if (/(expir|expired|best before|near expiry|past date)/i.test(msg)) {
+      return `<strong>⏰ Expiry / Near Expiry:</strong><br>
+• Check the 'Best Before' date on the pack.<br>
+• If you received a product already expired or very close to expiry, raise an <em>Expiry / Labelling</em> complaint.<br>
+• Upload a photo of the date printed on the pack.<br>
+• We will investigate FIFO compliance and arrange a credit/replacement if found valid.`;
+    }
+    if (/(short delivery|less quantity|missing items|not enough|fewer)/i.test(msg)) {
+      return `<strong>📋 Short Delivery:</strong><br>
+• Compare the delivered quantity with the invoice / LR.<br>
+• File a <em>Short Delivery</em> complaint, mentioning the ordered quantity vs. received.<br>
+• Our logistics team will reconcile within 48 hours. Keep the delivery note handy.`;
+    }
+    if (/(wrong product|wrong sku|different item|mistake)/i.test(msg)) {
+      return `<strong>🔄 Wrong Product Received:</strong><br>
+• Do not use the product. Keep it intact.<br>
+• Raise a <em>Wrong Product</em> complaint, quoting your invoice number and the received product details.<br>
+• We will arrange a reverse pickup and deliver the correct product.`;
+    }
+    if (/(late dispatch|delayed delivery|delay|not on time)/i.test(msg)) {
+      return `<strong>🚚 Late Delivery:</strong><br>
+• Provide the promised delivery date and actual date of receipt.<br>
+• File a <em>Delayed Delivery</em> complaint with your order/LR number.<br>
+• Our supply chain team will investigate and share a cause assessment within 2 working days.`;
+    }
+    return `To give you the best advice, could you specify the issue? For example: leakage, damage, wrong product, expiry, short delivery, or late dispatch. Then I'll guide you step by step.`;
+  }
+
+  // ── 3. Casually Dismissive / Acknowledgment Filter ───
+  if (/^(no|nope|nah|no thanks|nothing|ok|okay|fine|sure|alright|ok thanks|okay thank you|ok thnks|ok ty|ok thank you)\b/i.test(msg) ||
+      /^ok\s*(thanks|thank you|thnks|ty|thx)/i.test(msg) ||
+      /^(its ok|it'?s ok|that'?s fine|no problem|no prob)\b/i.test(msg)) {
+    if (/^(no|nope|nah|nothing|no thanks|no prob)\b/i.test(msg)) {
+      return "Alright! 😊 If you change your mind or need anything else, I'm right here.";
+    }
+    return "Glad to hear that! 😊 Let me know if there's anything else you need about Emami oils.";
+  }
+
+  // ── 4. Capability / Support Scope ────────────────────
+  if (/(what|which) (kind of|type of|sort of|) ?(support|help|assistance) (can|do|will) (you|ema)/i.test(msg) ||
+      /(what can you do|what do you do|what help can you offer|how (can|do) you (help|assist))/i.test(msg)) {
+    return `I can help you with a lot! 🛢️<br><br>
+<strong>📦 Product Knowledge:</strong> Ask me about any Emami Healthy & Tasty oil – ingredients, nutrition, usage, storage, price range, and comparisons.<br>
+<strong>📋 Complaints:</strong> I can tell you how to file a complaint, what documents are needed, what the status means, and escalation steps.<br>
+<strong>🔍 Track Complaint:</strong> If you have a Complaint ID (like EA-123456), I can look up its current status.<br>
+<strong>🏢 Company Info:</strong> Learn about Emami Agrotech, its certifications, contact details, and distribution.<br>
+<strong>💡 Tips & Troubleshooting:</strong> From oil storage to dealing with leakage – I've got answers.<br>
+Just type or speak your question! 😊`;
+  }
+
+  // ── 5. Self-introduction ("I am Abhijit", "My name is …") ──
+  const intro = msg.match(/(?:i am|i'm|my name is|this is|call me)\s+([a-z\-]+)/i);
+  if (intro) {
+    const name = intro[1];
+    const capitalized = name.charAt(0).toUpperCase() + name.slice(1);
+    return `Nice to meet you, ${capitalized}! 👋 I'm EMA. How can I assist you with Emami Agrotech products or support today?`;
+  }
+
+  // ── 6. Personal remarks (love, compliments, thanks) ──
+  const lovePatterns = [
+    /i love you/,
+    /love you/,
+    /you are (so )?(cute|sweet|nice|awesome|great|kind|amazing|lovely|wonderful|beautiful|handsome)/,
+    /i like you/,
+    /you.*(rock|best|super)/,
+    /(hugs|kisses|muah)/,
+    /you make me (happy|smile)/,
+    /(thank you|thanks|ty) ema/i,
+  ];
+  for (const pattern of lovePatterns) {
+    if (pattern.test(msg)) {
+      if (/i love you|love you|you are.*cute/i.test(msg)) return "That's very kind of you! ❤️ I'm EMA, your Emami Agrotech assistant. How can I help you with our edible oils or support today?";
+      if (/thank you|thanks/i.test(msg)) return "You're most welcome! 😊 If you need anything about Emami oils or your complaint, just ask.";
+      return "You're too kind! 🌼 I'm here to help with Emami Agrotech products and support. What can I assist you with?";
+    }
+  }
+
+  // ── 7. Complaint ID lookup ────────────────────────────
+  const eaMatch = input.match(/\bEA-?(\d{6})\b/i);
+  if (eaMatch) {
+    const cid = 'EA-' + eaMatch[1];
+    const session = getSession();
+    const comps = getComplaints().filter(c => !session || c.customerId === session.id);
+    const found = comps.find(c => c.id === cid);
+    if (found) return `Your complaint ${cid} is currently <strong>${found.status}</strong>. Issue: ${found.issueType}, Product: ${found.productName}. ${found.status === 'Resolved' ? 'Great news — it has been resolved!' : 'Our team is working on it.'}`;
+    return `I couldn't find complaint ${cid} in your account. Please verify the ID or contact us at 1800-103-2206.`;
+  }
+
+  // ── 8. Fuzzy Q&A (product / knowledge base) ──────────
+  let best = null, bestScore = 0;
+  for (const qa of QA) {
+    const s = scoreMatch(input, qa.q);
+    if (s > bestScore) { bestScore = s; best = qa; }
+  }
+  if (best && bestScore >= 1) return best.a;
+  return "I'm still learning! For immediate assistance, please contact our customer care at <strong>1800-103-2206</strong> (Mon–Sat, 9am–6pm) or email <strong>customercare@emamiagro.com</strong>.";
+}
+
+// ── Chat UI ───────────────────────────────────────────
+let voiceEnabled = true;
+let isTyping = false;
+
+function formatTime() {
+  return new Date().toLocaleTimeString('en-IN',{hour:'2-digit',minute:'2-digit'});
+}
+function appendMsg(text, role) {
+  const msgs = document.getElementById('chatMsgs');
+  const div = document.createElement('div');
+  div.className = `msg msg-${role}`;
+  div.innerHTML = `<div class="msg-bubble">${text}</div><div class="msg-time">${formatTime()}</div>`;
+  msgs.appendChild(div);
+  msgs.scrollTop = msgs.scrollHeight;
+  return div;
+}
+function appendTyping() {
+  const msgs = document.getElementById('chatMsgs');
+  const div = document.createElement('div');
+  div.className = 'msg msg-bot msg-typing';
+  div.id = 'typingIndicator';
+  div.innerHTML = `<div class="msg-bubble"><div class="typing-dot"></div><div class="typing-dot"></div><div class="typing-dot"></div></div>`;
+  msgs.appendChild(div);
+  msgs.scrollTop = msgs.scrollHeight;
+  return div;
+}
+function removeTyping() {
+  const t = document.getElementById('typingIndicator');
+  if (t) t.remove();
+}
+function speakText(text) {
+  if (!voiceEnabled || !window.speechSynthesis) return;
+  // Remove HTML tags first
+  let clean = text.replace(/<[^>]+>/g, '');
+  // Remove all emojis and special symbols before speaking
+  clean = clean.replace(
+    /[\u{1F600}-\u{1F64F}\u{1F300}-\u{1F5FF}\u{1F680}-\u{1F6FF}\u{1F1E0}-\u{1F1FF}\u{2600}-\u{26FF}\u{2700}-\u{27BF}\u{FE0F}\u{200D}\u{20E3}\u{23CF}\u{23E9}-\u{23F3}\u{23F8}-\u{23FA}\u{2B50}\u{2B55}\u{3030}\u{303D}\u{3297}\u{3299}]/gu,
+    ''
+  ).trim();
+  if (!clean) return;
+  const utt = new SpeechSynthesisUtterance(clean);
+  utt.lang = 'en-IN';
+  utt.rate = 1.0;
+  utt.pitch = 1.1;
+  utt.volume = 1;
+  // Try to pick a female voice
+  const voices = window.speechSynthesis.getVoices();
+  const fem = voices.find(v => /female|woman|zira|samantha|victoria|neerja|heera/i.test(v.name));
+  if (fem) utt.voice = fem;
+  window.speechSynthesis.speak(utt);
+}
+function sendMessage(text) {
+  if (!text.trim()) return;
+  appendMsg(text, 'user');
+  playTone('click');
+  document.getElementById('chatInput').value = '';
+  // Typing delay
+  setTimeout(() => {
+    appendTyping();
+    setTimeout(() => {
+      removeTyping();
+      const answer = findAnswer(text);
+      appendMsg(answer, 'bot');
+      playTone('notify');
+      speakText(answer);
+    }, 600 + Math.random()*400);
+  }, 150);
+}
+// Chatbot open/close
+const chatFab = document.getElementById('chatFab');
+const chatWindow = document.getElementById('chatWindow');
+let chatOpen = false;
+function toggleChat() {
+  chatOpen = !chatOpen;
+  chatWindow.classList.toggle('open', chatOpen);
+  chatFab.classList.toggle('open', chatOpen);
+  chatFab.textContent = chatOpen ? '✕' : '🤖';
+  if (chatOpen && document.getElementById('chatMsgs').children.length === 0) {
+    setTimeout(() => {
+      appendMsg("👋 Hi! I'm <strong>EMA</strong>, your Emami Agrotech support assistant. I can help you with product info, complaints, and more!<br><br>Try asking:<br>• <em>'What is Healthy & Tasty Rice Bran Oil?'</em><br>• <em>'How do I file a complaint?'</em><br>• <em>'Check complaint EA-123456'</em>", 'bot');
+      speakText("Hi! I'm EMA, your Emami Agrotech support assistant. How can I help you today?");
+    }, 300);
+  }
+  playTone('click');
+}
+chatFab.addEventListener('click', toggleChat);
+document.getElementById('chatCloseBtn').addEventListener('click', () => {
+  chatOpen = false;
+  chatWindow.classList.remove('open');
+  chatFab.classList.remove('open');
+  chatFab.textContent = '🤖';
+  playTone('click');
+});
+document.getElementById('chatSendBtn').addEventListener('click', () => {
+  sendMessage(document.getElementById('chatInput').value);
+});
+document.getElementById('chatInput').addEventListener('keydown', e => {
+  if (e.key === 'Enter' && !e.shiftKey) {
+    e.preventDefault();
+    sendMessage(e.target.value);
+  }
+});
+// Voice toggle
+document.getElementById('voiceToggleBtn').addEventListener('click', () => {
+  voiceEnabled = !voiceEnabled;
+  document.getElementById('voiceToggleBtn').textContent = voiceEnabled ? '🔊' : '🔇';
+  document.getElementById('voiceToggleBtn').classList.toggle('active', voiceEnabled);
+  if (!voiceEnabled) window.speechSynthesis && window.speechSynthesis.cancel();
+  toast(voiceEnabled ? 'Voice output enabled' : 'Voice output muted');
+  playTone('click');
+});
+// Mic / Speech Recognition
+const micBtn = document.getElementById('micBtn');
+let recognition = null;
+if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
+  const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+  recognition = new SR();
+  recognition.continuous = false;
+  recognition.interimResults = false;
+  recognition.lang = 'en-IN';
+  let listening = false;
+  recognition.onstart = () => {
+    listening = true;
+    micBtn.classList.add('listening');
+    micBtn.title = 'Listening…';
+    playTone('listen');
+  };
+  recognition.onend = () => {
+    listening = false;
+    micBtn.classList.remove('listening');
+    micBtn.title = 'Voice input';
+  };
+  recognition.onresult = e => {
+    const transcript = e.results[0][0].transcript;
+    document.getElementById('chatInput').value = transcript;
+    sendMessage(transcript);
+  };
+  recognition.onerror = () => {
+    micBtn.classList.remove('listening');
+    toast('Voice recognition error. Please try again.');
+  };
+  micBtn.addEventListener('click', () => {
+    if (!chatOpen) toggleChat();
+    if (listening) { recognition.stop(); }
+    else { recognition.start(); }
+  });
+} else {
+  micBtn.style.display = 'none';
+}
+
+// ═══════════════════════════════════════════════════════
+//  INIT
+// ═══════════════════════════════════════════════════════
+window.addEventListener('load', () => {
+  setTimeout(() => {
+    document.getElementById('loader').classList.add('gone');
+    const session = getSession();
+    if (session) {
+      document.getElementById('app').classList.remove('hidden');
+      bootApp(session);
+    } else {
+      document.getElementById('loginPage').classList.remove('hidden');
+    }
+  }, 1200);
+});
+
+// Network status
+function updateNet() {
+  document.getElementById('netLabel').textContent = navigator.onLine ? 'Connected' : 'Offline';
+}
+window.addEventListener('online', updateNet);
+window.addEventListener('offline', updateNet);
+updateNet();
+
+// Custom cursor
+if (window.matchMedia('(pointer:fine)').matches && !document.querySelector('.cursor')) {
+  const cursor = document.createElement('div');
+  cursor.className = 'cursor';
+  document.body.appendChild(cursor);
+  document.addEventListener('mousemove', e => {
+    cursor.style.left = e.clientX + 'px';
+    cursor.style.top = e.clientY + 'px';
+  });
+document.addEventListener('mouseover', e => {
+    if (e.target.closest('button, a, input, select, textarea, .nav-item, .product-card, .video-card, .video-card-premium, .complaint-card, .gist-btn, .tab-btn')) {
+      cursor.classList.add('expand');
+    }
+  });
+  document.addEventListener('mouseout', e => {
+    if (e.target.closest('button, a, input, select, textarea, .nav-item, .product-card, .video-card, .video-card-premium, .complaint-card, .gist-btn, .tab-btn')) {
+      cursor.classList.remove('expand');
+    }
+  });
+}
+
+// Optional headline word animation when SplitType and GSAP are available.
+function animateHeroHeadline() {
+  if (typeof SplitType !== 'undefined' && typeof gsap !== 'undefined') {
+    const heroHeadline = document.querySelector('#loginPage .hero-content h1');
+    if (heroHeadline && !heroHeadline.dataset.splitAnimated) {
+      heroHeadline.dataset.splitAnimated = 'true';
+      const split = new SplitType(heroHeadline, { types: 'words' });
+      gsap.fromTo(split.words,
+        { y: 100, opacity: 0 },
+        { y: 0, opacity: 1, stagger: 0.03, duration: 0.8, ease: 'power3.out', delay: 0.3 }
+      );
+    }
+  }
+}
+animateHeroHeadline();
+</script>
+</body>
+</html>
