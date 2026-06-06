@@ -361,6 +361,43 @@ document.querySelectorAll('.g-reveal').forEach((el, i) => {
     gsap.to(el, { borderColor: 'rgba(245,182,66,.1)', boxShadow: 'none', duration: .4 }));
 });
 
+// ── 18b. Services scroll reveal ──────────────────────
+ScrollTrigger.batch('.svc-reveal', {
+  start: 'top 88%',
+  onEnter: batch => batch.forEach(el => el.classList.add('in-view')),
+});
+
+// ── 18c. Connect form (AJAX → FormSubmit, stay on page) ──
+(function connectForm() {
+  const form = document.getElementById('connectForm');
+  if (!form) return;
+  const btn = form.querySelector('.connect-submit');
+  form.addEventListener('submit', async e => {
+    e.preventDefault();
+    const original = btn.textContent;
+    btn.disabled = true;
+    btn.textContent = 'Sending…';
+    try {
+      const res = await fetch('https://formsubmit.co/ajax/ghoshabhijitpr@gmail.com', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+        body: JSON.stringify(Object.fromEntries(new FormData(form))),
+      });
+      const data = await res.json().catch(() => ({}));
+      // FormSubmit returns success:"true" only when the form is activated AND delivered
+      if (res.ok && String(data.success) === 'true') {
+        form.innerHTML = '<div class="form-success">✅ Thank you! Your message has been sent.<br>Abhijit will get back to you over email soon. 🤝</div>';
+      } else {
+        throw new Error(data.message || 'Delivery failed');
+      }
+    } catch (err) {
+      btn.disabled = false;
+      btn.textContent = original;
+      alert('Could not send right now. Please email directly: ghoshabhijitpr@gmail.com\n\n(' + err.message + ')');
+    }
+  });
+})();
+
 // ── Gallery lightbox ─────────────────────────────────
 (function galleryLightbox() {
   const lb      = document.getElementById('gallery-lightbox');
@@ -479,75 +516,245 @@ document.querySelectorAll('.contact-card').forEach(card => {
   const sendBtn  = document.getElementById('chatbot-send');
   const messages = document.getElementById('chatbot-messages');
 
+  // Each entry: keys (trigger phrases) + ans (string OR array of variants for variety)
   const KB = [
+    // ---------- IDENTITY ----------
     {
-      keys: ['who','name','abhijit','yourself','introduce','about'],
-      ans: "I'm Abhijit Ghosh — born 04 October 2001, from West Bengal 🇮🇳. I'm a Supply Chain professional currently working as Management Trainee SCM at Neo Metaliks Limited. I did my BBA in Marketing (Burdwan University, 75%) and am pursuing an MBA in Transportation & Logistics at IISWBM, Kolkata (2024–2026). I also co-founded Janani Ghee, a homemade ghee brand. 🎓",
+      keys: ['who is abhijit','who are you','your name','introduce yourself','tell me about yourself','about abhijit','about him','who'],
+      ans: "I'm Abhijit Ghosh — born 04 October 2001, from West Bengal 🇮🇳. A Supply Chain professional, currently Management Trainee – SCM at Neo Metaliks Limited. BBA in Marketing (Burdwan University, 75%) → MBA in Transportation & Logistics at IISWBM, Kolkata (2024–2026). I also co-founded Janani Ghee, a homemade ghee brand. 🎓",
     },
     {
-      keys: ['work','job','company','neo','metaliks','trainee','current','role'],
-      ans: "Abhijit works as Management Trainee — SCM at Neo Metaliks Limited, a steel manufacturer in West Bengal. He handles inbound raw material procurement (sponge iron, scrap, ferro-alloys), vendor coordination, logistics tracking, and SCM performance reporting. It's a live role he's currently in. 🏭",
+      keys: ['born','age','birthday','date of birth','dob','old','how old'],
+      ans: "Abhijit was born on 4th October 2001 in West Bengal, India 🎂 — so he's 24. A Libra, if you're curious! ♎",
     },
     {
-      keys: ['education','study','studied','degree','college','university','academic'],
-      ans: "Abhijit's academics: 📚 MBA (Transportation & Logistics) — IISWBM, Kolkata, 2024–2026. 🎓 BBA Marketing — Cyber Research & Training Institute, Burdwan University, 75%, 2021–2024. 📗 Higher Secondary — Gantar B.M. High School, 87%, 2019. 📘 Secondary — Gantar B.M. High School, 70%, 2017.",
+      keys: ['where from','from where','where is he from','where are you from','which city','which state','hometown','native','belong','origin','located','based','reside','region','place'],
+      ans: "Abhijit is from West Bengal, India 🇮🇳 — he grew up around the Burdwan region and is currently based in Kolkata for his MBA at IISWBM.",
     },
     {
-      keys: ['mba','iiswbm','transportation','logistics','kolkata'],
-      ans: "His MBA is in Transportation & Logistics from IISWBM, Kolkata (2024–2026). Subjects include Logistics & Distribution Management, Transportation Management Systems, Warehouse & Inventory Management, Procurement, Operations Research, and International Logistics. IISWBM was established in 1953 — one of India's oldest management institutes! 📚",
+      keys: ['language','languages','speak','bengali','hindi'],
+      ans: "Abhijit speaks Bengali (mother tongue), Hindi, and English fluently 🗣️ — handy for vendor negotiations and ground-level coordination across India.",
+    },
+
+    // ---------- CURRENT WORK (Neo Metaliks) ----------
+    {
+      keys: ['neo metaliks','neometaliks','steel company','current job','current role','where does he work','where do you work','present job','present company'],
+      ans: "Abhijit works as Management Trainee – SCM at Neo Metaliks Limited, a steel manufacturer (TMT bars & wire rods). He handles inbound raw-material procurement (sponge iron, scrap, ferro-alloys), vendor coordination, logistics tracking, and SCM performance reporting. 🏭",
     },
     {
-      keys: ['bba','burdwan','marketing','bachelor'],
-      ans: "Abhijit did his BBA in Marketing Management from Cyber Research & Training Institute, Burdwan (Burdwan University) — scoring 75% from 2021 to 2024. He studied Consumer Behaviour, Brand Management, Market Research, and Sales & Distribution. This marketing background is what makes him sharp at communicating SCM value. 🏛️",
+      keys: ['responsibilities','day to day','typical day','daily','routine','daily work','what do you do at','duties','tasks at work','role involve'],
+      ans: "Day-to-day at Neo Metaliks, Abhijit: schedules inbound raw-material deliveries (sponge iron, scrap, ferro-alloys), tracks vendor lead times & delivery performance, monitors freight routes for cost savings, builds weekly SCM dashboards (inventory turns, fill rates, freight ₹/tonne), and coordinates raw-material availability with the rolling mill schedule. 📋",
     },
     {
-      keys: ['janani','ghee','entrepreneur','startup','founder','brand'],
-      ans: "Janani Ghee was Abhijit's entrepreneurial venture (2021–2023) — a homemade ghee brand he co-founded. He managed everything: procurement, production coordination with 12 housewives, distribution to 10+ retail outlets, and 200+ direct customers. He reduced delivery lead times by 25%! This was his real-world SCM MBA before the actual MBA. 🧈",
+      keys: ['challenge','difficult','hard part','struggle','problem at work','toughest','obstacle'],
+      ans: "The toughest part of Abhijit's work is volatility — sponge iron and scrap prices swing constantly, so just-in-time raw-material availability is a daily balancing act. He's tackling it by building a Supplier Performance Index (SPI) and pushing for vendor consolidation to reduce fragmentation. ⚙️",
     },
     {
-      keys: ['certificate','certified','cscmp','nestle','nestlé','award','achievement'],
-      ans: "Abhijit has two certifications: 🏅 CSCMP Bronze Level — 2025 CSCMP Global Learning Challenge (SCPro™ Foundations, signed by Mark Baxa, CEO of CSCMP — globally recognised!). 📜 Nestlé Certificate — Running an Efficient Supply Chain (supply chain optimisation & sustainability, 2025). Big credentials for an MBA student!",
+      keys: ['contribution','impact','achievement','accomplishment','achieved','proud','what have you done','result','difference','value add'],
+      ans: "At Neo Metaliks, Abhijit has: initiated a Supplier Performance Index (SPI) framework for structured vendor evaluation, identified vendor-consolidation opportunities to cut procurement complexity, flagged lane-wise freight savings, and introduced AI-assisted reporting (Excel + Claude) to speed up weekly MIS. 📈",
     },
     {
-      keys: ['ai','artificial intelligence','claude','chatbot','automation','integrate','productivity','tool'],
-      ans: "AI integration is one of Abhijit's standout skills! 🤖 He uses Claude AI at 92% proficiency for workflow automation, built this entire portfolio with AI (including this chatbot!), does AI-assisted SCM research, and applies prompt engineering in supply chain contexts. He believes AI is a productivity multiplier — not just a search tool.",
+      keys: ['learn from work','learn','learnt','learned','learning','lesson','biggest lesson','takeaway','grown','gained'],
+      ans: "Abhijit's biggest learning so far: supply chain on paper vs. on the shop floor are two different worlds. A model that looks perfect in Excel can collapse against a weighbridge queue or a delayed rake. He's learned to ground every decision in ground reality. 💡",
     },
     {
-      keys: ['project','built','tool','work'],
-      ans: "Abhijit's projects: 1️⃣ Emami COPQ Study — ₹10.03 crore waste mapped, 14 interventions. 2️⃣ Expiry Tracker Tool — browser inventory app. 3️⃣ Neo Metaliks SCM — live MT role. 4️⃣ SAMA SRN Portal — sales return & credit note digitisation at Emami. 5️⃣ SCM Knowledge Base — AI-assisted exam prep. 6️⃣ Janani Ghee — co-founded ghee brand. 7️⃣ This AI Portfolio! 💪",
+      keys: ['steel','tmt','wire rod','sponge iron','scrap','ferro','blast furnace','manufacturing process'],
+      ans: "Neo Metaliks makes TMT bars & wire rods. The chain: sponge iron (DRI) + MS scrap + ferro-alloys → induction furnace → continuous casting (billets) → rolling mill → finished TMT (IS 1786 Fe-500D grade). Abhijit manages the inbound side of that flow. 🔩",
+    },
+
+    // ---------- EDUCATION ----------
+    {
+      keys: ['education','academic','qualification','studied','degree','schooling','marks','percentage'],
+      ans: "Abhijit's academics: 📚 MBA (Transportation & Logistics) — IISWBM, Kolkata, 2024–2026. 🎓 BBA Marketing — Burdwan University, 75%, 2021–2024. 📗 Higher Secondary — Gantar B.M. High School, 87%, 2019. 📘 Secondary — 70%, 2017.",
     },
     {
-      keys: ['skill','know','good','expertise','excel','sap','python','power bi'],
-      ans: "Abhijit's top skills: ⛓️ Supply Chain & Operations (COPQ, logistics, procurement — 80-90%). 📊 Data Tools (Excel 92%, Power BI 78%, SAP 72%, Python 65%). 🤖 AI Integration (Claude AI 92%, AI research 90%, prompt engineering 88%). 🤝 Soft Skills (communication, negotiation, root cause analysis). CSCMP & Nestlé certified too!",
+      keys: ['mba','iiswbm','transportation and logistics','masters','post graduate','pg'],
+      ans: "His MBA is in Transportation & Logistics from IISWBM, Kolkata (2024–2026) — affiliated to Calcutta University. Subjects: Logistics & Distribution, Transportation Management Systems, Warehouse & Inventory, Procurement, Operations Research, Supply Chain Analytics, International Logistics. IISWBM (est. 1953) is India's first business school! 📚",
     },
     {
-      keys: ['contact','email','phone','linkedin','reach','connect','hire'],
-      ans: "📧 ghoshabhijitpr@gmail.com\n📱 +91 78640 84892\n💼 linkedin.com/in/ghoshabhijitpr\n📍 Boys Hostel, IISWBM, Kolkata 700073\n\nAbhijit is open to supply chain, logistics, and operations opportunities. Don't hesitate to reach out! 🤝",
+      keys: ['bba','burdwan','marketing degree','bachelor','undergraduate','graduation'],
+      ans: "Abhijit did his BBA in Marketing from Burdwan University (Cyber Research & Training Institute) — 75%, 2021–2024. Consumer Behaviour, Brand Management, Market Research, Sales & Distribution. That marketing lens is exactly why he's good at *selling* supply-chain value, not just calculating it. 🏛️",
     },
     {
-      keys: ['emami','copq','haldia','internship','intern','agrotech'],
-      ans: "At Emami Agrotech (March–May 2026), Abhijit did India's first COPQ study for an edible oil network — analysed 5,167 SRN lines worth ₹773.38 lakhs, quantified ₹10.03 crore annual COPQ across 15 depots, and gave 14 interventions saving ₹4.5–6 crore in Year 1. Also designed the SAMA SRN Portal to fix the return & credit note process. 6 weeks at Haldia Plant + Dhulagarh CFA! 🔍",
+      keys: ['school','high school','secondary','12th','10th','gantar'],
+      ans: "Abhijit studied at Gantar B.M. High School — Higher Secondary 87% (2019) and Secondary 70% (2017), before his BBA and MBA. 🏫",
     },
     {
-      keys: ['dr soma','homeopathic','stock manager','assistant'],
-      ans: "In 2024, before joining Neo Metaliks, Abhijit worked as Assistant Stock Manager at Dr Soma Singha's homeopathic clinic — managing inventory of 200+ homeopathic products, ensuring accurate tracking and timely replenishment. His first formal inventory management role! 📦",
+      keys: ['why supply chain','why logistics','why scm','why this field','chose','choose','chosen','choose career','career switch','switch from marketing'],
+      ans: "Abhijit started in marketing but found his real spark running Janani Ghee — sourcing, producing, and delivering a physical product. He realised the magic wasn't in the ad, it was in getting the product to the customer fresh and on time. That pulled him into supply chain for good. 🔄",
+    },
+
+    // ---------- EMAMI INTERNSHIP / COPQ ----------
+    {
+      keys: ['emami','copq','haldia','dhulagarh','agrotech','dissertation','cost of poor quality','internship project','edible oil'],
+      ans: "At Emami Agrotech (March–May 2026), Abhijit ran a comprehensive COPQ study across their distribution network — analysed 5,167 SRN lines worth ₹773.38 lakhs, quantified ₹10.03 crore annual COPQ across 15 depots, and proposed 14 interventions (9 zero-cost) saving ₹4.5–6 crore in Year 1. Guide: Mr. Debanjan Chakravarti, CS&L Manager. 🔍",
     },
     {
-      keys: ['hello','hi','hey','hii','helo','hola'],
-      ans: "Hey! 👋 I'm Abhi's little assistant — the one with a butterfly on my head! Ask me anything about Abhijit: his work at Neo Metaliks, his education, projects, certifications, or AI skills. I know everything about him! 🦋",
+      keys: ['srn','stock return','returns','credit note','return note'],
+      ans: "SRN = Stock Return Notes. In FY25–26, Emami processed 5,167 SRN lines worth ₹773.38 lakhs — 89.2% driven by e-commerce (Zepto, Blinkit, Flipkart) enforcing a 180-days-remaining shelf-life rule. The Kolkata depot alone was ₹417.87 lakhs (54%!). Abhijit's SAMA portal was built to fix exactly this. 📦",
     },
     {
-      keys: ['thank','thanks','great','nice','awesome','cool'],
-      ans: "You're welcome! 😊 Feel free to ask anything else about Abhijit — or scroll up the page to explore his full portfolio!",
+      keys: ['detention','truck','tat','turnaround','asrs','trucks waiting','yard'],
+      ans: "Abhijit's COPQ study surfaced a hidden detention liability: at Haldia, 150 trucks arrive on a peak day but the ASRS loads only 90 — the other 60 wait 6–7 hours. That's ₹60,000/day of exposure, ~₹1.87 crore/year, sitting on no P&L line until transporters renegotiate. 🚛",
+    },
+    {
+      keys: ['intervention','recommendation','solution','fix','what did you recommend','savings'],
+      ans: "Of 14 COPQ interventions, 9 were zero-cost — e.g. moving the FFS conveyor labour station from 8ft to 20–25ft so seals harden before handling (₹0), mandatory FEFO dispatch, anti-bird nets, pre-dispatch MRP checks, and BOPT upgrades with a 3-year ROI model. First-year saving: ₹4.5–6 crore. ✅",
+    },
+
+    // ---------- PROJECTS ----------
+    {
+      keys: ['project','projects','portfolio work','what have you built','case studies'],
+      ans: "Abhijit's projects: 1️⃣ Emami COPQ Study — ₹10.03 cr waste mapped. 2️⃣ SAMA SRN Portal — return & credit-note digitisation. 3️⃣ Expiry Tracker tool. 4️⃣ Neo Metaliks SCM — live role. 5️⃣ SCM Knowledge Base — AI exam prep. 6️⃣ Janani Ghee. 7️⃣ This AI Portfolio! Click any card on the page to dive in. 💪",
+    },
+    {
+      keys: ['sama','srn portal','sales approval','return portal'],
+      ans: "SAMA (Sales Approval & Management Application) is the SRN portal Abhijit designed at Emami — it digitises the entire sales-return & credit-note flow: rep raises a request → routes through ASM → Regional Manager → Accounts → auto-generates a credit note with full audit trail. Replaces messy WhatsApp/phone approvals. There's a live demo button in the SAMA project card! 🖥️",
+    },
+    {
+      keys: ['expiry tracker','expiry tool','freshness','inventory app','shelf life tool'],
+      ans: "The Expiry Tracker is a browser-based inventory-freshness tool Abhijit built — it flags near-expiry stock so depots can apply FEFO and avoid the kind of ₹168-lakh freshness losses he found at Emami. Try the live launch button in the project modal! ⏳",
+    },
+    {
+      keys: ['knowledge base','scm knowledge','exam prep','study material'],
+      ans: "Abhijit built an AI-assisted SCM Knowledge Base — a structured prep resource across his IISWBM Transportation & Logistics subjects, shared with batchmates. A neat example of using AI as a learning multiplier. 📖",
+    },
+    {
+      keys: ['janani','ghee','entrepreneur','startup','founder','co-founded','business','venture'],
+      ans: "Janani Ghee (2021–2023) was Abhijit's homemade-ghee venture. He ran the whole chain: procurement, production with 12 housewives, distribution to 10+ outlets and 200+ direct customers — and cut delivery lead times by 25%. His real-world SCM apprenticeship before the MBA. 🧈",
+    },
+    {
+      keys: ['dr soma','homeopathic','stock manager','clinic','assistant stock'],
+      ans: "Before Neo Metaliks, Abhijit was Assistant Stock Manager at Dr Soma Singha's homeopathic clinic (2024) — managing 200+ products with accurate tracking and timely replenishment. His first formal inventory role. 📦",
+    },
+    {
+      keys: ['logiseast','cii','event','summit','conference'],
+      ans: "Abhijit represented IISWBM at CII LOGISEAST 2025 — the Confederation of Indian Industry's Eastern India logistics summit on transforming logistics & warehousing. You can see the photo in his gallery! 🚀",
+    },
+
+    // ---------- SKILLS ----------
+    {
+      keys: ['skill','skills','expertise','good at','strong at','excel','sap','python','power bi','data tools','technical'],
+      ans: "Abhijit's skills: ⛓️ Supply Chain (COPQ, logistics, procurement, vendor mgmt — 80-90%). 📊 Data (Excel 92%, Power BI 78%, SAP 72%, Python 65%). 🤖 AI (Claude 92%, AI research 90%, prompt engineering 88%). 🤝 Soft skills (communication, negotiation, root-cause analysis). CSCMP & Nestlé certified.",
+    },
+    {
+      keys: ['ai','artificial intelligence','claude','automation','integrate ai','productivity','use ai','prompt'],
+      ans: "AI integration is Abhijit's signature edge 🤖 — Claude at 92% proficiency for workflow automation. He built this entire portfolio (and me!) with AI, runs AI-assisted SCM research, and applies prompt engineering to live supply-chain reporting. His view: AI is a productivity multiplier, not just a search box.",
+    },
+    {
+      keys: ['strength','strong point','best quality','what makes you good','usp','stand out'],
+      ans: "Abhijit's biggest strengths: a rare marketing-to-supply-chain blend (he can quantify *and* communicate value), ground-level rigor (₹10 cr COPQ map from real SAP data), and AI fluency that makes him faster than peers. He turns chaos into a clear, costed action plan. ⭐",
+    },
+    {
+      keys: ['weakness','weak','improve','working on','flaw','shortcoming'],
+      ans: "Honestly? Abhijit can over-invest in perfecting analysis before acting — a side effect of being detail-driven. He's actively working on 'good enough, ship it' speed, especially in fast-moving plant environments. 🌱",
+    },
+
+    // ---------- CERTIFICATIONS ----------
+    {
+      keys: ['certificate','certification','certified','cscmp','nestle','nestlé','award','bronze','accolade','credential'],
+      ans: "Two big credentials: 🏅 CSCMP Bronze — 2025 Global Learning Challenge (SCPro™ Foundations, signed by Mark Baxa, CEO of CSCMP). 📜 Nestlé — Running an Efficient Supply Chain (optimisation & sustainability, 2025). Strong signals for an MBA student!",
+    },
+
+    // ---------- CAREER / GOALS / PERSONALITY ----------
+    {
+      keys: ['goal','ambition','future','aspiration','five years','vision','where do you see','plan','career plan','next'],
+      ans: "Abhijit's goal: grow into a supply-chain leadership role where he blends operations rigor with AI-driven decision-making — building lean, cost-efficient, tech-enabled supply chains for Indian manufacturing. Long-term, he'd love to lead an end-to-end SCM function. 🎯",
+    },
+    {
+      keys: ['why hire','why should we hire','why you','recruit','candidate','fit for'],
+      ans: "Why hire Abhijit? He's already delivered a ₹10-crore COPQ map and a working digital portal as an intern — not theory, real impact. Add a marketing brain, AI fluency, and ground-level hustle, and you get an MT who creates value from week one. 🤝",
+    },
+    {
+      keys: ['hobby','hobbies','interest','free time','passion','outside work','fun','personality'],
+      ans: "Outside work, Abhijit is into supply-chain & tech reading, experimenting with AI tools, and exploring food & local markets (his Janani Ghee roots!). He's curious, hands-on, and genuinely enjoys solving messy real-world problems. 🦋",
+    },
+    {
+      keys: ['inspiration','role model','idol','look up to','motivat'],
+      ans: "Abhijit is inspired by operations leaders who fix things on the ground — Toyota's lean thinking especially. He believes the best supply-chain minds spend more time on the shop floor than in slide decks. 🏭",
+    },
+    {
+      keys: ['relocate','relocation','willing to move','willing to relocate','move anywhere','location','availability','available','notice period'],
+      ans: "Abhijit is open to relocating anywhere in India for the right supply-chain / operations role 📍. He's currently with Neo Metaliks and his MBA wraps in 2026 — reach out at ghoshabhijitpr@gmail.com to talk timing. 🤝",
+    },
+
+    // ---------- CONTACT ----------
+    {
+      keys: ['contact','email','phone','number','linkedin','reach','connect','get in touch','message','call'],
+      ans: "📧 ghoshabhijitpr@gmail.com\n📱 +91 78640 84892\n💼 linkedin.com/in/ghoshabhijitpr\n📍 IISWBM, Kolkata 700073\n\nAbhijit is open to supply-chain, logistics & operations opportunities — reach out anytime! 🤝",
+    },
+
+    // ---------- GREETINGS / SMALLTALK ----------
+    {
+      keys: ['hello','hi','hey','hii','helo','hola','namaste','yo','greetings'],
+      ans: [
+        "Hey! 👋 I'm Abhi's little assistant — the one with a butterfly on my head 🦋. Ask me anything: his work at Neo Metaliks, the Emami COPQ study, projects, skills, or goals!",
+        "Hi there! 😄 Curious about Abhijit? Try 'what does he do at Neo Metaliks', 'tell me about the Emami project', or 'what are his strengths'!",
+      ],
+    },
+    {
+      keys: ['thank','thanks','great','nice','awesome','cool','helpful','good job'],
+      ans: [
+        "You're welcome! 😊 Ask me anything else about Abhijit — or scroll the page to explore his full portfolio!",
+        "Anytime! 🙌 Want to know about his projects, skills, or how to reach him? Just ask!",
+      ],
+    },
+    {
+      keys: ['bye','goodbye','see you','later','take care'],
+      ans: "Catch you later! 👋 If you'd like to connect with Abhijit, he's at ghoshabhijitpr@gmail.com. 🦋",
     },
   ];
 
-  function findAnswer(q) {
-    const lq = q.toLowerCase();
-    for (const item of KB) {
-      if (item.keys.some(k => lq.includes(k))) return item.ans;
+  // Stop-words ignored when scoring so generic words don't skew matches
+  const STOP = new Set(['the','a','an','is','are','was','were','do','does','did','what','who','how','why','when','where','your','you','his','her','him','he','she','tell','me','about','of','in','on','at','to','for','and','or','can','i','abhijit','ghosh']);
+  // Distinctive brand / proper-noun terms — when present they should win over generic words
+  const SPECIFIC = new Set(['emami','neometaliks','metaliks','janani','sama','cscmp','nestle','nestlé','haldia','dhulagarh','iiswbm','burdwan','logiseast','copq','srn','agrotech','soma']);
+
+  let lastAnswer = null;
+
+  // Pick a variant (string or array) avoiding immediate repeats
+  function pick(ans) {
+    if (Array.isArray(ans)) {
+      const choices = ans.filter(a => a !== lastAnswer);
+      return (choices.length ? choices : ans)[Math.floor(Math.random() * (choices.length ? choices.length : ans.length))];
     }
-    return "Hmm, I'm not sure about that one! 🤔 Try asking about Abhijit's education, job, skills, or projects — or reach out directly at ghoshabhijitpr@gmail.com 📧";
+    return ans;
+  }
+
+  function findAnswer(q) {
+    const lq = ' ' + q.toLowerCase().replace(/[^\w\s]/g, ' ').replace(/\s+/g, ' ') + ' ';
+    let best = null, bestScore = 0;
+
+    for (const item of KB) {
+      let score = 0;
+      for (const k of item.keys) {
+        const key = k.toLowerCase();
+        if (key.includes(' ')) {
+          // multi-word phrase: strong signal
+          if (lq.includes(' ' + key + ' ') || lq.includes(key)) score += key.split(' ').length * 3;
+        } else {
+          // single word: must be a whole-word match and not a stop-word
+          if (STOP.has(key)) continue;
+          let hit = lq.includes(' ' + key + ' ');
+          // only apply naive plural/-ing stemming to keys >=4 chars (avoids 'hi'->'his')
+          if (!hit && key.length >= 4) {
+            hit = lq.includes(' ' + key + 's ') || lq.includes(' ' + key + 'ing ') || lq.includes(' ' + key + 'es ');
+          }
+          if (hit) {
+            // brand/proper-noun terms get a strong bonus so they beat generic words
+            score += SPECIFIC.has(key) ? 5 : Math.max(1, Math.round(key.length / 4));
+          }
+        }
+      }
+      if (score > bestScore) { bestScore = score; best = item; }
+    }
+
+    if (best && bestScore > 0) {
+      const ans = pick(best.ans);
+      lastAnswer = ans;
+      return ans;
+    }
+    return "Hmm, I don't have that detail yet 🤔 — but try asking about Abhijit's work at Neo Metaliks, the Emami COPQ study, his projects, skills, goals, or how to reach him. Or email him directly: ghoshabhijitpr@gmail.com 📧";
   }
 
   function appendMsg(text, who) {
