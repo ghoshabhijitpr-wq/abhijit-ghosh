@@ -3,29 +3,59 @@
    Stack: GSAP 3 + ScrollTrigger · Lenis · Canvas
    ═══════════════════════════════════════════════════════ */
 
-// ── 1. Lenis smooth scroll ──────────────────────────────
-const lenis = new Lenis({
-  duration: 1.25,
-  easing: t => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-  smooth: true,
-});
-gsap.registerPlugin(ScrollTrigger);
-gsap.ticker.add(time => lenis.raf(time * 1000));
-gsap.ticker.lagSmoothing(0);
-lenis.on('scroll', ScrollTrigger.update);
+// ── 0. Device / performance detection ───────────────────
+// Treat narrow screens, coarse pointers (touch), and reduced-motion users as "lite mode"
+const IS_MOBILE = window.matchMedia('(max-width: 820px)').matches
+               || window.matchMedia('(pointer: coarse)').matches;
+const REDUCE_MOTION = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+const LITE = IS_MOBILE || REDUCE_MOTION;
+if (LITE) document.documentElement.classList.add('lite-mode');
 
-// ── 2. Magnetic buttons ─────────────────────────────────
-document.querySelectorAll('.btn-gold, .btn-outline').forEach(btn => {
-  btn.addEventListener('mousemove', e => {
-    const r = btn.getBoundingClientRect();
-    const x = (e.clientX - r.left - r.width  / 2) * 0.28;
-    const y = (e.clientY - r.top  - r.height / 2) * 0.28;
-    gsap.to(btn, { x, y, duration: 0.35, ease: 'power2.out', overwrite: true });
+// ── 0b. Preloader — hide once page is ready ──────────────
+(function preloader() {
+  const el = document.getElementById('preloader');
+  if (!el) return;
+  const hide = () => setTimeout(() => el.classList.add('done'), 350);
+  if (document.readyState === 'complete') hide();
+  else window.addEventListener('load', hide);
+  // safety: never let it block the page for more than 3.5s
+  setTimeout(() => el.classList.add('done'), 3500);
+})();
+
+// ── 1. Lenis smooth scroll (desktop only — native scroll is smoother on touch) ──
+gsap.registerPlugin(ScrollTrigger);
+let lenis = null;
+if (!LITE) {
+  lenis = new Lenis({
+    duration: 1.25,
+    easing: t => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+    smooth: true,
   });
-  btn.addEventListener('mouseleave', () => {
-    gsap.to(btn, { x: 0, y: 0, duration: 0.7, ease: 'elastic.out(1,0.5)', overwrite: true });
+  gsap.ticker.add(time => lenis.raf(time * 1000));
+  gsap.ticker.lagSmoothing(0);
+  lenis.on('scroll', ScrollTrigger.update);
+} else {
+  // keep ScrollTrigger in sync with native scrolling
+  window.addEventListener('scroll', () => ScrollTrigger.update(), { passive: true });
+}
+// Safe wrappers so modal code can call lenis.stop/start regardless of mode
+const lenisStop  = () => { if (lenis) lenis.stop();  else document.body.style.overflow = 'hidden'; };
+const lenisStart = () => { if (lenis) lenis.start(); else document.body.style.overflow = ''; };
+
+// ── 2. Magnetic buttons (desktop only) ──────────────────
+if (!LITE) {
+  document.querySelectorAll('.btn-gold, .btn-outline').forEach(btn => {
+    btn.addEventListener('mousemove', e => {
+      const r = btn.getBoundingClientRect();
+      const x = (e.clientX - r.left - r.width  / 2) * 0.28;
+      const y = (e.clientY - r.top  - r.height / 2) * 0.28;
+      gsap.to(btn, { x, y, duration: 0.35, ease: 'power2.out', overwrite: true });
+    });
+    btn.addEventListener('mouseleave', () => {
+      gsap.to(btn, { x: 0, y: 0, duration: 0.7, ease: 'elastic.out(1,0.5)', overwrite: true });
+    });
   });
-});
+}
 
 // ── 3. Nav: progress bar + active-section highlight ─────
 const navProgress = document.getElementById('navProgress');
@@ -33,45 +63,55 @@ const navbar      = document.getElementById('navbar');
 const navLinks    = document.querySelectorAll('nav ul a');
 const sections    = Array.from(document.querySelectorAll('section[id]'));
 
-lenis.on('scroll', ({ scroll, limit }) => {
-  navProgress.style.width = (scroll / limit * 100) + '%';
+function updateNav(scroll) {
+  const limit = document.documentElement.scrollHeight - window.innerHeight;
+  navProgress.style.width = (scroll / (limit || 1) * 100) + '%';
   navbar.classList.toggle('scrolled', scroll > 50);
 
   let active = sections[0].id;
   sections.forEach(s => { if (scroll >= s.offsetTop - 240) active = s.id; });
   navLinks.forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#' + active));
-});
+}
+if (lenis) {
+  lenis.on('scroll', ({ scroll }) => updateNav(scroll));
+} else {
+  window.addEventListener('scroll', () => updateNav(window.scrollY), { passive: true });
+}
 
-// ── 4. Aurora mouse drift ───────────────────────────────
+// ── 4. Aurora mouse drift (desktop only) ────────────────
 const aBlobs = document.querySelectorAll('.aurora-blob');
-document.addEventListener('mousemove', e => {
-  const nx = e.clientX / window.innerWidth  - 0.5;
-  const ny = e.clientY / window.innerHeight - 0.5;
-  aBlobs.forEach((b, i) => {
-    const d = (i + 1) * 18;
-    gsap.to(b, { x: nx * d, y: ny * d, duration: 4, ease: 'power1.out', overwrite: true });
-  });
-});
-
-// ── 5. Hero parallax layers ─────────────────────────────
-const floatIcons = document.querySelectorAll('.float-icon');
-document.addEventListener('mousemove', e => {
-  if (window.scrollY > window.innerHeight * 0.6) return;
-  const nx = e.clientX / window.innerWidth  - 0.5;
-  const ny = e.clientY / window.innerHeight - 0.5;
-
-  gsap.to('#hero-headline', { x: nx * -22, y: ny * -14, duration: 1.1, ease: 'power2.out', overwrite: true });
-  gsap.to('.hero-tagline',  { x: nx * -14, y: ny * -9,  duration: 1.3, ease: 'power2.out', overwrite: true });
-  gsap.to('.hero-chips',    { x: nx * -9,  y: ny * -6,  duration: 1.5, ease: 'power2.out', overwrite: true });
-  gsap.to('.hero-badge',    { x: nx * -5,  y: ny * -3,  duration: 1.7, ease: 'power2.out', overwrite: true });
-  floatIcons.forEach((icon, i) => {
-    const depth = parseFloat(icon.dataset.depth) || 0.3;
-    gsap.to(icon, {
-      x: nx * -70 * depth, y: ny * -50 * depth,
-      duration: 1.6 + i * 0.08, ease: 'power2.out', overwrite: true,
+if (!LITE) {
+  document.addEventListener('mousemove', e => {
+    const nx = e.clientX / window.innerWidth  - 0.5;
+    const ny = e.clientY / window.innerHeight - 0.5;
+    aBlobs.forEach((b, i) => {
+      const d = (i + 1) * 18;
+      gsap.to(b, { x: nx * d, y: ny * d, duration: 4, ease: 'power1.out', overwrite: true });
     });
   });
-});
+}
+
+// ── 5. Hero parallax layers (desktop only) ──────────────
+const floatIcons = document.querySelectorAll('.float-icon');
+if (!LITE) {
+  document.addEventListener('mousemove', e => {
+    if (window.scrollY > window.innerHeight * 0.6) return;
+    const nx = e.clientX / window.innerWidth  - 0.5;
+    const ny = e.clientY / window.innerHeight - 0.5;
+
+    gsap.to('#hero-headline', { x: nx * -22, y: ny * -14, duration: 1.1, ease: 'power2.out', overwrite: true });
+    gsap.to('.hero-tagline',  { x: nx * -14, y: ny * -9,  duration: 1.3, ease: 'power2.out', overwrite: true });
+    gsap.to('.hero-chips',    { x: nx * -9,  y: ny * -6,  duration: 1.5, ease: 'power2.out', overwrite: true });
+    gsap.to('.hero-badge',    { x: nx * -5,  y: ny * -3,  duration: 1.7, ease: 'power2.out', overwrite: true });
+    floatIcons.forEach((icon, i) => {
+      const depth = parseFloat(icon.dataset.depth) || 0.3;
+      gsap.to(icon, {
+        x: nx * -70 * depth, y: ny * -50 * depth,
+        duration: 1.6 + i * 0.08, ease: 'power2.out', overwrite: true,
+      });
+    });
+  });
+}
 
 // ── 6. Hero GSAP entrance ────────────────────────────────
 const heroTl = gsap.timeline({ delay: 0.2 });
@@ -224,9 +264,11 @@ gsap.from('.footer-statement', {
   y: 25, opacity: 0, duration: .9, ease: 'power3.out',
 });
 
-// ── 16. Enhanced particle canvas (mouse-attracted) ───────
+// ── 16. Enhanced particle canvas (mouse-attracted) — desktop only ──
 (function particleCanvas() {
   const canvas = document.getElementById('particle-canvas');
+  if (!canvas) return;
+  if (LITE) { canvas.style.display = 'none'; return; }   // skip heavy canvas on mobile
   const ctx    = canvas.getContext('2d');
   let W, H, dots;
   let mx = -999, my = -999;
@@ -296,10 +338,11 @@ gsap.from('.footer-statement', {
   draw();
 })();
 
-// ── 17. Footer star field ────────────────────────────────
+// ── 17. Footer star field — desktop only ─────────────────
 (function starField() {
   const canvas = document.getElementById('footer-stars');
   if (!canvas) return;
+  if (LITE) { canvas.style.display = 'none'; return; }
   const ctx = canvas.getContext('2d');
   let stars;
 
@@ -367,6 +410,42 @@ ScrollTrigger.batch('.svc-reveal', {
   onEnter: batch => batch.forEach(el => el.classList.add('in-view')),
 });
 
+// ── 18d. Testimonials reveal ─────────────────────────
+ScrollTrigger.batch('.t-reveal', {
+  start: 'top 88%',
+  onEnter: batch => batch.forEach(el => el.classList.add('in-view')),
+});
+
+// ── 18e. Impact stats count-up ───────────────────────
+(function impactCounters() {
+  const nums = document.querySelectorAll('.impact-num');
+  if (!nums.length) return;
+  const fmt = (v, decimals) => {
+    const s = decimals ? v.toFixed(decimals) : Math.round(v).toString();
+    // thousands separators for big whole numbers
+    return decimals ? s : s.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+  };
+  const run = el => {
+    const target   = parseFloat(el.dataset.target);
+    const decimals = parseInt(el.dataset.decimals || '0');
+    const prefix   = el.dataset.prefix || '';
+    const suffix   = el.dataset.suffix || '';
+    const dur = 1500, t0 = performance.now();
+    const tick = now => {
+      const p = Math.min((now - t0) / dur, 1);
+      const eased = 1 - Math.pow(1 - p, 3);
+      el.textContent = prefix + fmt(target * eased, decimals) + suffix;
+      if (p < 1) requestAnimationFrame(tick);
+      else el.textContent = prefix + fmt(target, decimals) + suffix;
+    };
+    requestAnimationFrame(tick);
+  };
+  const obs = new IntersectionObserver((entries, o) => {
+    entries.forEach(e => { if (e.isIntersecting) { run(e.target); o.unobserve(e.target); } });
+  }, { threshold: 0.5 });
+  nums.forEach(n => obs.observe(n));
+})();
+
 // ── 18c. Connect form (AJAX → FormSubmit, stay on page) ──
 (function connectForm() {
   const form = document.getElementById('connectForm');
@@ -411,14 +490,14 @@ ScrollTrigger.batch('.svc-reveal', {
       lbImg.alt = item.querySelector('img').alt;
       lbCap.textContent = item.dataset.caption || '';
       lb.classList.add('open');
-      lenis.stop();
+      lenisStop();
       document.body.style.overflow = 'hidden';
     });
   });
 
   const close = () => {
     lb.classList.remove('open');
-    lenis.start();
+    lenisStart();
     document.body.style.overflow = '';
   };
 
@@ -433,30 +512,40 @@ gsap.from('.hero-profile-img', {
   duration: 1, ease: 'back.out(1.8)',
 });
 
-// ── 20. 3-D tilt on skill cards ──────────────────────
-document.querySelectorAll('.tilt-card').forEach(card => {
-  card.addEventListener('mousemove', e => {
-    const r = card.getBoundingClientRect();
-    const x = (e.clientX - r.left) / r.width  - 0.5;
-    const y = (e.clientY - r.top)  / r.height - 0.5;
-    gsap.to(card, {
-      rotateY: x * 12, rotateX: -y * 12,
-      transformPerspective: 700,
-      duration: .25, ease: 'power1.out', overwrite: true,
+// ── 20. 3-D tilt on skill cards (desktop only) ───────
+if (!LITE) {
+  document.querySelectorAll('.tilt-card').forEach(card => {
+    card.addEventListener('mousemove', e => {
+      const r = card.getBoundingClientRect();
+      const x = (e.clientX - r.left) / r.width  - 0.5;
+      const y = (e.clientY - r.top)  / r.height - 0.5;
+      gsap.to(card, {
+        rotateY: x * 12, rotateX: -y * 12,
+        transformPerspective: 700,
+        duration: .25, ease: 'power1.out', overwrite: true,
+      });
+    });
+    card.addEventListener('mouseleave', () => {
+      gsap.to(card, { rotateY: 0, rotateX: 0, duration: .7, ease: 'elastic.out(1,.5)', overwrite: true });
     });
   });
-  card.addEventListener('mouseleave', () => {
-    gsap.to(card, { rotateY: 0, rotateX: 0, duration: .7, ease: 'elastic.out(1,.5)', overwrite: true });
-  });
-});
+}
 
-// ── 19. Floating icons continuous bob + parallax-scroll fade ──
-lenis.on('scroll', ({ scroll }) => {
-  const heroH = document.getElementById('hero').offsetHeight;
-  const pct   = Math.min(scroll / heroH, 1);
-  document.querySelector('.hero-floats').style.opacity = 1 - pct * 1.5;
-  document.querySelector('.hero-bg-img').style.transform = `translateY(${scroll * 0.18}px)`;
-});
+// ── 19. Floating icons fade + bg parallax on scroll ──────
+function heroScrollFx(scroll) {
+  const hero = document.getElementById('hero');
+  if (!hero) return;
+  const pct = Math.min(scroll / hero.offsetHeight, 1);
+  const floats = document.querySelector('.hero-floats');
+  const bg = document.querySelector('.hero-bg-img');
+  if (floats) floats.style.opacity = 1 - pct * 1.5;
+  if (bg && !LITE) bg.style.transform = `translateY(${scroll * 0.18}px)`;  // skip parallax repaint on mobile
+}
+if (lenis) {
+  lenis.on('scroll', ({ scroll }) => heroScrollFx(scroll));
+} else {
+  window.addEventListener('scroll', () => heroScrollFx(window.scrollY), { passive: true });
+}
 
 // ── 20. Contact card glow on hover ───────────────────
 document.querySelectorAll('.contact-card').forEach(card => {
@@ -473,7 +562,7 @@ document.querySelectorAll('.contact-card').forEach(card => {
   function openModal(id) {
     const overlay = document.getElementById('modal-' + id);
     if (!overlay) return;
-    lenis.stop();
+    lenisStop();
     overlay.classList.add('open');
     // allow native scroll inside modal box
     const box = overlay.querySelector('.modal-box');
@@ -486,7 +575,7 @@ document.querySelectorAll('.contact-card').forEach(card => {
 
   function closeModal(overlay) {
     overlay.classList.remove('open');
-    lenis.start();
+    lenisStart();
   }
 
   document.querySelectorAll('[data-modal]').forEach(el => {
@@ -521,7 +610,7 @@ document.querySelectorAll('.contact-card').forEach(card => {
     // ---------- IDENTITY ----------
     {
       keys: ['who is abhijit','who are you','your name','introduce yourself','tell me about yourself','about abhijit','about him','who'],
-      ans: "I'm Abhijit Ghosh — born 04 October 2001, from West Bengal 🇮🇳. A Supply Chain professional, currently Management Trainee – SCM at Neo Metaliks Limited. BBA in Marketing (Burdwan University, 75%) → MBA in Transportation & Logistics at IISWBM, Kolkata (2024–2026). I also co-founded Janani Ghee, a homemade ghee brand. 🎓",
+      ans: "I'm Abhijit Ghosh — born 04 October 2001, from West Bengal 🇮🇳. A Supply Chain professional, currently Management Trainee – SCM at Neo Metaliks Limited. BBA in Marketing (Burdwan University, 75%) → MBA in Transportation & Logistics at IISWBM, Kolkata (2024–2026). I also interned with Janani Ghee, a packaged dairy line. 🎓",
     },
     {
       keys: ['born','age','birthday','date of birth','dob','old','how old'],
@@ -581,13 +670,13 @@ document.querySelectorAll('.contact-card').forEach(card => {
     },
     {
       keys: ['why supply chain','why logistics','why scm','why this field','chose','choose','chosen','choose career','career switch','switch from marketing'],
-      ans: "Abhijit started in marketing but found his real spark running Janani Ghee — sourcing, producing, and delivering a physical product. He realised the magic wasn't in the ad, it was in getting the product to the customer fresh and on time. That pulled him into supply chain for good. 🔄",
+      ans: "Abhijit started in marketing but found his real spark interning at Janani Ghee — sourcing from village farmers and delivering a perishable product fresh and on time. He realised the magic wasn't in the ad, it was in the supply chain. That pulled him into operations for good. 🔄",
     },
 
     // ---------- EMAMI INTERNSHIP / COPQ ----------
     {
       keys: ['emami','copq','haldia','dhulagarh','agrotech','dissertation','cost of poor quality','internship project','edible oil'],
-      ans: "At Emami Agrotech (March–May 2026), Abhijit ran a comprehensive COPQ study across their distribution network — analysed 5,167 SRN lines worth ₹773.38 lakhs, quantified ₹10.03 crore annual COPQ across 15 depots, and proposed 14 interventions (9 zero-cost) saving ₹4.5–6 crore in Year 1. Guide: Mr. Debanjan Chakravarti, CS&L Manager. 🔍",
+      ans: "At Emami Agrotech (March–May 2026), Abhijit ran a comprehensive COPQ study across their distribution network — analysed 5,167 SRN lines worth ₹773.38 lakhs, identified ₹30.19 crore in total annual COPQ across 15 depots, and pinpointed ~₹41 lakhs in actionable savings within his 2-month internship via 14 interventions. Guide: Mr. Debanjan Chakravarti, CS&L Manager. 🔍",
     },
     {
       keys: ['srn','stock return','returns','credit note','return note'],
@@ -599,13 +688,13 @@ document.querySelectorAll('.contact-card').forEach(card => {
     },
     {
       keys: ['intervention','recommendation','solution','fix','what did you recommend','savings'],
-      ans: "Of 14 COPQ interventions, 9 were zero-cost — e.g. moving the FFS conveyor labour station from 8ft to 20–25ft so seals harden before handling (₹0), mandatory FEFO dispatch, anti-bird nets, pre-dispatch MRP checks, and BOPT upgrades with a 3-year ROI model. First-year saving: ₹4.5–6 crore. ✅",
+      ans: "Of 14 COPQ interventions, 9 were zero-cost — e.g. moving the FFS conveyor labour station from 8ft to 20–25ft so seals harden before handling (₹0), mandatory FEFO dispatch, anti-bird nets, pre-dispatch MRP checks, and BOPT upgrades with a 3-year ROI model. Within his 2-month internship he pinpointed ~₹41 lakhs in actionable savings. ✅",
     },
 
     // ---------- PROJECTS ----------
     {
       keys: ['project','projects','portfolio work','what have you built','case studies'],
-      ans: "Abhijit's projects: 1️⃣ Emami COPQ Study — ₹10.03 cr waste mapped. 2️⃣ SAMA SRN Portal — return & credit-note digitisation. 3️⃣ Expiry Tracker tool. 4️⃣ Neo Metaliks SCM — live role. 5️⃣ SCM Knowledge Base — AI exam prep. 6️⃣ Janani Ghee. 7️⃣ This AI Portfolio! Click any card on the page to dive in. 💪",
+      ans: "Abhijit's projects: 1️⃣ Emami COPQ Study — ₹30.19 cr COPQ identified, ₹41L savings pinpointed. 2️⃣ SAMA SRN Portal — return & credit-note digitisation. 3️⃣ Expiry Tracker tool. 4️⃣ Neo Metaliks SCM — live role. 5️⃣ SCM Knowledge Base — AI exam prep. 6️⃣ Janani Ghee. 7️⃣ This AI Portfolio! Click any card on the page to dive in. 💪",
     },
     {
       keys: ['sama','srn portal','sales approval','return portal'],
@@ -620,8 +709,8 @@ document.querySelectorAll('.contact-card').forEach(card => {
       ans: "Abhijit built an AI-assisted SCM Knowledge Base — a structured prep resource across his IISWBM Transportation & Logistics subjects, shared with batchmates. A neat example of using AI as a learning multiplier. 📖",
     },
     {
-      keys: ['janani','ghee','entrepreneur','startup','founder','co-founded','business','venture'],
-      ans: "Janani Ghee (2021–2023) was Abhijit's homemade-ghee venture. He ran the whole chain: procurement, production with 12 housewives, distribution to 10+ outlets and 200+ direct customers — and cut delivery lead times by 25%. His real-world SCM apprenticeship before the MBA. 🧈",
+      keys: ['janani','ghee','dairy','milk','internship dairy','founder','business','venture'],
+      ans: "Janani Ghee (Jun–Jul 2024) was Abhijit's supply-chain internship with a packaged dairy line. He designed the end-to-end supply chain — partnering with 12 village milk farmers, expanding to 10 outlets and 200+ customers, and tuning order volumes to demand patterns without overstocking. Real, hands-on ground-level SCM! 🧈",
     },
     {
       keys: ['dr soma','homeopathic','stock manager','clinic','assistant stock'],

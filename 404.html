@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>404 — Page Not Found · Abhijit Ghosh</title>
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png" />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@600;800&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{
+      font-family:'Inter',sans-serif;background:#050d1a;color:#e9eef5;
+      min-height:100vh;display:flex;align-items:center;justify-content:center;
+      text-align:center;padding:2rem;overflow:hidden;position:relative;
+    }
+    .glow{position:fixed;width:600px;height:600px;border-radius:50%;
+      background:radial-gradient(circle,rgba(245,182,66,.12),transparent 70%);
+      top:-150px;left:-150px;filter:blur(40px);pointer-events:none;
+      animation:float 12s ease-in-out infinite;}
+    @keyframes float{0%,100%{transform:translate(0,0)}50%{transform:translate(80px,60px)}}
+    .wrap{position:relative;z-index:2;max-width:520px}
+    .code{font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;
+      font-size:clamp(5rem,18vw,9rem);line-height:1;
+      background:linear-gradient(120deg,#fff3cf,#f5b642);
+      -webkit-background-clip:text;background-clip:text;color:transparent;}
+    h1{font-family:'Plus Jakarta Sans',sans-serif;font-weight:600;font-size:1.5rem;margin:.5rem 0 1rem}
+    p{color:#8b97a8;line-height:1.6;margin-bottom:2rem}
+    a{display:inline-block;background:linear-gradient(135deg,#f5b642,#c97e1a);
+      color:#050d1a;font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;
+      padding:.85rem 2rem;border-radius:50px;text-decoration:none;
+      box-shadow:0 8px 28px rgba(245,182,66,.35);transition:transform .2s,box-shadow .2s;}
+    a:hover{transform:translateY(-2px);box-shadow:0 12px 36px rgba(245,182,66,.5)}
+  </style>
+</head>
+<body>
+  <div class="glow"></div>
+  <div class="wrap">
+    <div class="code">404</div>
+    <h1>Lost in the supply chain 📦</h1>
+    <p>This page took a wrong turn at the warehouse. Let's get you back on route.</p>
+    <a href="/abhijit-ghosh/">← Back to Home</a>
+  </div>
+</body>
+</html>

@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://ghoshabhijitpr-wq.github.io/abhijit-ghosh/sitemap.xml

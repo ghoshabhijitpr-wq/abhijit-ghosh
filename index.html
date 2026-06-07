@@ -3,15 +3,82 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Abhijit Ghosh — Portfolio</title>
+  <title>Abhijit Ghosh — Supply Chain & Logistics Professional</title>
+  <meta name="description" content="Abhijit Ghosh — Supply Chain & Logistics professional. MBA (Transportation & Logistics, IISWBM), Management Trainee SCM at Neo Metaliks, CSCMP certified. AI automation, website hosting & training services." />
+  <meta name="author" content="Abhijit Ghosh" />
+  <meta name="keywords" content="Abhijit Ghosh, Supply Chain, Logistics, SCM, IISWBM, Neo Metaliks, CSCMP, COPQ, AI Automation, Kolkata" />
+  <meta name="theme-color" content="#050d1a" />
+
+  <!-- Open Graph (LinkedIn / WhatsApp / Facebook preview) -->
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Abhijit Ghosh — Supply Chain & Logistics Professional" />
+  <meta property="og:description" content="MBA (Transportation & Logistics, IISWBM) · Management Trainee SCM at Neo Metaliks · CSCMP Certified · AI Automation, Web Hosting & Training." />
+  <meta property="og:image" content="https://ghoshabhijitpr-wq.github.io/abhijit-ghosh/og-image.jpg" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:url" content="https://ghoshabhijitpr-wq.github.io/abhijit-ghosh/" />
+  <meta property="og:site_name" content="Abhijit Ghosh Portfolio" />
+
+  <!-- Twitter / X card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Abhijit Ghosh — Supply Chain & Logistics Professional" />
+  <meta name="twitter:description" content="MBA (Transportation & Logistics, IISWBM) · Management Trainee SCM · CSCMP Certified · AI Automation & Training." />
+  <meta name="twitter:image" content="https://ghoshabhijitpr-wq.github.io/abhijit-ghosh/og-image.jpg" />
+
+  <!-- Structured data — helps Google show a rich result for "Abhijit Ghosh" -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": "Abhijit Ghosh",
+    "url": "https://ghoshabhijitpr-wq.github.io/abhijit-ghosh/",
+    "image": "https://ghoshabhijitpr-wq.github.io/abhijit-ghosh/photo_passport.jpg",
+    "jobTitle": "Management Trainee — Supply Chain Management",
+    "worksFor": { "@type": "Organization", "name": "Neo Metaliks Limited" },
+    "alumniOf": [
+      { "@type": "CollegeOrUniversity", "name": "IISWBM (Indian Institute of Social Welfare & Business Management), Kolkata" },
+      { "@type": "CollegeOrUniversity", "name": "University of Burdwan" }
+    ],
+    "knowsAbout": ["Supply Chain Management", "Logistics", "Procurement", "COPQ", "Cost of Poor Quality", "Warehouse Management", "AI Automation", "Power BI"],
+    "email": "mailto:ghoshabhijitpr@gmail.com",
+    "telephone": "+91-78640-84892",
+    "address": { "@type": "PostalAddress", "addressLocality": "Kolkata", "addressRegion": "West Bengal", "addressCountry": "IN" },
+    "sameAs": ["https://www.linkedin.com/in/ghoshabhijitpr/"]
+  }
+  </script>
+
+  <!-- Favicons -->
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png" />
+  <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png" />
+  <link rel="apple-touch-icon" href="apple-touch-icon.png" />
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="style.css?v=6" />
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
 </head>
 <body>
+
+  <!-- Preloader -->
+  <div id="preloader" aria-hidden="true">
+    <div class="preloader-inner">
+      <div class="preloader-ring"></div>
+      <span class="preloader-mono">AG</span>
+    </div>
+    <div class="preloader-text">Abhijit Ghosh</div>
+  </div>
+
+  <!-- Flowing gradient mesh -->
+  <div id="mesh-bg" aria-hidden="true"></div>
+
+  <!-- Shooting stars -->
+  <div id="shooting-stars" aria-hidden="true">
+    <span class="shoot s1"></span>
+    <span class="shoot s2"></span>
+    <span class="shoot s3"></span>
+  </div>
 
   <!-- Aurora -->
   <div id="aurora" aria-hidden="true">
@@ -85,6 +152,7 @@
       <div class="hero-cta">
         <a href="#projects" class="btn-gold">View My Work</a>
         <a href="#contact" class="btn-outline">Get in Touch</a>
+        <a href="Abhijit_Ghosh_CV.docx" download class="btn-outline btn-cv" title="Download CV (Word / ATS-friendly)">⬇ Download CV</a>
       </div>
     </div>
     <div class="hero-scroll-hint">
@@ -127,8 +195,8 @@
       <div class="about-grid">
         <div class="about-text">
           <p>I'm <span class="gold">Abhijit Ghosh</span>, a Supply Chain professional from West Bengal currently working as a <span class="gold">Management Trainee — SCM at Neo Metaliks Limited</span>. I started my academic journey with a <span class="gold">BBA in Marketing</span> from the University of Burdwan, which gave me a strong foundation in business and consumer dynamics.</p>
-          <p>I then levelled up with an <span class="gold">MBA in Transportation &amp; Logistics from IISWBM, Kolkata</span> (2024–2026) — diving deep into supply chain strategy, operations research, procurement, and logistics optimisation. During my MBA, I completed my internship at <span class="gold">Emami Agrotech Limited</span> (March–May 2026) — conducting a comprehensive COPQ (Cost of Poor Quality) study across their distribution network, quantifying ₹10.03 crores in annual quality failures across their Haldia plant and pan-India CFA network.</p>
-          <p>I also co-founded <span class="gold">Janani Ghee</span> (2021–23) — a homemade ghee brand where I ran end-to-end logistics, procurement, and distribution across 10+ retail outlets and 200+ customers, cutting delivery lead times by 25%. I love combining ground-level operations thinking with <span class="gold">AI tools</span> to make supply chains leaner, faster, and smarter.</p>
+          <p>I then levelled up with an <span class="gold">MBA in Transportation &amp; Logistics from IISWBM, Kolkata</span> (2024–2026) — diving deep into supply chain strategy, operations research, procurement, and logistics optimisation. During my MBA, I completed my internship at <span class="gold">Emami Agrotech Limited</span> (March–May 2026) — conducting a comprehensive COPQ (Cost of Poor Quality) study across their distribution network, identifying <span class="gold">₹30.19 crores</span> in annual quality failures and pinpointing <span class="gold">~₹41 lakhs</span> in actionable savings within the two-month internship.</p>
+          <p>I also interned with <span class="gold">Janani Ghee</span> (2024) — a packaged dairy line where I designed the end-to-end supply chain, partnering with 12 village milk farmers and expanding distribution to 10 outlets and 200+ customers. I love combining ground-level operations thinking with <span class="gold">AI tools</span> to make supply chains leaner, faster, and smarter.</p>
         </div>
         <div class="about-stats">
           <div class="stat-card glass-card clickable" data-modal="mba" title="Click to see what I studied">
@@ -153,6 +221,34 @@
             <span class="stat-num">Ops</span>
             <span class="stat-label">Ground Research</span>
           </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- IMPACT STATS -->
+  <section id="impact">
+    <div class="container">
+      <div class="impact-band">
+        <div class="impact-item">
+          <span class="impact-num" data-target="30.19" data-decimals="2" data-prefix="₹" data-suffix=" Cr">₹0 Cr</span>
+          <span class="impact-label">Total COPQ identified at Emami</span>
+        </div>
+        <div class="impact-item">
+          <span class="impact-num" data-target="41" data-prefix="₹" data-suffix=" L">₹0 L</span>
+          <span class="impact-label">Savings identified in 2 months</span>
+        </div>
+        <div class="impact-item">
+          <span class="impact-num" data-target="5167" data-suffix="">0</span>
+          <span class="impact-label">SRN lines analysed in SAP</span>
+        </div>
+        <div class="impact-item">
+          <span class="impact-num" data-target="200" data-suffix="+">0+</span>
+          <span class="impact-label">Customers served at Janani</span>
+        </div>
+        <div class="impact-item">
+          <span class="impact-num" data-target="25" data-suffix="%">0%</span>
+          <span class="impact-label">Lead-time reduction delivered</span>
         </div>
       </div>
     </div>
@@ -302,7 +398,7 @@
             <span class="timeline-date">March – May 2026</span>
             <h3>MBA Intern — Customer Service &amp; Logistics</h3>
             <p class="timeline-company">Emami Agrotech Limited · Haldia Plant (M251) &amp; Dhulagarh CFA, Kolkata (D257)</p>
-            <p>Dissertation internship under Mr. Debanjan Chakravarti (Manager – CS&amp;L). Conducted a comprehensive COPQ study across Emami's distribution network — analysed 5,167 SRN lines worth ₹773.38 lakhs, quantified ₹10.03 crores annual COPQ, and delivered 14 interventions with ₹4.5–6 crore first-year saving potential. Also designed the <strong>SAMA SRN portal</strong> to digitise the sales return and credit note approval workflow.</p>
+            <p>Dissertation internship under Mr. Debanjan Chakravarti (Manager – CS&amp;L). Conducted a comprehensive COPQ study across Emami's distribution network — analysed 5,167 SRN lines worth ₹773.38 lakhs, identified <strong>₹30.19 crore</strong> in total annual COPQ, and pinpointed <strong>~₹41 lakhs</strong> in actionable savings within the 2-month internship via 14 targeted interventions. Also designed the <strong>SAMA SRN portal</strong> to digitise the sales return and credit note approval workflow.</p>
             <div class="tags"><span>COPQ</span><span>SAP Analysis</span><span>SRN / Credit Notes</span><span>FMCG Logistics</span><span>Dissertation</span></div>
           </div>
         </div>
@@ -332,11 +428,11 @@
         <div class="timeline-item">
           <div class="timeline-dot"><span>05</span></div>
           <div class="timeline-content glass-card">
-            <span class="timeline-date">2021 — 2023</span>
-            <h3>Co-Founder — Janani Ghee 🧈</h3>
-            <p class="timeline-company">Janani Ghee · Entrepreneurial Venture · West Bengal</p>
-            <p>Co-founded and ran a homemade ghee brand from scratch. Managed end-to-end supply chain — sourcing raw materials, coordinating production with 12 housewives, and building a distribution network across 10+ retail outlets and 200+ direct customers. Reduced delivery lead times by 25% through demand forecasting and route optimisation.</p>
-            <div class="tags"><span>Entrepreneurship</span><span>Logistics</span><span>Procurement</span><span>Demand Forecasting</span><span>Distribution</span></div>
+            <span class="timeline-date">Jun 2024 — Jul 2024</span>
+            <h3>Supply Chain Intern — Janani Ghee 🧈</h3>
+            <p class="timeline-company">Janani Ghee · Packaged Dairy · West Bengal</p>
+            <p>Designed and managed the end-to-end supply chain for a packaged dairy product line, partnering with 12 suppliers (village milk farmers). Expanded distribution to 10 outlets and 200+ customers through vendor coordination, local sourcing, and delivery scheduling. Identified demand patterns and adjusted order volumes accordingly — supporting a steady increase in order throughput without overstocking.</p>
+            <div class="tags"><span>Supply Chain</span><span>Local Sourcing</span><span>Vendor Coordination</span><span>Demand Planning</span><span>Distribution</span></div>
           </div>
         </div>
 
@@ -424,7 +520,7 @@
             <span class="project-icon">📦</span>
             <h3>Emami COPQ Reduction Study</h3>
           </div>
-          <p>A comprehensive COPQ map across Emami's distribution network — ₹10.03 cr annual waste quantified across 15 depots. 5,167 SRN lines, SAP data analysis, 14 interventions with ₹4.5–6 cr saving potential.</p>
+          <p>A comprehensive COPQ map across Emami's distribution network — ₹30.19 cr total annual COPQ identified across 15 depots, with ~₹41 lakhs in actionable savings pinpointed in just 2 months. 5,167 SRN lines, SAP analysis, 14 interventions.</p>
           <div class="tags"><span>FMCG</span><span>COPQ</span><span>SAP</span><span>₹10 Cr Impact</span><span>Dissertation</span></div>
           <div class="card-cta">View Case Study →</div>
         </div>
@@ -482,10 +578,10 @@
           <div class="project-number">06</div>
           <div class="project-header">
             <span class="project-icon">🧈</span>
-            <h3>Janani Ghee — Co-Founder</h3>
+            <h3>Janani Ghee — SCM Intern</h3>
           </div>
-          <p>Co-founded a homemade ghee brand — ran procurement, production coordination with 12 housewives, logistics &amp; distribution to 200+ customers.</p>
-          <div class="tags"><span>Entrepreneurship</span><span>SCM</span><span>Distribution</span><span>2021–23</span></div>
+          <p>Designed the end-to-end supply chain for a packaged dairy line — partnered with 12 village milk farmers, expanded to 10 outlets &amp; 200+ customers via demand planning.</p>
+          <div class="tags"><span>Supply Chain</span><span>Dairy</span><span>Distribution</span><span>2024</span></div>
           <div class="card-cta">View Story →</div>
         </div>
 
@@ -533,6 +629,13 @@
           <p>One-on-one or group sessions on <strong>how to use AI</strong> and <strong>how to automate your tasks</strong> — practical, hands-on, and tailored to your work. Walk away able to save hours every week with the right AI workflow.</p>
           <div class="service-tags"><span>AI Training</span><span>Automation 101</span><span>Hands-on</span><span>Productivity</span></div>
         </div>
+
+        <div class="service-card glass-card svc-reveal">
+          <div class="service-icon">📄</div>
+          <h3>ATS Resume Building</h3>
+          <p>I build <strong>ATS-friendly resumes</strong> that actually get past the bots and onto a recruiter's desk — clean formatting, the right keywords for your target role, and a sharp, results-driven story. Beat the applicant tracking system.</p>
+          <div class="service-tags"><span>ATS-Optimised</span><span>Keywords</span><span>Clean Format</span><span>Recruiter-Ready</span></div>
+        </div>
       </div>
 
       <!-- CONNECT FORM -->
@@ -571,6 +674,7 @@
                 <option value="AI Automation">AI Automation (Claude Code / Codex / ChatGPT)</option>
                 <option value="Website Hosting">Website Design &amp; Hosting</option>
                 <option value="AI Classes / Training">AI Classes &amp; Training</option>
+                <option value="ATS Resume Building">ATS Resume Building</option>
                 <option value="Supply Chain / Hiring">Supply Chain / Hiring Opportunity</option>
                 <option value="Collaboration">Collaboration / Partnership</option>
                 <option value="Other">Other</option>
@@ -585,6 +689,47 @@
 
           <button type="submit" class="btn-gold connect-submit">Send Message 🚀</button>
         </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- TESTIMONIALS  (real LinkedIn recommendations) -->
+  <section id="testimonials">
+    <div class="container">
+      <div class="section-label">Kind Words</div>
+      <h2 class="section-title">Testimonials</h2>
+      <p class="contact-sub">Recommendations from my mentor and teammates on LinkedIn.</p>
+      <div class="testimonial-grid one">
+        <figure class="testimonial-card glass-card t-reveal">
+          <div class="t-quote">"</div>
+          <blockquote>Working with Abhijit at Janani Ghee was a wonderful experience. He took genuine ownership of our dairy supply chain — coordinating village milk farmers, planning deliveries, and keeping stock fresh without overstocking. He's organised, hands-on, and brings real care and energy to everything he does.</blockquote>
+          <figcaption>
+            <span class="t-name">Aritri Saha</span>
+            <span class="t-role">Janani Ghee &nbsp;·&nbsp; <em>Worked with Abhijit</em></span>
+          </figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- NEWSLETTER -->
+  <section id="newsletter">
+    <div class="container">
+      <div class="newsletter-card glass-card svc-reveal">
+        <div class="newsletter-left">
+          <span class="newsletter-eyebrow">📰 LinkedIn Newsletter</span>
+          <h2 class="newsletter-title">Lean &amp; Green</h2>
+          <p class="newsletter-desc">My weekly newsletter on making supply chains <strong>smarter, more efficient, and environmentally sustainable</strong> — insights, tips, and real case studies from the world of logistics &amp; operations.</p>
+          <div class="newsletter-stats">
+            <div><span class="ns-num">498+</span><span class="ns-lbl">Subscribers</span></div>
+            <div><span class="ns-num">9</span><span class="ns-lbl">Editions</span></div>
+            <div><span class="ns-num">Weekly</span><span class="ns-lbl">Cadence</span></div>
+          </div>
+          <a href="https://www.linkedin.com/newsletters/lean-green-7385676862754234368/" target="_blank" rel="noopener" class="btn-gold newsletter-btn">Subscribe on LinkedIn →</a>
+        </div>
+        <div class="newsletter-right">
+          <img src="newsletter-logo.jpg" alt="Lean & Green newsletter logo" class="newsletter-logo-img" loading="lazy" />
+        </div>
       </div>
     </div>
   </section>
@@ -637,49 +782,44 @@
         </div>
       </div>
       <div class="modal-body">
+        <div class="detail-section">
+          <p>A two-year specialisation in Transportation &amp; Logistics that took me deep into how goods actually move — from the warehouse floor to multimodal transport networks, backed by the data tools and human skills to manage it all.</p>
+        </div>
         <div class="sem-grid">
           <div class="sem-block">
-            <div class="sem-label">Semester I — Foundation</div>
+            <div class="sem-label">🏭 Logistics &amp; Operations</div>
             <ul>
-              <li>Principles of Management</li>
-              <li>Managerial Economics</li>
-              <li>Quantitative Methods for Management</li>
-              <li>Financial Accounting &amp; Analysis</li>
-              <li>Organisational Behaviour</li>
-              <li>Business Communication</li>
+              <li>Warehousing &amp; Inventory</li>
+              <li>Primary &amp; Secondary Logistics</li>
+              <li>Procurement &amp; Sourcing</li>
+              <li>Demand &amp; Supply Planning</li>
             </ul>
           </div>
           <div class="sem-block">
-            <div class="sem-label">Semester II — Core</div>
+            <div class="sem-label">🚚 Transportation Modes</div>
             <ul>
-              <li>Operations Management</li>
-              <li>Supply Chain Management</li>
-              <li>Marketing Management</li>
-              <li>Human Resource Management</li>
-              <li>Management Information Systems</li>
-              <li>Business Statistics &amp; Analytics</li>
+              <li>Road Transport</li>
+              <li>Rail Transport</li>
+              <li>Air Cargo</li>
+              <li>Water / Maritime Shipping</li>
             </ul>
           </div>
           <div class="sem-block">
-            <div class="sem-label">Semester III — T&amp;L Specialisation</div>
+            <div class="sem-label">📊 Digital &amp; Data Tools</div>
             <ul>
-              <li>Logistics &amp; Distribution Management</li>
-              <li>Transportation Management Systems</li>
-              <li>Warehouse &amp; Inventory Management</li>
-              <li>Procurement &amp; Materials Management</li>
-              <li>Quality Management (TQM / Six Sigma)</li>
-              <li>Research Methodology</li>
+              <li>Power BI</li>
+              <li>Advanced Excel</li>
+              <li>Context Engineering / AI</li>
+              <li>Data-driven Decision Making</li>
             </ul>
           </div>
           <div class="sem-block">
-            <div class="sem-label">Semester IV — Advanced</div>
+            <div class="sem-label">🤝 Human Skills</div>
             <ul>
-              <li>Strategic Supply Chain Management</li>
-              <li>International Logistics &amp; Trade</li>
-              <li>Operations Research &amp; Modelling</li>
-              <li>Multimodal Transport &amp; Port Ops</li>
-              <li>Dissertation / Summer Project</li>
-              <li>Industry Interaction Programme</li>
+              <li>Communication &amp; Negotiation</li>
+              <li>Team Coordination</li>
+              <li>Stakeholder Management</li>
+              <li>Problem Solving</li>
             </ul>
           </div>
         </div>
@@ -778,7 +918,7 @@
         <div class="detail-section">
           <h4>📊 Key Findings (Quantified)</h4>
           <ul>
-            <li><strong>Total quantified COPQ: ₹10.03 crores/year</strong> across the network</li>
+            <li><strong>Total COPQ identified: ₹30.19 crores/year</strong> across the network</li>
             <li><strong>SRN (Stock Return Notes): ₹773.38 lakhs</strong> — e-commerce channel drives 89.2% (₹690.13 lakhs) due to quick-commerce 180-day shelf-life rule enforcement</li>
             <li><strong>Kolkata depot (D257): ₹417.87 lakhs</strong> — 54% of all-India SRN; depot SRN rate 1.60% vs best-practice target &lt;0.5%</li>
             <li><strong>Freshness / expiry losses: ₹168.27 lakhs/year</strong> (full-year estimate)</li>
@@ -798,14 +938,22 @@
             <li>Anti-bird net + tarpaulin covers at depot — eliminates pigeon damage and rain infiltration</li>
             <li>Pre-dispatch MRP verification checklist to eliminate ₹3.12 crore ASRS mismatch exposure</li>
           </ul>
-          <p style="margin-top:.75rem"><strong>First-year saving potential: ₹4.5–6.0 crores</strong></p>
+          <p style="margin-top:.75rem"><strong>Savings I identified within the 2-month internship: ~₹41 lakhs</strong> in immediately actionable opportunities.</p>
         </div>
         <div class="detail-section">
           <h4>🏆 Significance</h4>
-          <p>This study builds the <strong>first consolidated COPQ map across Emami's distribution network</strong> — bringing scattered cost leakages (SRN, freshness, detention, damage) onto a single framework so the CS&amp;L function can track and reduce wastage systematically in FY27. Pan-India net sales base: ₹2,266.68 crores (FY26); Haldia billings: ₹797.74 crores.</p>
+          <p>This study builds a <strong>consolidated COPQ map across the distribution network</strong> — bringing scattered cost leakages (SRN, freshness, detention, damage) onto a single framework so the CS&amp;L function can track and reduce wastage systematically in FY27.</p>
+        </div>
+        <div class="detail-section">
+          <h4>📐 Deliverable — Proposed Warehouse Layout</h4>
+          <p>As part of the recommendations, I designed a revised factory-warehouse floor plan built on <strong>ABC classification + FIFO</strong> stock rotation — optimising bin placement, dock allocation, and aisle clearances to cut handling time and damage.</p>
+          <a href="warehouse_layout.jpg" target="_blank" class="layout-img-link" title="Click to open full layout">
+            <img src="warehouse_layout.jpg" alt="Proposed warehouse floor plan — ABC + FIFO layout" loading="lazy" class="layout-img" />
+            <span class="layout-img-cap">🔍 Click to view full resolution</span>
+          </a>
         </div>
         <div class="modal-tags">
-          <span>COPQ</span><span>SAP Data Analysis</span><span>FMCG Logistics</span><span>SRN</span><span>Detention Analysis</span><span>Edible Oil</span><span>Haldia Plant</span><span>MBA Dissertation</span><span>FY 2025-26</span>
+          <span>COPQ</span><span>SAP Data Analysis</span><span>FMCG Logistics</span><span>SRN</span><span>Warehouse Layout</span><span>ABC + FIFO</span><span>MBA Dissertation</span>
         </div>
       </div>
     </div>
@@ -1050,32 +1198,29 @@
       <div class="modal-header">
         <span class="modal-icon">🧈</span>
         <div>
-          <h2>Janani Ghee — Co-Founder</h2>
-          <p class="modal-sub">Entrepreneurial Venture · West Bengal · 2021–2023</p>
+          <h2>Janani Ghee — Supply Chain Intern</h2>
+          <p class="modal-sub">Packaged Dairy · West Bengal · Jun 2024 – Jul 2024</p>
         </div>
       </div>
       <div class="modal-body">
         <div class="detail-section">
-          <h4>💡 The Idea</h4>
-          <p>Co-founded Janani Ghee — a homemade ghee brand built around quality, trust, and community. The brand was rooted in the idea of empowering local housewives while delivering pure, authentic ghee directly to customers and retail outlets.</p>
+          <h4>💡 The Project</h4>
+          <p>Interned with Janani Ghee, a packaged dairy product line, where I designed and managed the <span class="gold">end-to-end supply chain</span> — from local sourcing right through to last-mile delivery — built around quality, freshness, and community-led sourcing.</p>
         </div>
         <div class="detail-section">
-          <h4>⚙️ What I Ran</h4>
+          <h4>⚙️ What I Did</h4>
           <ul>
-            <li>Coordinated production with <span class="gold">12 housewives</span> — quality checks, batch scheduling, and output consistency</li>
-            <li>Managed <span class="gold">end-to-end procurement</span> of raw materials (milk, equipment, packaging)</li>
-            <li>Built a distribution network across <span class="gold">10+ retail outlets</span> in West Bengal</li>
-            <li>Grew to <span class="gold">200+ direct customers</span> through word-of-mouth and local marketing</li>
-            <li>Implemented demand forecasting and route planning — reduced delivery lead times by <span class="gold">25%</span></li>
-            <li>Handled inventory management, cost control, and pricing strategy</li>
+            <li>Designed and managed the end-to-end supply chain for a packaged dairy product line, partnering with <span class="gold">12 suppliers (village milk farmers)</span></li>
+            <li>Expanded distribution to <span class="gold">10 outlets</span> and <span class="gold">200+ customers</span> through vendor coordination, local sourcing, and delivery scheduling</li>
+            <li>Identified <span class="gold">demand patterns</span> and adjusted order volumes accordingly — supporting a steady increase in order throughput <span class="gold">without overstocking</span></li>
           </ul>
         </div>
         <div class="detail-section">
           <h4>📌 Key Learnings</h4>
-          <p>Janani Ghee was my real-world supply chain MBA — before the actual MBA. It taught me that supply chain isn't just theory: it's about people, trust, and execution on the ground. Every concept I study now, I've seen play out in that small operation.</p>
+          <p>Janani Ghee was hands-on supply chain on the ground — it taught me that the discipline isn't just theory: it's about people, trust, and execution. Balancing demand against perishability without overstocking is a lesson I carry into every operation since.</p>
         </div>
         <div class="modal-tags">
-          <span>Entrepreneurship</span><span>Procurement</span><span>Distribution</span><span>Demand Forecasting</span><span>Inventory Mgmt</span><span>Cost Control</span>
+          <span>Supply Chain</span><span>Local Sourcing</span><span>Vendor Coordination</span><span>Demand Planning</span><span>Distribution</span><span>Dairy</span>
         </div>
       </div>
     </div>
@@ -1220,6 +1365,6 @@
     </div>
   </div>
 
-  <script src="main.js"></script>
+  <script src="main.js?v=6"></script>
 </body>
 </html>
